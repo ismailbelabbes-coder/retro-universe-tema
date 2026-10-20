@@ -1,0 +1,13 @@
+{%- comment -%} Paginación. Parámetro: paginate (objeto de {% paginate %}) {%- endcomment -%}
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination" aria-label="{{ 'general.pagination' | t }}">
+    {%- if paginate.previous -%}
+      <a class="btn btn--ghost" href="{{ paginate.previous.url }}" rel="prev">{{ 'general.previous' | t }}</a>
+    {%- endif -%}
+    {%- capture page_label -%}{{ 'general.page_of' | t: current: paginate.current_page, total: paginate.pages }}{%- endcapture -%}
+    <span class="px">{% render 'px', text: page_label %}</span>
+    {%- if paginate.next -%}
+      <a class="btn" href="{{ paginate.next.url }}" rel="next">{{ 'general.next' | t }}</a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

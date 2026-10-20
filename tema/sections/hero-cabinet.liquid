@@ -1,0 +1,152 @@
+{%- comment -%} Portada: cabina arcade con pantalla CRT en modo demo. Cada bloque es una "máquina" de la rotación. {%- endcomment -%}
+<section class="hero" id="inicio" aria-labelledby="hero-t-{{ section.id }}">
+  <canvas class="hero__space" id="space" aria-hidden="true"></canvas>
+  <div class="hero__floor" aria-hidden="true"></div>
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <h1 class="hero__title" id="hero-t-{{ section.id }}" data-in style="--d:120">
+        {%- if section.settings.title_1 != blank -%}<span class="row">{{ section.settings.title_1 | escape }}</span>{%- endif -%}
+        {%- if section.settings.title_2 != blank -%}<span class="row hl">{{ section.settings.title_2 | escape }}</span>{%- endif -%}
+      </h1>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="hero__sub" data-in style="--d:380">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+      <p class="hero__hint px" data-in style="--d:520" aria-hidden="true"><span class="key key--j">&lt;&gt;</span> {% render 'px', text: section.settings.hint_pick %} <span class="key">A</span> {% render 'px', text: section.settings.button_a_label %} <span class="key key--b">B</span> WhatsApp</p>
+    </div>
+
+    <div class="cab" id="cab" role="group" aria-label="{{ 'hero.group' | t }}">
+      <div class="cab__marquee">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 600 | image_tag: widths: '300, 600', sizes: '300px', loading: 'eager', alt: shop.name }}
+        {%- else -%}
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="315" height="168">
+        {%- endif -%}
+      </div>
+      <div class="cab__head">
+        <div class="crt">
+          <p class="crt__hud px" aria-hidden="true"><span>Hi-score <b>{% render 'px', text: section.settings.hiscore %}</b></span><span>Credit <b data-count>{% if cart.item_count < 10 %}0{% endif %}{{ cart.item_count }}</b></span></p>
+
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign target = block.settings.collection
+              assign color = block.settings.color
+              assign title = block.settings.title | default: target.title
+              assign url = block.settings.link | default: target.url
+              assign image = block.settings.image | default: target.featured_image | default: target.image
+              if image == blank and target != blank
+                assign first_p = target.products.first
+                assign image = first_p.featured_image
+              endif
+            -%}
+            <div class="crt__slide{% if forloop.first %} is-on{% endif %}" data-slide {{ block.shopify_attributes }} style="--c:var(--{{ color }})">
+              <a class="crt__go" href="{{ url | default: routes.collections_url }}" style="--c:var(--{{ color }})">
+                {%- if image != blank -%}
+                  {%- if forloop.first -%}
+                    {% render 'img', image: image, alt: title, sizes: '(min-width: 900px) 300px, 70vw', widths: '240, 360, 540, 720', priority: true %}
+                  {%- else -%}
+                    {% render 'img', image: image, alt: title, sizes: '(min-width: 900px) 300px, 70vw', widths: '240, 360, 540, 720' %}
+                  {%- endif -%}
+                {%- else -%}
+                  {% render 'demo-img', name: 'bartop-ghost', alt: title %}
+                {%- endif -%}
+                <span class="sr">{{ 'hero.see' | t: title: title }}</span>
+              </a>
+            </div>
+          {%- endfor -%}
+
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign target = block.settings.collection
+              assign title = block.settings.title | default: target.title
+              assign min_price = nil
+              if target != blank
+                for p in target.products limit: 12
+                  if p.available
+                    if min_price == nil or p.price < min_price
+                      assign min_price = p.price
+                    endif
+                  endif
+                endfor
+              endif
+            -%}
+            <div class="crt__info" data-name{% unless forloop.first %} hidden{% endunless %} aria-hidden="true" style="--c:var(--{{ block.settings.color }})">
+              <p class="crt__name">{{ title | escape }}</p>
+              {%- if min_price != nil -%}
+                <p class="crt__price px">{{ 'hero.from' | t }} {{ min_price | money | strip_html }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+
+          <div class="crt__nav">
+            <button class="crt__arrow" type="button" data-cab="-1" aria-label="{{ 'hero.prev' | t }}"><span></span></button>
+            <span class="crt__label px" aria-hidden="true" style="--c:var(--pink)">{% render 'px', text: section.settings.label %}</span>
+            <button class="crt__arrow crt__arrow--r" type="button" data-cab="1" aria-label="{{ 'hero.next' | t }}"><span></span></button>
+          </div>
+          <div class="crt__scan" aria-hidden="true"></div>
+          <div class="crt__glare" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="cab__panel">
+        <button class="stick" id="stick" type="button" aria-label="{{ 'hero.joystick' | t }}"><span class="stick__base"></span><span class="stick__shaft"><span class="stick__ball"></span></span></button>
+        <div class="abtns">
+          <a class="abtn" href="{{ section.settings.button_a_link | default: routes.collections_url }}"><span class="abtn__cap" aria-hidden="true">A</span><span class="abtn__lbl">{% render 'px', text: section.settings.button_a_label %}</span></a>
+          {%- if settings.whatsapp_number != blank -%}
+            <a class="abtn abtn--b" href="{% render 'whatsapp-url' %}" target="_blank" rel="noopener"><span class="abtn__cap" aria-hidden="true">B</span><span class="abtn__lbl">WhatsApp</span></a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="cab__lower" aria-hidden="true">
+        <div class="coin-door">
+          <span class="slot"><span class="slot__mouth"><i></i></span><span class="slot__txt">{% render 'px', text: section.settings.coin_text %}</span></span>
+          <span class="slot"><span class="slot__mouth"><i></i></span><span class="slot__txt">{% render 'px', text: section.settings.coin_text %}</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="{{ 'hero.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Portada: cabina arcade",
+  "settings": [
+    { "type": "text", "id": "title_1", "label": "Titular, línea 1", "default": "Donde los clásicos" },
+    { "type": "text", "id": "title_2", "label": "Titular, línea 2 (amarilla)", "default": "cobran vida." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Arcades, bartops, pinball virtual y Pandora Box listos para enchufar y jugar, con 3 años de garantía." },
+    { "type": "text", "id": "hiscore", "label": "Hi-score decorativo", "default": "009800" },
+    { "type": "text", "id": "label", "label": "Etiqueta bajo la pantalla", "default": "Elige máquina" },
+    { "type": "text", "id": "hint_pick", "label": "Ayuda de escritorio: elegir", "default": "elige" },
+    { "type": "text", "id": "button_a_label", "label": "Botón A: texto", "default": "Tienda" },
+    { "type": "url", "id": "button_a_link", "label": "Botón A: enlace", "info": "Si está vacío va a la lista de colecciones." },
+    { "type": "text", "id": "coin_text", "label": "Texto de las ranuras", "default": "100 ptas" }
+  ],
+  "blocks": [
+    {
+      "type": "machine",
+      "name": "Máquina",
+      "limit": 6,
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección", "info": "Da el enlace, el título, la imagen y el precio «desde» automáticamente." },
+        { "type": "text", "id": "title", "label": "Título (opcional)", "info": "Si está vacío usa el de la colección." },
+        { "type": "image_picker", "id": "image", "label": "Imagen (opcional)", "info": "Si está vacía usa la imagen de la colección o de su primer producto." },
+        { "type": "url", "id": "link", "label": "Enlace (opcional)" },
+        { "type": "select", "id": "color", "label": "Color", "default": "pink", "options": [
+          { "value": "pink", "label": "Rosa" }, { "value": "cyan", "label": "Cian" }, { "value": "yellow", "label": "Amarillo" }, { "value": "violet", "label": "Violeta" }
+        ] }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Portada: cabina arcade",
+      "blocks": [
+        { "type": "machine", "settings": { "color": "pink" } },
+        { "type": "machine", "settings": { "color": "cyan" } },
+        { "type": "machine", "settings": { "color": "yellow" } },
+        { "type": "machine", "settings": { "color": "violet" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

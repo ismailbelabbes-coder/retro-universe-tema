@@ -1,0 +1,5 @@
+Fuentes alojadas en el propio tema (sin llamadas a Google Fonts):
+- Jersey 10 (SIL Open Font License 1.1) - Sarah Cadigan-Fried
+- Press Start 2P (SIL Open Font License 1.1) - CodeMan38
+- Space Grotesk (SIL Open Font License 1.1) - Florian Karsten
+Origen: Google Fonts. Convertidas a WOFF2 sin modificar los glifos.

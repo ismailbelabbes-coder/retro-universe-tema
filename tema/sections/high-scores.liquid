@@ -1,0 +1,60 @@
+{% render 'section-style', section: section %}
+<section class="scores" aria-labelledby="scores-{{ section.id }}">
+  <div class="wrap">
+    <div class="screen">
+      <h2 class="scores__title px" id="scores-{{ section.id }}">{% render 'px', text: section.settings.heading %}</h2>
+      <ol class="board">
+        {%- for block in section.blocks -%}
+          {%- assign ranks = '1ST,2ND,3RD,4TH,5TH' | split: ',' -%}
+          <li style="--c:var(--{{ block.settings.color }})" {{ block.shopify_attributes }}>
+            <span class="board__rank" aria-hidden="true">{{ ranks[forloop.index0] }}</span>
+            <span class="board__main">
+              {%- assign n = block.settings.number | strip -%}
+              {%- assign n_num = n | plus: 0 | append: '' -%}
+              <span class="board__num"{% if n != blank and n_num == n %} data-count-to="{{ n }}" data-prefix="{{ block.settings.prefix | escape }}"{% endif %}>
+                {{- block.settings.prefix | escape }}{{ n | escape -}}
+              </span>
+              <span class="board__label">{{ block.settings.label | escape }}</span>
+            </span>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "High Scores",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "High scores" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "score",
+      "name": "Marcador",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "prefix", "label": "Prefijo", "default": "+" },
+        { "type": "text", "id": "number", "label": "Número", "default": "20", "info": "Solo cifras (sin puntos) para que cuente hacia arriba." },
+        { "type": "text", "id": "label", "label": "Descripción", "default": "años montando máquinas" },
+        { "type": "select", "id": "color", "label": "Color", "default": "pink", "options": [
+          { "value": "pink", "label": "Rosa" }, { "value": "cyan", "label": "Cian" }, { "value": "yellow", "label": "Amarillo" }, { "value": "violet", "label": "Violeta" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "High Scores",
+      "blocks": [
+        { "type": "score", "settings": { "prefix": "+", "number": "20", "label": "años montando máquinas", "color": "pink" } },
+        { "type": "score", "settings": { "prefix": "", "number": "9800", "label": "juegos en una sola máquina", "color": "cyan" } },
+        { "type": "score", "settings": { "prefix": "", "number": "3", "label": "años de garantía en cada compra", "color": "yellow" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

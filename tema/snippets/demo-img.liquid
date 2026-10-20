@@ -1,0 +1,8 @@
+{%- comment -%}
+  Imagen de demostración incluida en el tema. Solo se usa dentro del editor de temas
+  (request.design_mode) como valor por defecto visual; la tienda en producción no la muestra.
+  Parámetros: name (p. ej. 'bartop-ghost'), alt, width, height, class
+{%- endcomment -%}
+{%- if request.design_mode -%}
+  <img src="{{ 'demo-' | append: name | append: '.webp' | asset_url }}" alt="{{ alt | escape }}" width="{{ width | default: 900 }}" height="{{ height | default: 900 }}" class="{{ class }}" loading="lazy" decoding="async">
+{%- endif -%}

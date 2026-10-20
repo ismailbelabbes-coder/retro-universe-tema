@@ -1,0 +1,111 @@
+{% render 'section-style', section: section %}
+<section class="pinball" id="pinball" aria-labelledby="pinball-{{ section.id }}">
+  <div class="wrap">
+    <h2 class="h2 reveal" id="pinball-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+    {%- if section.settings.text != blank -%}<div class="lead rich">{{ section.settings.text }}</div>{%- endif -%}
+    <div class="pinball__grid" data-sizer>
+      <div>
+        <div class="sizer" role="tablist" aria-label="{{ section.settings.tabs_label | escape }}">
+          {%- for block in section.blocks -%}
+            <button class="size-btn" role="tab" type="button" id="tab-{{ block.id }}" aria-controls="pin-{{ block.id }}" aria-selected="{% if forloop.index == section.settings.default_tab %}true{% else %}false{% endif %}" {{ block.shopify_attributes }}>{% render 'px', text: block.settings.size %}<small>{% render 'px', text: block.settings.tag %}</small></button>
+          {%- endfor -%}
+        </div>
+        <div class="ruler" aria-hidden="true"><div class="ruler__track"></div><div class="ruler__fill" data-ruler></div></div>
+
+        {%- for block in section.blocks -%}
+          {%- assign prod = block.settings.product -%}
+          <div class="pin-panel" id="pin-{{ block.id }}" role="tabpanel" aria-labelledby="tab-{{ block.id }}"{% unless forloop.index == section.settings.default_tab %} hidden{% endunless %}>
+            <h3>{{ block.settings.title | default: prod.title | escape }}</h3>
+            {%- if block.settings.text != blank -%}<p class="d">{{ block.settings.text | escape }}</p>{%- endif -%}
+            <dl class="specs">
+              {%- for i in (1..3) -%}
+                {%- assign k_key = 'spec_' | append: i | append: '_label' -%}
+                {%- assign v_key = 'spec_' | append: i | append: '_value' -%}
+                {%- if block.settings[k_key] != blank -%}
+                  <div><dt>{{ block.settings[k_key] | escape }}</dt><dd>{{ block.settings[v_key] | escape }}</dd></div>
+                {%- endif -%}
+              {%- endfor -%}
+            </dl>
+            {%- if prod != blank -%}
+              <div class="pin-buy">
+                {% render 'price', product: prod %}
+                {%- if prod.available and prod.variants.size == 1 -%}
+                  {%- form 'product', prod, data-ajax-cart: 'true' -%}
+                    <input type="hidden" name="id" value="{{ prod.selected_or_first_available_variant.id }}">
+                    <button class="btn btn--cyan" type="submit" data-label="{{ 'products.add' | t }}">{{ 'products.add' | t }}</button>
+                  {%- endform -%}
+                {%- endif -%}
+                <a class="btn btn--ghost" href="{{ prod.url }}">{{ 'products.choose_options' | t }}</a>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+
+        {%- if section.settings.tech != blank -%}
+          {%- assign techs = section.settings.tech | split: ',' -%}
+          <ul class="pin-tech">{%- for t in techs -%}<li>{{ t | strip | escape }}</li>{%- endfor -%}</ul>
+        {%- endif -%}
+      </div>
+
+      <div class="pin-stage" aria-hidden="true">
+        {%- for block in section.blocks -%}
+          {%- assign prod = block.settings.product -%}
+          {%- assign image = block.settings.image | default: prod.featured_image -%}
+          <span data-pin class="{% if forloop.index == section.settings.default_tab %}on{% endif %}">
+            {%- if image != blank -%}
+              {% render 'img', image: image, alt: '', sizes: '(min-width: 900px) 45vw, 90vw', widths: '360, 540, 720, 960', class: 'pin-img' %}
+            {%- else -%}
+              {% render 'demo-img', name: 'pinball-185', alt: '', width: 600, height: 900 %}
+            {%- endif -%}
+          </span>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Selector de pinball",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Elige el tamaño de tu mesa" },
+    { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Pinballs virtuales optimizados para Visual Pinball X y Future Pinball, con opciones de solenoides, shaker y DOF para que cada bola se sienta de verdad.</p>" },
+    { "type": "text", "id": "tabs_label", "label": "Descripción accesible de las pestañas", "default": "Tamaño de pantalla" },
+    { "type": "range", "id": "default_tab", "label": "Pestaña inicial", "min": 1, "max": 4, "step": 1, "default": 2 },
+    { "type": "text", "id": "tech", "label": "Etiquetas técnicas (separadas por comas)", "default": "Visual Pinball X, Future Pinball, Solenoides, Shaker, DOF" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "size",
+      "name": "Tamaño",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "size", "label": "Tamaño", "default": "18,5\"" },
+        { "type": "text", "id": "tag", "label": "Etiqueta", "default": "Normal" },
+        { "type": "product", "id": "product", "label": "Producto", "info": "El precio y el botón de añadir salen de este producto." },
+        { "type": "text", "id": "title", "label": "Título (opcional)", "info": "Si está vacío usa el del producto." },
+        { "type": "textarea", "id": "text", "label": "Descripción corta" },
+        { "type": "image_picker", "id": "image", "label": "Imagen (opcional)", "info": "Si está vacía usa la del producto." },
+        { "type": "text", "id": "spec_1_label", "label": "Dato 1: nombre", "default": "Playfield" },
+        { "type": "text", "id": "spec_1_value", "label": "Dato 1: valor", "default": "18,5\"" },
+        { "type": "text", "id": "spec_2_label", "label": "Dato 2: nombre", "default": "Backglass" },
+        { "type": "text", "id": "spec_2_value", "label": "Dato 2: valor", "default": "15\"" },
+        { "type": "text", "id": "spec_3_label", "label": "Dato 3: nombre", "default": "PC" },
+        { "type": "text", "id": "spec_3_value", "label": "Dato 3: valor", "default": "Ryzen 5" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Selector de pinball",
+      "blocks": [
+        { "type": "size", "settings": { "size": "13,3\"", "tag": "Mini", "spec_1_label": "Pantalla", "spec_1_value": "13,3\" 1080p", "spec_2_label": "PC", "spec_2_value": "Intel N95", "spec_3_label": "Botones", "spec_3_value": "12 arcade" } },
+        { "type": "size", "settings": { "size": "18,5\"", "tag": "Normal" } },
+        { "type": "size", "settings": { "size": "27,5\"", "tag": "Pro", "spec_1_label": "Playfield", "spec_1_value": "27,5\"", "spec_2_label": "Backglass + DMD", "spec_2_value": "19\" + 7\"", "spec_3_label": "PC", "spec_3_value": "Ryzen 7" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

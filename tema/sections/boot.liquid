@@ -1,0 +1,35 @@
+{%- comment -%}
+  Pantalla Insert Coin. Se activa o desactiva en Ajustes del tema > Pantalla Insert Coin.
+  Nunca bloquea la tienda: sin JavaScript no se muestra, se salta con un toque, Enter o Escape,
+  y se cierra sola. El contenido de la página está siempre en el HTML.
+{%- endcomment -%}
+{%- if settings.boot_enabled -%}
+  <div class="boot" id="boot" role="dialog" aria-label="{{ 'boot.label' | t }}">
+    <div class="boot__screen">
+      <p class="boot__hi px" aria-hidden="true"><span>1UP <b>000000</b></span><span>HI-SCORE <b>{% render 'px', text: section.settings.hiscore %}</b></span></p>
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 600 | image_tag: class: 'boot__logo', widths: '300, 600', sizes: '300px', loading: 'eager', alt: shop.name }}
+      {%- else -%}
+        <img class="boot__logo" src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="315" height="168">
+      {%- endif -%}
+      <button class="boot__coin" id="insert-coin" type="button"><span class="blink">{% render 'px', text: section.settings.button %}</span></button>
+      <p class="boot__hint">{{ section.settings.hint }}</p>
+      <p class="boot__cred px" aria-hidden="true">Credit <span id="boot-cred">00</span></p>
+      <p class="boot__legal px" aria-hidden="true">&copy; {% render 'px', text: section.settings.legal %}</p>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Arranque Insert Coin",
+  "settings": [
+    { "type": "paragraph", "content": "Para activarla o desactivarla, y para elegir si recuerda que ya se saltó, ve a Ajustes del tema > Pantalla Insert Coin." },
+    { "type": "text", "id": "hiscore", "label": "Hi-score decorativo", "default": "009800" },
+    { "type": "text", "id": "button", "label": "Texto del botón", "default": "Insert coin" },
+    { "type": "text", "id": "hint", "label": "Texto de ayuda", "default": "Toca la pantalla o pulsa Enter para entrar" },
+    { "type": "text", "id": "legal", "label": "Línea legal", "default": "Retro Universe S.L. Mijas Costa" }
+  ],
+  "presets": [{ "name": "Arranque Insert Coin" }]
+}
+{% endschema %}

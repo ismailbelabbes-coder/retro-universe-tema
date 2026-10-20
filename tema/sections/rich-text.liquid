@@ -1,0 +1,26 @@
+{% render 'section-style', section: section %}
+<section class="rt align-{{ section.settings.align }}">
+  <div class="wrap">
+    {%- if section.settings.heading != blank -%}<h2 class="h2 h2--s">{{ section.settings.heading | escape }}</h2>{%- endif -%}
+    {%- if section.settings.text != blank -%}<div class="lead rich">{{ section.settings.text }}</div>{%- endif -%}
+    {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+      <div class="cta-row"{% if section.settings.align == 'center' %} style="justify-content:center"{% endif %}><a class="btn" href="{{ section.settings.button_link }}">{% render 'px', text: section.settings.button_label %}</a></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Texto",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "Título" },
+    { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Escribe aquí.</p>" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    { "type": "select", "id": "align", "label": "Alineación", "default": "left", "options": [ { "value": "left", "label": "Izquierda" }, { "value": "center", "label": "Centro" } ] },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ],
+  "presets": [{ "name": "Texto" }]
+}
+{% endschema %}

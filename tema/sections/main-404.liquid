@@ -1,0 +1,17 @@
+{% render 'section-style', section: section %}
+<div class="wrap e404">
+  <p class="big" aria-hidden="true">404</p>
+  <h1>{{ 'not_found.title' | t }}</h1>
+  <p class="lead" style="margin-inline:auto">{{ 'not_found.text' | t }}</p>
+  <div class="cta-row" style="justify-content:center"><a class="btn" href="{{ routes.all_products_collection_url }}">{{ 'not_found.button' | t }}</a></div>
+</div>
+
+{% schema %}
+{
+  "name": "Página 404",
+  "settings": [
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ]
+}
+{% endschema %}

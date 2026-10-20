@@ -1,0 +1,37 @@
+{%- if section.blocks.size > 0 -%}
+<div class="marquee" role="presentation">
+  {%- capture group -%}
+    <div class="marquee__group">
+      {%- for block in section.blocks -%}
+        <span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}<span class="pix">{% render 'pix', name: 'coin' %}</span></span>
+      {%- endfor -%}
+    </div>
+  {%- endcapture -%}
+  <div class="marquee__track">
+    {{ group }}
+    <div aria-hidden="true" style="display:contents">{{ group }}</div>
+  </div>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Marquesina",
+  "blocks": [
+    { "type": "item", "name": "Palabra", "settings": [ { "type": "text", "id": "text", "label": "Texto", "default": "Arcades" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Marquesina",
+      "blocks": [
+        { "type": "item", "settings": { "text": "Arcades" } },
+        { "type": "item", "settings": { "text": "Bartops" } },
+        { "type": "item", "settings": { "text": "Pinball virtual" } },
+        { "type": "item", "settings": { "text": "Pandora Box" } },
+        { "type": "item", "settings": { "text": "Consolas retro" } },
+        { "type": "item", "settings": { "text": "Envío desde España" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

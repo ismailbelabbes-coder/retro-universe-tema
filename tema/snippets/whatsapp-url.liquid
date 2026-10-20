@@ -1,0 +1,3 @@
+{%- comment -%} URL de WhatsApp. Parámetro opcional: message. Sin mensaje usa el de ajustes. {%- endcomment -%}
+{%- assign wa_msg = message | default: settings.whatsapp_message -%}
+https://wa.me/{{ settings.whatsapp_number | remove: '+' | remove: ' ' }}?text={{ wa_msg | url_encode }}

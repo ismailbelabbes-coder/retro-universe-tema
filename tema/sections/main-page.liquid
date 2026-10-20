@@ -1,0 +1,15 @@
+{% render 'section-style', section: section %}
+<div class="wrap page">
+  <h1>{{ page.title | escape }}</h1>
+  <div class="prose rich">{{ page.content }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "Página",
+  "settings": [
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+{%- comment -%}
+  Texto para etiquetas con Press Start 2P: esa fuente no tiene mayúsculas con tilde,
+  así que se quitan las tildes antes de que el CSS ponga el texto en mayúsculas.
+  Uso: {% render 'px', text: block.settings.label %}
+{%- endcomment -%}
+{%- liquid
+  assign t = text | strip_html
+  assign t = t | replace: 'á', 'a' | replace: 'é', 'e' | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'ú', 'u' | replace: 'ü', 'u'
+  assign t = t | replace: 'Á', 'A' | replace: 'É', 'E' | replace: 'Í', 'I' | replace: 'Ó', 'O' | replace: 'Ú', 'U' | replace: 'Ü', 'U'
+  assign t = t | replace: '¡', '' | replace: '¿', ''
+-%}
+{{- t | escape -}}

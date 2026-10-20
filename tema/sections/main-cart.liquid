@@ -1,0 +1,64 @@
+{% render 'section-style', section: section %}
+<div class="wrap cartp">
+  <h1>{{ 'cart.title' | t }}</h1>
+  {%- if cart.item_count == 0 -%}
+    <div class="cart-empty">
+      <span class="pix">{% render 'pix', name: 'ghost' %}</span>
+      <p>{{ 'cart.empty' | t }}</p>
+      <a class="btn" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" data-cart-form>
+      <ul class="lines" role="list">
+        {%- for item in cart.items -%}
+          <li class="line">
+            <a class="line__img" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+              {%- if item.image -%}{{ item.image | image_url: width: 240 | image_tag: width: 96, loading: 'lazy', alt: '' }}{%- endif -%}
+            </a>
+            <div>
+              <a class="line__name" href="{{ item.url }}">{{ item.product.title | escape }}</a>
+              {%- unless item.product.has_only_default_variant -%}<p class="line__opts">{{ item.variant.title | escape }}</p>{%- endunless -%}
+              <p class="line__opts">{{ item.final_price | money }}</p>
+              {%- for property in item.properties -%}
+                {%- unless property.last == blank or property.first contains '_' -%}<p class="line__opts">{{ property.first | escape }}: {{ property.last | escape }}</p>{%- endunless -%}
+              {%- endfor -%}
+            </div>
+            <div class="line__row">
+              <div class="qty">
+                <button type="button" data-qty-step="-1" aria-label="{{ 'products.decrease' | t }}">{% render 'icon', name: 'minus' %}</button>
+                <input type="number" name="updates[]" id="q-{{ item.key }}" value="{{ item.quantity }}" min="0" inputmode="numeric" aria-label="{{ 'products.quantity' | t }}: {{ item.product.title | escape }}">
+                <button type="button" data-qty-step="1" aria-label="{{ 'products.increase' | t }}">{% render 'icon', name: 'plus' %}</button>
+              </div>
+              <span class="line__total">{{ item.final_line_price | money }}</span>
+              <a class="line__del" href="{{ item.url_to_remove }}" aria-label="{{ 'cart.remove' | t: title: item.product.title }}">{% render 'icon', name: 'trash' %}</a>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="cart-sum">
+        <p class="tot"><span>{{ 'cart.subtotal' | t }}</span><strong>{{ cart.total_price | money }}</strong></p>
+        <p class="note">{{ 'cart.taxes_note' | t }}</p>
+        <button class="btn btn--ghost" type="submit" name="update">{{ 'cart.update' | t }}</button>
+        <button class="btn" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+        {%- if section.settings.show_whatsapp and settings.whatsapp_number != blank -%}
+          {%- assign cart_url_full = shop.url | append: routes.cart_url -%}
+          {%- assign cart_msg = 'cart.whatsapp_message' | t: url: cart_url_full -%}
+          <p class="note" style="margin-top:14px">{{ 'cart.whatsapp_help' | t }}</p>
+          <a class="btn btn--wa btn--full" href="{% render 'whatsapp-url', message: cart_msg %}" target="_blank" rel="noopener">{% render 'icon', name: 'whatsapp' %}WhatsApp</a>
+        {%- endif -%}
+      </div>
+    </form>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cesta",
+  "settings": [
+    { "type": "checkbox", "id": "show_whatsapp", "label": "Mostrar ayuda por WhatsApp (opción secundaria)", "default": true },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ]
+}
+{% endschema %}

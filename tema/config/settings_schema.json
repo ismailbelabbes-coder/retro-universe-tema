@@ -1,0 +1,108 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Retro Universe Arcade",
+    "theme_version": "1.0.0",
+    "theme_author": "Ismail Belabbes",
+    "theme_documentation_url": "https://retrouniverse.es",
+    "theme_support_url": "https://retrouniverse.es"
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      { "type": "header", "content": "Paleta arcade" },
+      { "type": "color", "id": "color_bg", "label": "Fondo", "default": "#0a0612" },
+      { "type": "color", "id": "color_text", "label": "Texto", "default": "#f4eeff" },
+      { "type": "color", "id": "color_pink", "label": "Rosa (acción principal)", "default": "#ff2e93" },
+      { "type": "color", "id": "color_cyan", "label": "Cian", "default": "#27f0ff" },
+      { "type": "color", "id": "color_yellow", "label": "Amarillo", "default": "#ffd23f" },
+      { "type": "color", "id": "color_violet", "label": "Violeta", "default": "#7a3cff" },
+      { "type": "paragraph", "content": "Los tonos de superficies, bordes y texto secundario se calculan solos a partir del fondo y del texto." }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      { "type": "paragraph", "content": "Las fuentes Jersey 10, Space Grotesk y Press Start 2P vienen incluidas en el tema. Press Start 2P no tiene mayúsculas con tilde: en etiquetas, botones y números el tema quita las tildes solo." },
+      { "type": "select", "id": "font_display", "label": "Titulares", "default": "jersey", "options": [
+        { "value": "jersey", "label": "Jersey 10 (incluida)" },
+        { "value": "body", "label": "Space Grotesk (incluida)" },
+        { "value": "system", "label": "Fuente del sistema" }
+      ] },
+      { "type": "select", "id": "font_body", "label": "Cuerpo de texto", "default": "grotesk", "options": [
+        { "value": "grotesk", "label": "Space Grotesk (incluida)" },
+        { "value": "system", "label": "Fuente del sistema" }
+      ] },
+      { "type": "range", "id": "base_size", "label": "Tamaño base del texto", "min": 15, "max": 20, "step": 1, "unit": "px", "default": 17 }
+    ]
+  },
+  {
+    "name": "Efectos arcade",
+    "settings": [
+      { "type": "checkbox", "id": "fx_scanlines", "label": "Líneas de pantalla CRT sobre la página", "default": true },
+      { "type": "checkbox", "id": "fx_vignette", "label": "Viñeta en los bordes", "default": true },
+      { "type": "checkbox", "id": "fx_motion", "label": "Animaciones (marquesina, fondo de estrellas, aparición de elementos)", "info": "Si la persona usa «reducir movimiento» en su dispositivo, siempre se ve la versión estática.", "default": true },
+      { "type": "checkbox", "id": "fx_xp", "label": "Barra de progreso de scroll bajo la cabecera", "default": true }
+    ]
+  },
+  {
+    "name": "Pantalla Insert Coin",
+    "settings": [
+      { "type": "paragraph", "content": "Pantalla de arranque de la portada. Nunca bloquea la tienda: se salta con un toque en cualquier sitio, con Enter o Escape, y se cierra sola pasados unos segundos." },
+      { "type": "checkbox", "id": "boot_enabled", "label": "Mostrar pantalla Insert Coin", "default": true },
+      { "type": "select", "id": "boot_remember", "label": "Recordar que ya se saltó", "default": "device", "options": [
+        { "value": "device", "label": "En este dispositivo (no vuelve a salir)" },
+        { "value": "session", "label": "Durante la visita (vuelve a salir otro día)" },
+        { "value": "never", "label": "No recordar" }
+      ] },
+      { "type": "range", "id": "boot_auto", "label": "Cierre automático", "min": 0, "max": 10, "step": 1, "unit": "s", "default": 5, "info": "0 = no se cierra sola." }
+    ]
+  },
+  {
+    "name": "Contacto y WhatsApp",
+    "settings": [
+      { "type": "text", "id": "whatsapp_number", "label": "Número de WhatsApp (con prefijo, sin + ni espacios)", "default": "34672835894" },
+      { "type": "text", "id": "whatsapp_message", "label": "Mensaje inicial de WhatsApp", "default": "¡Hola, Retro Universe! Vengo de vuestra web y quería preguntaros por una máquina." },
+      { "type": "text", "id": "contact_email", "label": "Correo de contacto", "default": "info@retrouniverse.es" },
+      { "type": "text", "id": "contact_address", "label": "Dirección", "default": "C/ Archidona, nave 30, Mijas Costa (Málaga)" },
+      { "type": "url", "id": "contact_map", "label": "Enlace al mapa" }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram (URL)" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook (URL)" },
+      { "type": "text", "id": "social_youtube", "label": "YouTube (URL)" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok (URL)" }
+    ]
+  },
+  {
+    "name": "Anuncio",
+    "settings": [
+      { "type": "checkbox", "id": "announcement_enabled", "label": "Mostrar barra de anuncio", "default": false },
+      { "type": "text", "id": "announcement_text", "label": "Texto" },
+      { "type": "url", "id": "announcement_link", "label": "Enlace" },
+      { "type": "select", "id": "announcement_color", "label": "Color", "default": "pink", "options": [
+        { "value": "pink", "label": "Rosa" }, { "value": "cyan", "label": "Cian" }, { "value": "yellow", "label": "Amarillo" }, { "value": "violet", "label": "Violeta" }
+      ] }
+    ]
+  },
+  {
+    "name": "Logotipo y SEO",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logotipo", "info": "Si está vacío se usa el logotipo incluido en el tema." },
+      { "type": "range", "id": "logo_height", "label": "Altura del logotipo en la cabecera", "min": 28, "max": 64, "step": 2, "unit": "px", "default": 40 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Cuadrado, mínimo 32 x 32 px." },
+      { "type": "image_picker", "id": "share_image", "label": "Imagen para compartir en redes", "info": "Se usa cuando la página no tiene imagen propia." },
+      { "type": "checkbox", "id": "title_append_shop", "label": "Añadir el nombre de la tienda al título de la página", "info": "Compruébalo contra los títulos del tema actual antes de publicar para no alterar el SEO.", "default": true }
+    ]
+  },
+  {
+    "name": "Pie de página legal",
+    "settings": [
+      { "type": "text", "id": "legal_text", "label": "Datos de la empresa", "default": "RETRO UNIVERSE S.L. CIF B56157308" },
+      { "type": "checkbox", "id": "show_payment_icons", "label": "Mostrar medios de pago aceptados", "default": false }
+    ]
+  }
+]

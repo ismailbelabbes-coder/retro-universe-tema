@@ -1,0 +1,97 @@
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__in">
+      <div>
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 300 | image_tag: height: 48, loading: 'lazy', alt: shop.name }}
+        {%- elsif settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 300 | image_tag: height: 48, loading: 'lazy', alt: shop.name }}
+        {%- else -%}
+          <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="315" height="168" loading="lazy">
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="rich" style="margin-top:14px">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        <nav {{ block.shopify_attributes }} aria-labelledby="foot-{{ block.id }}">
+          <h2 id="foot-{{ block.id }}">{% render 'px', text: block.settings.heading %}</h2>
+          {%- if block.settings.menu != blank -%}
+            <ul>
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </nav>
+      {%- endfor -%}
+
+      <div>
+        <h2>{{ 'footer.contact' | t }}</h2>
+        <ul>
+          {%- if settings.whatsapp_number != blank -%}
+            <li><a href="{% render 'whatsapp-url' %}" target="_blank" rel="noopener">WhatsApp</a></li>
+          {%- endif -%}
+          {%- if settings.contact_email != blank -%}
+            <li><a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></li>
+          {%- endif -%}
+          {%- if settings.contact_address != blank -%}
+            <li>{{ settings.contact_address }}</li>
+          {%- endif -%}
+        </ul>
+        {%- liquid
+          assign has_social = false
+          if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_youtube != blank or settings.social_tiktok != blank
+            assign has_social = true
+          endif
+        -%}
+        {%- if has_social -%}
+          <h2 style="margin-top:18px">{{ 'footer.follow' | t }}</h2>
+          <ul class="social" aria-label="{{ 'footer.social_aria' | t }}">
+            {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" rel="me noopener" target="_blank">Instagram</a></li>{%- endif -%}
+            {%- if settings.social_facebook != blank -%}<li><a href="{{ settings.social_facebook }}" rel="me noopener" target="_blank">Facebook</a></li>{%- endif -%}
+            {%- if settings.social_youtube != blank -%}<li><a href="{{ settings.social_youtube }}" rel="me noopener" target="_blank">YouTube</a></li>{%- endif -%}
+            {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}" rel="me noopener" target="_blank">TikTok</a></li>{%- endif -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="foot__legal">
+      {%- if settings.legal_text != blank -%}<span>{{ settings.legal_text }}</span>{%- endif -%}
+      {%- if section.settings.show_prices_note -%}<span>{{ 'footer.prices_note' | t }}</span>{%- endif -%}
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</span>
+      {%- for policy in shop.policies -%}
+        <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
+      {%- endfor -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logotipo del pie", "info": "Si está vacío usa el de la cabecera." },
+    { "type": "richtext", "id": "text", "label": "Texto bajo el logotipo", "default": "<p>Arcades, bartops, pinball virtual, Pandora Box y consolas retro. Mijas Costa, Málaga.</p>" },
+    { "type": "checkbox", "id": "show_prices_note", "label": "Mostrar «Todos los precios incluyen IVA»", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Columna de enlaces",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Título", "default": "Tienda" },
+        { "type": "link_list", "id": "menu", "label": "Menú" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "menu", "settings": { "heading": "Tienda", "menu": "footer" } }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,47 @@
+{%- comment -%}
+  Tarjeta de producto. Parámetros: product (obligatorio), index (para alternar color), eager (true en las primeras)
+{%- endcomment -%}
+{%- liquid
+  assign k = product.id | modulo: 4
+  assign multi = false
+  if product.variants.size > 1
+    assign multi = true
+  endif
+  assign on_sale = false
+  if product.compare_at_price > product.price and product.available
+    assign on_sale = true
+  endif
+-%}
+<article class="card k-{{ k }}">
+  <div class="card__media">
+    {%- unless product.available -%}
+      <span class="badge badge--out">{{ 'products.sold_out' | t }}</span>
+    {%- elsif on_sale -%}
+      <span class="badge">{{ 'products.sale' | t }}</span>
+    {%- endunless -%}
+    {%- if product.featured_image -%}
+      {%- if eager -%}
+        {% render 'img', image: product.featured_image, alt: product.title, sizes: '(min-width: 990px) 30vw, 48vw', widths: '240, 360, 540, 720', loading: 'eager' %}
+      {%- else -%}
+        {% render 'img', image: product.featured_image, alt: product.title, sizes: '(min-width: 990px) 30vw, 48vw', widths: '240, 360, 540, 720' %}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+    {%- endif -%}
+  </div>
+  <div class="card__body">
+    {%- if product.type != blank -%}<p class="card__cat">{{ product.type | escape }}</p>{%- endif -%}
+    <h3 class="card__name"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
+    <div class="card__buy">
+      {% render 'price', product: product %}
+      {%- if product.available and multi == false -%}
+        {%- form 'product', product, data-ajax-cart: 'true' -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <button class="btn-add" type="submit" data-label="{{ 'products.add' | t }}" aria-label="{{ 'products.add_to_cart' | t }}: {{ product.title | escape }}">{{ 'products.add' | t }}</button>
+        {%- endform -%}
+      {%- elsif product.available -%}
+        <a class="btn-add" href="{{ product.url }}" aria-label="{{ 'products.choose_options' | t }}: {{ product.title | escape }}">{{ 'products.choose_options' | t }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

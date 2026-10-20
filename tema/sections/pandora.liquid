@@ -1,0 +1,90 @@
+{% render 'section-style', section: section %}
+<section class="pandora" id="pandora" aria-labelledby="pandora-{{ section.id }}">
+  <div class="wrap pandora__grid">
+    <div class="pandora__visual">
+      {%- if section.settings.image != blank -%}
+        {% render 'img', image: section.settings.image, sizes: '(min-width: 900px) 50vw, 90vw', alt: section.settings.image_alt %}
+      {%- else -%}
+        {% render 'demo-img', name: 'pandora-premium', alt: '', width: 900, height: 600 %}
+      {%- endif -%}
+    </div>
+    <div>
+      <h2 class="h2 h2--s reveal" id="pandora-{{ section.id }}">
+        {%- assign n = section.settings.number | strip -%}
+        {%- assign n_num = n | plus: 0 | append: '' -%}
+        {%- if n != blank -%}<span class="big-num" aria-hidden="true"{% if n_num == n %} data-count-to="{{ n }}"{% endif %}>{{ n | escape }}</span><span class="sr">{{ n | escape }}</span>{%- endif %}
+        {{ section.settings.heading | escape }}
+      </h2>
+      {%- if section.settings.text != blank -%}<div class="lead rich">{{ section.settings.text }}</div>{%- endif -%}
+
+      {%- assign games = section.settings.games | split: ',' -%}
+      {%- if games.size > 0 and section.settings.games != blank -%}
+        <div class="games">
+          <div class="screen">
+            <p class="games__hint px" aria-hidden="true"><span>Select game</span><span>Press <b>Start</b></span></p>
+            <ul class="chips" aria-label="{{ section.settings.games_label | escape }}">
+              {%- for g in games -%}{%- assign gname = g | strip -%}<li class="chip">{% render 'px', text: gname %}</li>{%- endfor -%}
+              {%- if section.settings.more != blank -%}<li class="chip chip--more">{{ section.settings.more | escape }}</li>{%- endif -%}
+            </ul>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <ul class="feats">
+        {%- for block in section.blocks -%}
+          {%- assign dot = block.settings.color | prepend: 'var(--' | append: ')' -%}
+          <li {{ block.shopify_attributes }}><span class="pix">{% render 'pix', name: 'dot', color: dot %}</span>{{ block.settings.text | escape }}</li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="cta-row"><a class="btn btn--yellow" href="{{ section.settings.button_link | default: section.settings.collection.url | default: routes.collections_url }}">{% render 'px', text: section.settings.button_label %}</a></div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bloque Pandora",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen" },
+    { "type": "text", "id": "image_alt", "label": "Texto alternativo (si la imagen no tiene)", "default": "Pandora Box con dos joysticks, botones arcade y trackball" },
+    { "type": "text", "id": "number", "label": "Número grande", "default": "9800", "info": "Solo cifras para que cuente hacia arriba." },
+    { "type": "text", "id": "heading", "label": "Titular", "default": "juegos. Una sola máquina." },
+    { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>La Pandora Box mete décadas de recreativas en una consola para dos jugadores. La enchufas a la tele por HDMI y a jugar.</p>" },
+    { "type": "text", "id": "games_label", "label": "Descripción accesible de la lista", "default": "Algunos de los juegos incluidos" },
+    { "type": "textarea", "id": "games", "label": "Juegos (separados por comas)", "default": "Pac-Man, Street Fighter II, Metal Slug, Final Fight, Bubble Bobble, Donkey Kong, Galaga, Toki" },
+    { "type": "text", "id": "more", "label": "Última etiqueta", "default": "Y miles más" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Ver Pandora Box" },
+    { "type": "collection", "id": "collection", "label": "Colección del botón" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón (si no hay colección)" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Característica",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Texto", "default": "Guarda la partida y sigue otro día" },
+        { "type": "select", "id": "color", "label": "Color del punto", "default": "pink", "options": [
+          { "value": "pink", "label": "Rosa" }, { "value": "cyan", "label": "Cian" }, { "value": "yellow", "label": "Amarillo" }, { "value": "violet", "label": "Violeta" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bloque Pandora",
+      "blocks": [
+        { "type": "feature", "settings": { "text": "Guarda la partida y sigue otro día", "color": "pink" } },
+        { "type": "feature", "settings": { "text": "Busca cualquier juego por su nombre", "color": "cyan" } },
+        { "type": "feature", "settings": { "text": "Vídeo de cada juego antes de elegirlo", "color": "yellow" } },
+        { "type": "feature", "settings": { "text": "Filtro scanline para el look de tubo", "color": "violet" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

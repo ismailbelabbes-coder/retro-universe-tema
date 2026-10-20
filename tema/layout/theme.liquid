@@ -1,0 +1,161 @@
+<!doctype html>
+{%- comment -%}
+  Retro Universe Arcade · tema Online Store 2.0.
+  Estructura de buenas prácticas tomada de Dawn (Shopify, ver LICENSE-DAWN.md).
+  No quitar content_for_header ni content_for_layout: de ahí cargan Analytics, Google & YouTube, Merchant y píxeles.
+{%- endcomment -%}
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="{{ settings.color_bg }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 48, height: 48 }}">
+    {%- endif -%}
+
+    <title>
+      {{- page_title -}}
+      {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.page_n' | t: n: current_page }}{% endif -%}
+      {%- if settings.title_append_shop -%}{%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}{%- endif -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    {{ 'jersey-10.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: '' }}
+    {{ 'space-grotesk-400.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: '' }}
+
+    {%- liquid
+      assign c_bg = settings.color_bg
+      assign c_text = settings.color_text
+      assign c_pink = settings.color_pink
+      assign c_cyan = settings.color_cyan
+      assign c_yellow = settings.color_yellow
+      assign c_violet = settings.color_violet
+    -%}
+
+    <style>
+      @font-face { font-family: "Jersey 10"; src: url({{ 'jersey-10.woff2' | asset_url }}) format("woff2"); font-weight: 400; font-display: swap; }
+      @font-face { font-family: "Press Start 2P"; src: url({{ 'press-start-2p.woff2' | asset_url }}) format("woff2"); font-weight: 400; font-display: swap; }
+      @font-face { font-family: "Space Grotesk"; src: url({{ 'space-grotesk-400.woff2' | asset_url }}) format("woff2"); font-weight: 400; font-display: swap; }
+      @font-face { font-family: "Space Grotesk"; src: url({{ 'space-grotesk-500.woff2' | asset_url }}) format("woff2"); font-weight: 500; font-display: swap; }
+      @font-face { font-family: "Space Grotesk"; src: url({{ 'space-grotesk-700.woff2' | asset_url }}) format("woff2"); font-weight: 700; font-display: swap; }
+      :root {
+        --bg: {{ c_bg }};
+        --bg-2: {{ c_bg | color_lighten: 4 }};
+        --bg-3: {{ c_bg | color_lighten: 8 }};
+        --edge: {{ c_bg | color_lighten: 13 }};
+        --edge-2: {{ c_bg | color_lighten: 23 }};
+        --ink: {{ c_text }};
+        --ink-2: {{ c_text | color_darken: 17 }};
+        --ink-3: {{ c_text | color_darken: 33 }};
+        --pink: {{ c_pink }};
+        --cyan: {{ c_cyan }};
+        --yellow: {{ c_yellow }};
+        --violet: {{ c_violet }};
+        --violet-ink: {{ c_violet | color_lighten: 19 }};
+        --pink-deep: {{ c_pink | color_darken: 30 }};
+        --cyan-deep: {{ c_cyan | color_darken: 30 }};
+        --yellow-deep: {{ c_yellow | color_darken: 30 }};
+        --violet-deep: {{ c_violet | color_darken: 29 }};
+        {%- assign pairs = 'pink,cyan,yellow,violet' | split: ',' -%}
+        {%- for pair in pairs -%}
+          {%- liquid
+            case pair
+              when 'pink'
+                assign cc = c_pink
+              when 'cyan'
+                assign cc = c_cyan
+              when 'yellow'
+                assign cc = c_yellow
+              else
+                assign cc = c_violet
+            endcase
+            assign bright = cc | color_brightness
+            if bright > 140
+              assign on = c_bg | color_darken: 2
+            else
+              assign on = '#ffffff'
+            endif
+          -%}
+          --on-{{ pair }}: {{ on }};
+        {%- endfor -%}
+        --f-display: {% case settings.font_display %}{% when 'jersey' %}"Jersey 10", "Space Grotesk", system-ui, sans-serif{% when 'body' %}"Space Grotesk", system-ui, sans-serif{% else %}system-ui, sans-serif{% endcase %};
+        --f-body: {% if settings.font_body == 'grotesk' %}"Space Grotesk", {% endif %}system-ui, sans-serif;
+        --f-pixel: "Press Start 2P", ui-monospace, monospace;
+        --base: {{ settings.base_size }}px;
+        --logo-h: {{ settings.logo_height }}px;
+      }
+    </style>
+
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      try {
+        if (/[?&]skip/.test(location.search) || localStorage.getItem('ru-booted') || sessionStorage.getItem('ru-booted') || {{ request.design_mode | json }}) {
+          document.documentElement.classList.add('booted');
+        }
+      } catch (e) {}
+    </script>
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ request.page_type | handle }}{% if settings.boot_enabled and request.page_type == 'index' %} booting{% endif %}"
+    data-motion="{{ settings.fx_motion }}">
+    <a class="skip" href="#MainContent">{{ 'general.skip' | t }}</a>
+
+    {%- if settings.announcement_enabled and settings.announcement_text != blank -%}
+      <div class="announce announce--{{ settings.announcement_color }}">
+        <div class="wrap">
+          {%- if settings.announcement_link != blank -%}<a href="{{ settings.announcement_link }}">{%- endif -%}
+          <span class="px">{% render 'px', text: settings.announcement_text %}</span>
+          {%- if settings.announcement_link != blank -%}</a>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="main" tabindex="-1" data-template="{{ request.page_type }}">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    <div class="toasts" id="toasts" aria-live="polite"></div>
+
+    {%- if settings.fx_scanlines -%}<div class="fx fx-scan" aria-hidden="true"></div>{%- endif -%}
+    {%- if settings.fx_vignette -%}<div class="fx fx-vignette" aria-hidden="true"></div>{%- endif -%}
+
+    <script type="application/json" id="theme-config">
+      {
+        "cartUrl": {{ routes.cart_url | json }},
+        "cartAdd": {{ routes.cart_add_url | json }},
+        "cartJs": {{ routes.cart_url | append: '.js' | json }},
+        "locale": {{ request.locale.iso_code | json }},
+        "strings": {
+          "added": {{ 'products.added' | t | json }},
+          "toast": {{ 'products.added_toast' | t | json }},
+          "viewCart": {{ 'products.view_cart' | t | json }},
+          "soldOut": {{ 'products.sold_out' | t | json }},
+          "add": {{ 'products.add_to_cart' | t | json }},
+          "unavailable": {{ 'products.unavailable' | t | json }},
+          "bootReady": {{ 'boot.ready' | t | json }}
+        },
+        "boot": {
+          "remember": {{ settings.boot_remember | json }},
+          "auto": {{ settings.boot_auto | json }}
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+{% render 'section-style', section: section %}
+{%- liquid
+  assign active_n = 0
+  for f in collection.filters
+    if f.type == 'price_range'
+      if f.min_value.value != blank or f.max_value.value != blank
+        assign active_n = active_n | plus: 1
+      endif
+    else
+      assign active_n = active_n | plus: f.active_values.size
+    endif
+  endfor
+-%}
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="wrap">
+  <header class="coll-head">
+    <nav class="crumbs" aria-label="Migas de pan"><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a> / <a href="{{ routes.collections_url }}">{{ 'collections.title' | t }}</a></nav>
+    <h1 class="h2">{{ collection.title | escape }}</h1>
+    {%- if section.settings.show_description and collection.description != blank -%}
+      <div class="lead rich">{{ collection.description }}</div>
+    {%- endif -%}
+  </header>
+
+  <form class="toolbar" method="get" action="{{ collection.url }}" id="facet-form">
+    <p class="count" role="status">{{ 'products.results' | t: count: collection.products_count }}</p>
+    {%- if collection.sort_options.size > 0 -%}
+      <div>
+        <label class="sr" for="sort-by">{{ 'products.sort_by' | t }}</label>
+        <select class="field" id="sort-by" name="sort_by" data-autosubmit>
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name | escape }}</option>
+          {%- endfor -%}
+        </select>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.show_filters and collection.filters.size > 0 -%}
+      <details class="facets" style="flex-basis:100%;margin-top:0"{% if active_n > 0 %} open{% endif %}>
+        <summary class="btn btn--ghost">{{ 'products.filters' | t }}{% if active_n > 0 %} ({{ active_n }}){% endif %}</summary>
+        <div class="facets__body">
+          {%- for filter in collection.filters -%}
+            <fieldset>
+              <legend>{% render 'px', text: filter.label %}</legend>
+              {%- case filter.type -%}
+                {%- when 'price_range' -%}
+                  <div class="range">
+                    <div>
+                      <label class="lbl" for="p-min">{{ 'products.price_from' | t }}</label>
+                      <input class="field" id="p-min" type="number" min="0" name="{{ filter.min_value.param_name }}" inputmode="decimal"{% if filter.min_value.value != blank %} value="{{ filter.min_value.value | divided_by: 100.0 }}"{% endif %} placeholder="0">
+                    </div>
+                    <div>
+                      <label class="lbl" for="p-max">{{ 'products.price_to' | t }}</label>
+                      <input class="field" id="p-max" type="number" min="0" name="{{ filter.max_value.param_name }}" inputmode="decimal"{% if filter.max_value.value != blank %} value="{{ filter.max_value.value | divided_by: 100.0 }}"{% endif %} placeholder="{{ filter.range_max | divided_by: 100.0 | ceil }}">
+                    </div>
+                  </div>
+                {%- else -%}
+                  {%- for value in filter.values -%}
+                    <label class="chk"><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"{% if value.active %} checked{% endif %}{% if value.count == 0 and value.active == false %} disabled{% endif %}> {{ value.label | escape }} ({{ value.count }})</label>
+                  {%- endfor -%}
+              {%- endcase -%}
+            </fieldset>
+          {%- endfor -%}
+          <div>
+            <button class="btn" type="submit">{{ 'products.apply' | t }}</button>
+            {%- if active_n > 0 -%}<a class="btn btn--ghost" href="{{ collection.url }}">{{ 'products.clear' | t }}</a>{%- endif -%}
+          </div>
+        </div>
+      </details>
+    {%- endif -%}
+  </form>
+
+  {%- if collection.products.size > 0 -%}
+    <ul class="grid cols-{{ section.settings.columns }}" role="list">
+      {%- for product in collection.products -%}
+        {%- assign is_eager = false -%}{%- if forloop.index <= 2 -%}{%- assign is_eager = true -%}{%- endif -%}
+        <li>{% render 'card-product', product: product, eager: is_eager %}</li>
+      {%- endfor -%}
+    </ul>
+    {% render 'pagination', paginate: paginate %}
+  {%- else -%}
+    <p class="lead">{{ 'products.no_products' | t }}</p>
+  {%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Colección",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Productos por página", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "select", "id": "columns", "label": "Columnas en escritorio", "default": "3", "options": [ { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ] },
+    { "type": "checkbox", "id": "show_description", "label": "Mostrar descripción de la colección", "default": true },
+    { "type": "checkbox", "id": "show_filters", "label": "Mostrar filtros", "info": "Se configuran en Shopify > Contenido > Menús > Filtros de búsqueda y descubrimiento.", "default": true },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ]
+}
+{% endschema %}

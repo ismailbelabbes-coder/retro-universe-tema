@@ -1,0 +1,44 @@
+{% render 'section-style', section: section %}
+<section class="cont" id="contacto" aria-labelledby="cont-{{ section.id }}">
+  <div class="wrap">
+    <div class="screen">
+      <h2 class="cont__q" id="cont-{{ section.id }}">{% render 'px', text: section.settings.heading %}</h2>
+      {%- if section.settings.show_countdown -%}<span class="cont__n" data-countdown aria-hidden="true">9</span>{%- endif -%}
+      {%- if section.settings.text != blank -%}<p class="t">{{ section.settings.text | escape }}</p>{%- endif -%}
+      <div class="cont__cta">
+        {%- if settings.whatsapp_number != blank -%}
+          <a class="btn btn--wa" href="{% render 'whatsapp-url' %}" target="_blank" rel="noopener">{% render 'icon', name: 'whatsapp' %}WhatsApp<span class="sr"> ({{ 'general.ask_whatsapp' | t }})</span></a>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <a class="btn" href="{{ section.settings.button_link }}">{% render 'px', text: section.settings.button_label %}</a>
+        {%- endif -%}
+      </div>
+      <div class="cont__info">
+        {%- if settings.contact_email != blank -%}
+          <a href="mailto:{{ settings.contact_email }}">{% render 'icon', name: 'mail' %}{{ settings.contact_email }}</a>
+        {%- endif -%}
+        {%- if settings.contact_address != blank -%}
+          {%- capture map_url -%}{%- if settings.contact_map != blank -%}{{ settings.contact_map }}{%- else -%}https://maps.google.com/?q={{ settings.contact_address | url_encode }}{%- endif -%}{%- endcapture -%}
+          <a href="{{ map_url }}" target="_blank" rel="noopener">{% render 'icon', name: 'pin' %}{{ settings.contact_address | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contacto «Continue?»",
+  "settings": [
+    { "type": "paragraph", "content": "El WhatsApp, el correo y la dirección se editan en Ajustes del tema > Contacto y WhatsApp." },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Continue?" },
+    { "type": "checkbox", "id": "show_countdown", "label": "Mostrar la cuenta atrás decorativa", "default": true },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "¿Dudas con el tamaño, los juegos o el envío? Escríbenos y te ayudamos a elegir tu máquina." },
+    { "type": "text", "id": "button_label", "label": "Botón extra: texto" },
+    { "type": "url", "id": "button_link", "label": "Botón extra: enlace" },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ],
+  "presets": [{ "name": "Contacto «Continue?»" }]
+}
+{% endschema %}

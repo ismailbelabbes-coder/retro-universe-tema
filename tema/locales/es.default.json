@@ -1,0 +1,134 @@
+{
+  "general": {
+    "skip": "Saltar al contenido",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "search": "Buscar",
+    "cart": "Cesta",
+    "cart_items": "Cesta, {{ count }} artículos",
+    "home": "Inicio",
+    "view_all": "Ver todo",
+    "back_to_shop": "Volver a la tienda",
+    "pagination": "Paginación",
+    "page_n": "Página {{ n }}",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "page_of": "Página {{ current }} de {{ total }}",
+    "whatsapp": "WhatsApp",
+    "email": "Correo",
+    "ask_whatsapp": "Preguntar por WhatsApp",
+    "main_menu": "Menú principal",
+    "footer_menu": "Menú del pie"
+  },
+  "products": {
+    "add": "+ Añadir",
+    "added": "¡Añadido!",
+    "add_to_cart": "Añadir a la cesta",
+    "sold_out": "Agotado",
+    "choose_options": "Ver opciones",
+    "sale": "Oferta",
+    "from": "desde",
+    "price_regular": "Precio habitual",
+    "price_sale": "Precio de oferta",
+    "unavailable": "No disponible",
+    "quantity": "Cantidad",
+    "decrease": "Quitar una unidad",
+    "increase": "Añadir una unidad",
+    "added_toast": "Añadido a la cesta",
+    "view_cart": "Ver cesta",
+    "gallery": "Galería de imágenes",
+    "image_n": "Imagen {{ n }} de {{ total }}",
+    "ask_product": "Preguntar por WhatsApp",
+    "ask_message": "¡Hola, Retro Universe! Quería preguntaros por: {{ title }} ({{ url }})",
+    "models": {
+      "one": "{{ count }} modelo",
+      "other": "{{ count }} modelos"
+    },
+    "no_products": "No hay productos en esta colección todavía.",
+    "sort_by": "Ordenar por",
+    "filters": "Filtros",
+    "apply": "Aplicar",
+    "clear": "Quitar filtros",
+    "in_stock": "Disponibilidad",
+    "available": "En stock",
+    "price": "Precio",
+    "price_from": "Desde",
+    "price_to": "Hasta",
+    "results": {
+      "one": "{{ count }} resultado",
+      "other": "{{ count }} resultados"
+    }
+  },
+  "cart": {
+    "title": "Tu cesta",
+    "empty": "La cesta está vacía. Inserta una máquina para empezar la partida.",
+    "continue": "Seguir comprando",
+    "product": "Producto",
+    "price": "Precio",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "taxes_note": "Impuestos y gastos de envío se calculan al finalizar la compra.",
+    "checkout": "Finalizar compra",
+    "update": "Actualizar cesta",
+    "remove": "Eliminar {{ title }}",
+    "note": "Notas para el pedido",
+    "whatsapp_help": "¿Prefieres que te ayudemos antes de pagar? Escríbenos por WhatsApp.",
+    "whatsapp_message": "¡Hola, Retro Universe! Tengo dudas sobre mi cesta ({{ url }})."
+  },
+  "search": {
+    "title": "Buscar",
+    "placeholder": "Busca una máquina, un juego…",
+    "submit": "Buscar",
+    "results_for": "Resultados para «{{ terms }}»",
+    "no_results": "No hemos encontrado nada para «{{ terms }}». Prueba con otra palabra o mira las colecciones.",
+    "label": "Buscar en la tienda"
+  },
+  "blog": {
+    "read_more": "Leer más",
+    "published": "Publicado el {{ date }}",
+    "by": "Por {{ author }}",
+    "back": "Volver al blog",
+    "empty": "Todavía no hay entradas.",
+    "tags": "Etiquetas"
+  },
+  "collections": {
+    "title": "Colecciones",
+    "empty": "Todavía no hay colecciones."
+  },
+  "not_found": {
+    "title": "Game over",
+    "text": "Esta página no existe o ha cambiado de sitio.",
+    "button": "Volver a la tienda"
+  },
+  "footer": {
+    "follow": "Síguenos",
+    "contact": "Contacto",
+    "prices_note": "Todos los precios incluyen IVA.",
+    "social_aria": "Redes sociales"
+  },
+  "boot": {
+    "label": "Pantalla de inicio de Retro Universe",
+    "skip": "Entrar a la tienda",
+    "skip_hint": "Toca la pantalla, pulsa Enter o espera unos segundos para entrar",
+    "ready": "READY!"
+  },
+  "hero": {
+    "prev": "Máquina anterior",
+    "next": "Máquina siguiente",
+    "joystick": "Joystick: siguiente máquina",
+    "see": "Ver {{ title }} en la tienda",
+    "group": "Recreativa interactiva",
+    "from": "desde"
+  },
+  "password": {
+    "title": "Tienda en preparación",
+    "text": "Volveremos muy pronto."
+  },
+  "gift_card": {
+    "title": "Tarjeta regalo",
+    "balance": "Saldo",
+    "code": "Código",
+    "copy": "Copiar código",
+    "use": "Usar en la tienda"
+  }
+}

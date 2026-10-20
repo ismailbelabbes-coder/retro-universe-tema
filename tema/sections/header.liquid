@@ -1,0 +1,80 @@
+{%- liquid
+  assign logo = settings.logo
+  assign logo_w = 0
+  if logo != blank
+    assign logo_w = logo.aspect_ratio | times: settings.logo_height | round
+  endif
+  assign menu = section.settings.menu
+-%}
+<header class="hud" id="hud">
+  <div class="wrap hud__in">
+    <a class="hud__logo" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+      {%- if logo != blank -%}
+        {{ logo | image_url: width: 400 | image_tag: height: settings.logo_height, width: logo_w, alt: shop.name, loading: 'eager', fetchpriority: 'high' }}
+      {%- else -%}
+        <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name | escape }}" width="315" height="168" loading="eager">
+      {%- endif -%}
+    </a>
+
+    <nav class="hud__nav" aria-label="{{ 'general.main_menu' | t }}">
+      <ul>
+        {%- for link in menu.links -%}
+          <li>
+            <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+            {%- if link.links.size > 0 -%}
+              <ul class="sub">
+                {%- for child in link.links -%}
+                  <li><a href="{{ child.url }}"{% if child.current %} aria-current="page"{% endif %}>{{ child.title | escape }}</a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="hud__right">
+      <a class="icon-btn" href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}">{% render 'icon', name: 'search' %}</a>
+      <a class="cart-link" href="{{ routes.cart_url }}" data-cart-link aria-label="{{ 'general.cart_items' | t: count: cart.item_count }}">
+        {% render 'icon', name: 'cart' %}
+        <span class="px" aria-hidden="true"><span class="lbl">{{ 'general.cart' | t }} </span><b data-count>{% if cart.item_count < 10 %}0{% endif %}{{ cart.item_count }}</b></span>
+      </a>
+      <details class="menu">
+        <summary class="icon-btn" aria-label="{{ 'general.menu' | t }}">{% render 'icon', name: 'menu' %}</summary>
+        <div class="menu__panel">
+          <ul class="menu__list">
+            {%- for link in menu.links -%}
+              <li>
+                <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+                {%- if link.links.size > 0 -%}
+                  <ul class="menu__sub">
+                    {%- for child in link.links -%}
+                      <li><a href="{{ child.url }}">{{ child.title | escape }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+          <form class="search" action="{{ routes.search_url }}" method="get" role="search">
+            <label class="sr" for="menu-q">{{ 'search.label' | t }}</label>
+            <input class="field" id="menu-q" type="search" name="q" placeholder="{{ 'search.placeholder' | t }}" autocomplete="off">
+            <button class="btn" type="submit">{{ 'search.submit' | t }}</button>
+          </form>
+        </div>
+      </details>
+    </div>
+  </div>
+  {%- if settings.fx_xp -%}
+    <div class="hud__xp" aria-hidden="true"><i data-xp></i></div>
+  {%- endif -%}
+</header>
+
+{% schema %}
+{
+  "name": "Cabecera",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menú principal", "default": "main-menu", "info": "Pon aquí las colecciones principales para que se vean siempre." }
+  ]
+}
+{% endschema %}

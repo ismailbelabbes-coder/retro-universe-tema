@@ -1,0 +1,48 @@
+{% render 'section-style', section: section %}
+{%- style -%}
+  #shopify-section-{{ section.id }} .banner { --banner-h: {{ section.settings.height }}px; --ov: {{ section.settings.overlay | divided_by: 100.0 }}; }
+{%- endstyle -%}
+<section class="banner banner--{{ section.settings.align }}" aria-labelledby="banner-{{ section.id }}">
+  <div class="banner__bg" aria-hidden="true">
+    {%- if section.settings.image != blank -%}
+      {% render 'img', image: section.settings.image, sizes: '100vw', widths: '540, 720, 960, 1200, 1500, 2000', alt: '' %}
+    {%- else -%}
+      {% render 'demo-img', name: 'bartop-ghost-xl', alt: '', width: 1600, height: 1000 %}
+    {%- endif -%}
+  </div>
+  <div class="wrap">
+    <div class="banner__box">
+      {%- if section.settings.kicker != blank -%}<p class="px" style="color:var(--yellow);font-size:.7rem">{% render 'px', text: section.settings.kicker %}</p>{%- endif -%}
+      <h2 class="h2 h2--s" id="banner-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}<div class="lead rich">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <div class="cta-row" {% if section.settings.align == 'center' %}style="justify-content:center"{% endif %}>
+          <a class="btn btn--{{ section.settings.button_color }}" href="{{ section.settings.button_link | default: routes.collections_url }}">{% render 'px', text: section.settings.button_label %}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen de fondo" },
+    { "type": "range", "id": "overlay", "label": "Oscurecer la imagen", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 55 },
+    { "type": "range", "id": "height", "label": "Altura mínima", "min": 240, "max": 800, "step": 20, "unit": "px", "default": 420 },
+    { "type": "text", "id": "kicker", "label": "Etiqueta pequeña" },
+    { "type": "text", "id": "heading", "label": "Titular", "default": "Tu sala de juegos, lista para jugar" },
+    { "type": "richtext", "id": "text", "label": "Texto" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Ver máquinas" },
+    { "type": "url", "id": "button_link", "label": "Enlace del botón" },
+    { "type": "select", "id": "button_color", "label": "Color del botón", "default": "yellow", "options": [
+      { "value": "cyan", "label": "Cian" }, { "value": "yellow", "label": "Amarillo" }, { "value": "violet", "label": "Violeta" }, { "value": "ghost", "label": "Neutro" }
+    ] },
+    { "type": "select", "id": "align", "label": "Alineación", "default": "left", "options": [ { "value": "left", "label": "Izquierda" }, { "value": "center", "label": "Centro" } ] },
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ],
+  "presets": [{ "name": "Banner" }]
+}
+{% endschema %}

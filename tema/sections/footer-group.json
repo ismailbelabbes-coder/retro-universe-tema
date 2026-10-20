@@ -1,0 +1,18 @@
+{
+  "name": "Pie de página",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "menu_1": { "type": "menu", "settings": { "heading": "Tienda", "menu": "footer" } }
+      },
+      "block_order": ["menu_1"],
+      "settings": {
+        "text": "<p>Arcades, bartops, pinball virtual, Pandora Box y consolas retro. Mijas Costa, Málaga.</p>",
+        "show_prices_note": true
+      }
+    }
+  },
+  "order": ["footer"]
+}
