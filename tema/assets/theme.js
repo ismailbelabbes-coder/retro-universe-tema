@@ -23,6 +23,32 @@
     setTimeout(() => t.remove(), 3100);
   }
 
+  /* ---------- Plantillas de píxel-art (moneda, fantasma...) ---------- */
+  const sprite = name => {
+    const t = $(`#sprites [data-sprite="${name}"]`);
+    return t ? t.firstElementChild.cloneNode(true) : null;
+  };
+
+  /* moneda que vuela hacia la cesta (solo transform) */
+  function flyCoin(from) {
+    if (!motionOn || !from) return;
+    const to = $$('[data-cart-link]').find(el => el.offsetParent !== null);
+    const coin = sprite('coin');
+    if (!to || !coin) return;
+    const a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+    const x0 = a.left + a.width / 2 - 11, y0 = a.top + a.height / 2 - 11, x1 = b.left + b.width / 2 - 11, y1 = b.top + b.height / 2 - 11;
+    const outer = document.createElement('div'); outer.className = 'fly'; outer.setAttribute('aria-hidden', 'true');
+    const inner = document.createElement('div'); inner.style.cssText = 'width:100%;height:100%'; inner.append(coin); outer.append(inner);
+    document.body.append(outer);
+    const lift = Math.min(160, Math.abs(y1 - y0) * .5 + 80);
+    outer.animate([{ transform: `translate(${x0}px,0)` }, { transform: `translate(${x1}px,0)` }], { duration: 650, easing: 'cubic-bezier(.45,0,.55,1)', fill: 'forwards' });
+    inner.animate([
+      { transform: `translateY(${y0}px) rotateY(0)` },
+      { transform: `translateY(${Math.min(y0, y1) - lift}px) rotateY(540deg)`, offset: .45, easing: 'cubic-bezier(.2,0,.6,1)' },
+      { transform: `translateY(${y1}px) rotateY(1080deg) scale(.6)` }
+    ], { duration: 650, easing: 'cubic-bezier(.3,0,.7,1)', fill: 'forwards' }).onfinish = () => outer.remove();
+  }
+
   /* ---------- Cesta: contador y añadir sin recargar ---------- */
   function setCount(n) {
     $$('[data-count]').forEach(el => { el.textContent = String(n).padStart(2, '0'); });
@@ -42,7 +68,8 @@
       if (!res.ok) throw new Error('add');
       const item = await res.json();
       const cart = await (await fetch(cfg.cartJs, { headers: { Accept: 'application/json' } })).json();
-      setCount(cart.item_count);
+      flyCoin(btn);
+      setTimeout(() => setCount(cart.item_count), motionOn ? 650 : 0);
       toast(S.toast, item.product_title, cfg.cartUrl, S.viewCart);
       if (btn) {
         btn.classList.add('is-added'); btn.textContent = S.added;
@@ -110,6 +137,20 @@
     $$('.reveal').forEach(el => el.classList.add('is-in'));
   }
 
+  /* ---------- Cartuchos que caen al entrar en pantalla (solo los que están bajo el pliegue) ---------- */
+  if (motionOn && 'IntersectionObserver' in window) {
+    const cio = new IntersectionObserver(es => {
+      es.filter(e => e.isIntersecting).forEach((e, k) => {
+        e.target.style.setProperty('--i', k);
+        e.target.classList.replace('pre', 'in');
+        cio.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    $$('.card').forEach(c => {
+      if (c.getBoundingClientRect().top > innerHeight * .92) { c.classList.add('pre'); cio.observe(c); }
+    });
+  }
+
   /* ---------- Selector de tamaño (pinball) ---------- */
   $$('[data-sizer]').forEach(box => {
     const tabs = $$('[role="tab"]', box), panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
@@ -174,8 +215,16 @@
       document.body.classList.remove('booting');
       root.classList.add('is-live');
       if (!motionOn) { boot.remove(); root.classList.add('booted'); return; }
-      boot.classList.add('is-leaving');
-      setTimeout(() => { boot.remove(); root.classList.add('booted'); }, 320);
+      const main = $('#MainContent');
+      boot.animate([{ transform: 'scale(1)', opacity: 1 }, { transform: 'scale(1.02, .006)', opacity: 1 }, { transform: 'scale(0, .006)', opacity: 0 }],
+        { duration: 420, easing: 'cubic-bezier(.7,0,.84,0)', fill: 'forwards' }).onfinish = () => {
+        boot.remove(); root.classList.add('booted');
+        const flash = document.createElement('div'); flash.className = 'crt-flash'; flash.setAttribute('aria-hidden', 'true');
+        document.body.append(flash);
+        flash.animate([{ transform: 'scaleX(0)', opacity: 1 }, { transform: 'scaleX(1)', opacity: 1, offset: .35 }, { transform: 'scaleX(1) scaleY(260)', opacity: 0 }],
+          { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)' }).onfinish = () => flash.remove();
+        if (main) main.animate([{ transform: 'scaleY(.02)', opacity: .2 }, { transform: 'scaleY(1)', opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)' });
+      };
     };
     const coin = $('#insert-coin');
     const start = () => {
@@ -194,5 +243,30 @@
   } else {
     document.body.classList.remove('booting');
     root.classList.add('is-live');
+  }
+
+  /* ---------- Sprites que cruzan la pantalla (decorativo, solo portada) ---------- */
+  if (motionOn && document.body.classList.contains('template-index')) {
+    const kinds = [['coin', 'coin', 'coin', 'ghost'], ['bolt'], ['ghost'], ['star']];
+    let n = 0;
+    const spawn = () => {
+      if (document.hidden || !root.classList.contains('is-live')) return;
+      const kind = kinds[n++ % kinds.length];
+      const wrap = document.createElement('div');
+      wrap.className = 'sprite'; wrap.setAttribute('aria-hidden', 'true');
+      wrap.style.gap = kind.length > 1 ? '22px' : '0';
+      kind.forEach((name, k) => {
+        const el = sprite(name); if (!el) return;
+        if (kind.length > 1 && k < kind.length - 1) el.classList.add('sm');
+        el.style.display = 'block'; wrap.append(el);
+      });
+      document.body.append(wrap);
+      const ltr = n % 2 === 0, y = 90 + Math.random() * innerHeight * .55, w = 260, flip = ltr ? '' : ' scaleX(-1)';
+      const from = ltr ? -w : innerWidth + 40, to = ltr ? innerWidth + 40 : -w;
+      wrap.animate([{ transform: `translate(${from}px, ${y}px)${flip}` }, { transform: `translate(${to}px, ${y + (Math.random() * 60 - 30)}px)${flip}` }],
+        { duration: 7000 + Math.random() * 3000, easing: 'linear' }).onfinish = () => wrap.remove();
+    };
+    setTimeout(spawn, 2600);
+    setInterval(spawn, 11000);
   }
 })();

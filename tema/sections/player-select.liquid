@@ -33,6 +33,7 @@
               {% render 'demo-img', name: 'bartop-ghost', alt: '' %}
             {%- endif -%}
           </span>
+          <span class="corners" aria-hidden="true"></span>
           <span class="player__name">{{ title | escape }}</span>
           <span class="player__meta">
             {%- if target != blank -%}<span>{{ 'products.models' | t: count: target.products_count }}</span>{%- endif -%}

@@ -88,5 +88,6 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 ## Notas para quien siga desarrollando
 
 - Movimiento solo con `transform` y `opacity`. Con `prefers-reduced-motion` o con la casilla de animaciones desactivada se ve una versión estática completa.
-- Faltan por diseño, para no sobrecargar el JS: sonido 8-bit, cursor de píxel, código Konami, sprites que cruzan la pantalla, predicción de búsqueda, recomendaciones de producto y planes de suscripción (selling plans).
+- Animaciones de la demo incluidas (solo `transform` y `opacity`, desactivables con la casilla de Efectos y con «reducir movimiento»): fondo espacial con planeta, anillo, luna y estrella fugaz; estática y rollo al cambiar de máquina en la pantalla CRT; apagado y encendido CRT al saltar Insert Coin; cartuchos que caen en las tarjetas; moneda que vuela a la cesta; esquinas parpadeantes en el selector de jugador; sprites que cruzan la portada.
+- Faltan por diseño: sonido 8-bit, cursor de píxel, código Konami, disolución de píxeles al pasar el ratón (usa máscaras, no solo transform/opacity), predicción de búsqueda, recomendaciones de producto y planes de suscripción (selling plans).
 - Los textos de la tienda están en `locales/es.default.json`. Los textos de los esquemas del editor están escritos en español directamente.

@@ -149,6 +149,12 @@
     {% sections 'footer-group' %}
 
     <div class="toasts" id="toasts" aria-live="polite"></div>
+    <template id="sprites" hidden>
+      <i data-sprite="coin">{% render 'pix', name: 'coin' %}</i>
+      <i data-sprite="ghost">{% render 'pix', name: 'ghost' %}</i>
+      <i data-sprite="bolt">{% render 'pix', name: 'bolt' %}</i>
+      <i data-sprite="star">{% render 'pix', name: 'star' %}</i>
+    </template>
 
     {%- if settings.fx_scanlines -%}<div class="fx fx-scan" aria-hidden="true"></div>{%- endif -%}
     {%- if settings.fx_vignette -%}<div class="fx fx-vignette" aria-hidden="true"></div>{%- endif -%}
