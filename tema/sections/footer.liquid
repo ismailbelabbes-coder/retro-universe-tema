@@ -62,6 +62,11 @@
       {%- if settings.legal_text != blank -%}<span>{{ settings.legal_text }}</span>{%- endif -%}
       {%- if section.settings.show_prices_note -%}<span>{{ 'footer.prices_note' | t }}</span>{%- endif -%}
       <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</span>
+      {%- if settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+        <ul class="social" aria-label="{{ 'general.payment_methods' | t }}" style="flex-basis:100%">
+          {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'pay-icon' }}</li>{%- endfor -%}
+        </ul>
+      {%- endif -%}
       {%- for policy in shop.policies -%}
         <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
       {%- endfor -%}

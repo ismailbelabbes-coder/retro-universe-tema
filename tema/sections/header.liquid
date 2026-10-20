@@ -35,6 +35,9 @@
 
     <div class="hud__right">
       <a class="icon-btn" href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}">{% render 'icon', name: 'search' %}</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-btn hud__account" href="{{ routes.account_url }}" aria-label="{{ 'general.account' | t }}">{% render 'icon', name: 'user' %}</a>
+      {%- endif -%}
       <a class="cart-link" href="{{ routes.cart_url }}" data-cart-link aria-label="{{ 'general.cart_items' | t: count: cart.item_count }}">
         {% render 'icon', name: 'cart' %}
         <span class="px" aria-hidden="true"><span class="lbl">{{ 'general.cart' | t }} </span><b data-count>{% if cart.item_count < 10 %}0{% endif %}{{ cart.item_count }}</b></span>

@@ -555,3 +555,6 @@ body[data-motion="false"] .reveal,.js body[data-motion="false"] .reveal{opacity:
   .js .reveal{opacity:1!important; transform:none!important}
   .is-live .hero [data-in],.is-live .cab{opacity:1; transform:none}
 }
+
+.pay-icon{height:24px; width:auto}
+@media (max-width:989px){.hud__account{display:none}}

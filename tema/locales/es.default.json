@@ -4,6 +4,8 @@
     "menu": "Menú",
     "close": "Cerrar",
     "search": "Buscar",
+    "account": "Mi cuenta",
+    "payment_methods": "Medios de pago aceptados",
     "cart": "Cesta",
     "cart_items": "Cesta, {{ count }} artículos",
     "home": "Inicio",
