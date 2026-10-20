@@ -80,8 +80,8 @@
   {
     "name": "Anuncio",
     "settings": [
-      { "type": "checkbox", "id": "announcement_enabled", "label": "Mostrar barra de anuncio", "default": false },
-      { "type": "text", "id": "announcement_text", "label": "Texto" },
+      { "type": "checkbox", "id": "announcement_enabled", "label": "Mostrar barra de anuncio", "default": true },
+      { "type": "text", "id": "announcement_text", "label": "Texto", "default": "Envío gratuito a partir de 30 € para España (solo Península) y Portugal" },
       { "type": "url", "id": "announcement_link", "label": "Enlace" },
       { "type": "select", "id": "announcement_color", "label": "Color", "default": "pink", "options": [
         { "value": "pink", "label": "Rosa" }, { "value": "cyan", "label": "Cian" }, { "value": "yellow", "label": "Amarillo" }, { "value": "violet", "label": "Violeta" }

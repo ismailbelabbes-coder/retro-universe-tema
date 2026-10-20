@@ -558,3 +558,5 @@ body[data-motion="false"] .reveal,.js body[data-motion="false"] .reveal{opacity:
 
 .pay-icon{height:24px; width:auto}
 @media (max-width:989px){.hud__account{display:none}}
+.card__name a,.line__name{display:-webkit-box; -webkit-line-clamp:3; line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; overflow-wrap:anywhere}
+.line__name{-webkit-line-clamp:4; line-clamp:4}

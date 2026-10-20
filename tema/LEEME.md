@@ -77,6 +77,14 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 - [ ] Google Merchant Center: Productos > Diagnósticos, sin nuevos avisos. En Search Console, inspecciona la portada y un producto y pide indexación.
 - [ ] Una semana después: Search Console (cobertura y errores 404), posiciones y tráfico frente a la semana anterior, y que las conversiones de Google Ads siguen registrándose.
 
+## Lo que he visto en la tienda actual (retrouniverse.es)
+
+- Usa el tema **Horizon** de Shopify. Las colecciones son `arcade-recreativas`, `pinball-virtual`, `pandora-box`, `lamparas-backglass-rgb`, `consolas-portatiles` y `consolas-stick`. La portada del tema las trae como valor por defecto (por handle); si una no existe en la tienda, el editor la deja vacía.
+- **Apps que inyectan código:** botón flotante de WhatsApp (Webux) y traducción (Transtore). Son extensiones de aplicación: al activar el tema nuevo hay que habilitarlas en el editor de temas, en «Embeds de aplicaciones» (icono lateral), o dejarán de verse. Lo mismo para cualquier otra app instalada.
+- **Envío gratuito:** la web actual dice «a partir de 30 € para España (solo Península) y Portugal». La demo decía 80 €, así que el tema usa los 30 € como texto por defecto. Compruébalo con el cliente.
+- Los títulos de producto son muy largos (hasta 150 caracteres). El tema los corta a 3 líneas en las tarjetas.
+- La portada actual publica datos estructurados `Organization`; el tema también.
+
 ## Notas para quien siga desarrollando
 
 - Movimiento solo con `transform` y `opacity`. Con `prefers-reduced-motion` o con la casilla de animaciones desactivada se ve una versión estática completa.
