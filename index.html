@@ -1,0 +1,1581 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Retro Universe | Arcades, pinball virtual y Pandora Box en Mijas Costa</title>
+<meta name="description" content="Arcades, bartops, pinball virtual, Pandora Box y consolas retro listos para enchufar y jugar. Más de 20 años de experiencia, 3 años de garantía y envío desde España.">
+<meta name="theme-color" content="#0a0612">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Retro Universe | Donde los clásicos cobran vida">
+<meta property="og:description" content="Arcades, bartops, pinball virtual y Pandora Box con 3 años de garantía. Pide por WhatsApp.">
+<meta property="og:image" content="https://propuesta-retro-universe.pages.dev/img/og.jpg">
+<meta property="og:url" content="https://propuesta-retro-universe.pages.dev/">
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/p/bartop-ghost.webp">
+<script>
+  document.documentElement.classList.replace('no-js', 'js');
+  try { if (sessionStorage.getItem('ru-booted') || /[?&]skip/.test(location.search)) document.documentElement.classList.add('booted'); } catch (e) {}
+</script>
+<style>
+/* ============ Tokens ============ */
+:root{
+  --bg:#0a0612; --bg-2:#130b22; --bg-3:#1d1133;
+  --edge:#2b1d47; --edge-2:#3d2b63;
+  --line:rgba(190,165,255,.16); --line-2:rgba(190,165,255,.3);
+  --ink:#f4eeff; --ink-2:#c9bde3; --ink-3:#9a8cbc;
+  --pink:#ff2e93; --cyan:#27f0ff; --yellow:#ffd23f; --violet:#7a3cff; --violet-ink:#b69cff;
+  --pink-deep:#8a0f4c; --cyan-deep:#0b6f7a; --yellow-deep:#8f6a00; --violet-deep:#3c1690;
+  --f-display:"Jersey 10", "Space Grotesk", system-ui, sans-serif;
+  --f-body:"Space Grotesk", system-ui, sans-serif;
+  --f-pixel:"Press Start 2P", ui-monospace, monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --clack:cubic-bezier(.25,1.6,.45,1);
+  --hud:64px;
+  --gutter:clamp(16px, 4vw, 56px);
+  --cursor:auto; --cursor-hit:pointer;
+  /* z-index scale */
+  --z-sprite:30; --z-hud:50; --z-demo:55; --z-backdrop:60; --z-drawer:61; --z-toast:70; --z-rain:75; --z-fx:80; --z-boot:90; --z-flash:95;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%; scroll-padding-top:calc(var(--hud) + 16px)}
+html,body{overflow-x:clip}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:1.0625rem; line-height:1.55}
+.booting{overflow:hidden}
+img{display:block; max-width:100%; height:auto}
+a{color:inherit}
+button{font:inherit; color:inherit; background:none; border:0; padding:0}
+@media (pointer:fine){ body{cursor:var(--cursor)} a, button, [role="tab"]{cursor:var(--cursor-hit)} }
+::selection{background:var(--pink); color:#12030b}
+:focus-visible{outline:3px solid var(--yellow); outline-offset:6px}
+html{scrollbar-color:var(--violet) var(--bg)}
+::-webkit-scrollbar{width:12px; height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--cyan),var(--pink)); border:3px solid var(--bg)}
+.sr{position:absolute!important; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+.skip{position:fixed; left:12px; top:-60px; z-index:100; background:var(--yellow); color:#120d00; padding:.6rem 1rem; font-weight:700; text-decoration:none}
+.skip:focus{top:12px}
+.wrap{width:100%; max-width:1360px; margin-inline:auto; padding-inline:var(--gutter)}
+.px{font-family:var(--f-pixel); text-transform:uppercase; line-height:1.4; letter-spacing:.04em}
+.pix{display:inline-block}
+.pix svg{display:block; width:100%; height:100%}
+.blink{animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@keyframes bob{50%{transform:translateY(-6px)}}
+
+/* ============ Pixel borders (NES-style notched corners) ============ */
+.btn,.btn-add,.tab,.chip,.card,.player,.screen,.pu,.size-btn,.specs div,.icon-btn,.cred-btn,.demo,.toast,.qty button,.perks span,.pin-tech span,.boot__coin,.line__img,.player__tag,.badge,.cart{
+  --bw:4px; --bc:var(--edge);
+  --pxb:0 calc(var(--bw) * -1) 0 0 var(--bc), 0 var(--bw) 0 0 var(--bc), calc(var(--bw) * -1) 0 0 0 var(--bc), var(--bw) 0 0 0 var(--bc);
+}
+
+/* ============ CRT overlays ============ */
+.fx{position:fixed; inset:0; pointer-events:none; z-index:var(--z-fx)}
+.fx-scan{background:repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 1px, transparent 1px 3px); opacity:.4; mix-blend-mode:multiply}
+.fx-grain{inset:-50%; width:200%; height:200%; background-image:var(--noise, none); background-size:160px; opacity:.06}
+.fx-vignette{background:radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(5,2,10,.5) 100%)}
+
+/* ============ Boot / INSERT COIN ============ */
+.boot{display:none}
+.js .boot{position:fixed; inset:0; z-index:var(--z-boot); display:grid; place-items:center; background:radial-gradient(ellipse at 50% 45%, #1a0f2e 0%, #07040d 70%); text-align:center; padding:24px}
+.js.booted .boot{display:none}
+.boot__screen{display:grid; justify-items:center; gap:clamp(18px,3.5vh,30px); max-width:680px}
+.boot__hi{font-size:clamp(.6rem,1.6vw,.8rem); color:var(--ink-2); display:flex; gap:1.6em; flex-wrap:wrap; justify-content:center; margin:0}
+.boot__hi b{color:var(--yellow); font-weight:400}
+.boot__logo{width:min(300px,70vw); filter:drop-shadow(0 0 22px rgba(255,46,147,.45))}
+.boot__coin{--bc:var(--yellow); font-family:var(--f-pixel); font-size:clamp(1rem,3.6vw,1.5rem); color:var(--yellow); padding:1em 1.3em; margin:4px; background:rgba(255,210,63,.07); box-shadow:var(--pxb), 0 0 40px rgba(255,210,63,.25); letter-spacing:.06em; transition:transform .1s, background .2s}
+.boot__coin:hover{background:rgba(255,210,63,.15)}
+.boot__coin:active{transform:translateY(3px)}
+.boot__hint{font-size:.95rem; color:var(--ink-3); margin:0}
+.boot__cred{font-size:.7rem; color:var(--ink-2); margin:0}
+.boot__cred span{color:var(--cyan)}
+.boot__legal{font-size:.55rem; color:var(--ink-3); margin:0}
+.boot.is-ready .boot__coin{--bc:var(--cyan); color:var(--cyan)}
+.crt-flash{position:fixed; left:0; right:0; top:50%; height:4px; margin-top:-2px; background:#fff; box-shadow:0 0 30px 10px rgba(255,255,255,.7), 0 0 80px 30px rgba(39,240,255,.4); z-index:var(--z-flash); pointer-events:none; transform:scaleX(0); opacity:0}
+
+/* ============ HUD ============ */
+.hud{position:fixed; inset:0 0 auto 0; z-index:var(--z-hud); height:var(--hud); background:rgba(10,6,18,.9); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:4px solid var(--edge)}
+.hud__in{height:100%; display:flex; align-items:center; gap:22px}
+.hud__logo{flex:none; display:block}
+.hud__logo img{height:40px; width:auto}
+.hud__score{font-size:.55rem; color:var(--ink-3); margin:0; white-space:nowrap}
+.hud__score b{color:var(--ink); font-weight:400}
+.hud__nav{display:flex; gap:clamp(14px,2vw,28px); margin-inline:auto; font-family:var(--f-display); font-weight:400; font-size:1.3rem}
+.hud__nav a{text-decoration:none; color:var(--ink-2); padding:.4rem 0 .4rem 1.1em; position:relative; transition:color .15s}
+.hud__nav a::before{content:""; position:absolute; left:0; top:50%; width:.55em; height:.7em; margin-top:-.35em; background:var(--yellow); clip-path:polygon(0 0, 100% 50%, 0 100%); opacity:0; transition:opacity .1s}
+.hud__nav a:hover{color:var(--ink)}
+.hud__nav a:hover::before{opacity:1; animation:blink .6s steps(1) infinite}
+.hud__right{display:flex; align-items:center; gap:14px; margin-left:auto}
+.hud__nav + .hud__right{margin-left:0}
+.icon-btn{--bw:3px; --bc:var(--edge-2); width:40px; height:40px; margin:3px; display:grid; place-items:center; color:var(--ink-2); background:var(--bg-2); box-shadow:var(--pxb); transition:color .15s}
+.icon-btn:hover{--bc:var(--cyan); color:var(--ink)}
+.icon-btn svg{width:20px; height:20px}
+.icon-btn[aria-pressed="true"]{--bc:var(--cyan); color:var(--cyan)}
+.snd-on{display:none} [aria-pressed="true"] .snd-on{display:block} [aria-pressed="true"] .snd-off{display:none}
+.cred-btn{--bw:3px; --bc:var(--edge-2); display:flex; align-items:center; gap:10px; height:40px; margin:3px; padding:0 14px; background:var(--bg-3); box-shadow:var(--pxb)}
+.cred-btn:hover{--bc:var(--yellow)}
+.cred-btn svg{width:18px; height:18px; color:var(--yellow)}
+.cred-btn .px{font-size:.6rem; color:var(--ink-2)}
+.cred-btn .px b{color:var(--yellow); font-weight:400}
+.bump{animation:bump .45s steps(4)}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.2)}100%{transform:scale(1)}}
+/* XP bar = scroll progress */
+.xp{position:absolute; left:0; right:0; bottom:-10px; height:6px; pointer-events:none}
+.xp__bar{position:absolute; inset:0; background:rgba(122,60,255,.18)}
+.xp__fill{position:absolute; inset:0; background:linear-gradient(90deg, var(--cyan), var(--pink) 55%, var(--yellow)); transform-origin:left; transform:scaleX(var(--p,0)); -webkit-mask:repeating-linear-gradient(90deg,#000 0 10px, transparent 10px 12px); mask:repeating-linear-gradient(90deg,#000 0 10px, transparent 10px 12px)}
+.xp__lv{position:absolute; right:var(--gutter); top:12px; font-size:.5rem; color:var(--ink-3); background:var(--bg); padding:4px 6px; border:2px solid var(--edge)}
+.xp__lv b{color:var(--yellow); font-weight:400}
+
+/* ============ Buttons ============ */
+.btn{--b:var(--pink); --bd:var(--pink-deep); --bi:#14030c; --bc:var(--b); display:inline-flex; align-items:center; justify-content:center; gap:.8rem; min-height:52px; margin:4px; padding:1.05rem 1.4rem; font-family:var(--f-pixel); font-size:.68rem; line-height:1; letter-spacing:.06em; text-transform:uppercase; text-decoration:none; white-space:nowrap; background:var(--b); color:var(--bi); box-shadow:var(--pxb), inset -4px -5px 0 0 var(--bd), inset 4px 4px 0 0 rgba(255,255,255,.3); transition:transform .08s, filter .15s}
+.btn:hover{filter:brightness(1.1)}
+.btn:active{transform:translateY(3px); box-shadow:var(--pxb), inset 4px 4px 0 0 var(--bd)}
+.btn svg{width:18px; height:18px; flex:none}
+.btn--wa{--b:#120c22; --bd:#05030a; --bi:var(--ink); --bc:var(--cyan); box-shadow:var(--pxb), inset -4px -4px 0 0 #05030a, inset 4px 4px 0 0 rgba(39,240,255,.14), 0 0 26px -4px rgba(39,240,255,.45)}
+.btn--wa svg{color:var(--cyan)}
+.btn--wa:active{box-shadow:var(--pxb), inset 4px 4px 0 0 #05030a}
+.btn--ghost{--b:var(--bg-2); --bd:#05030a; --bi:var(--ink); --bc:var(--edge-2)}
+
+/* ============ Hero: arcade cabinet ============ */
+.hero{position:relative; min-height:100svh; padding-top:calc(var(--hud) + 20px); overflow:hidden; isolation:isolate; display:flex}
+#space{position:absolute; inset:0; width:100%; height:100%; z-index:-2; image-rendering:pixelated; image-rendering:crisp-edges}
+.hero__floor{position:absolute; left:0; right:0; bottom:0; height:clamp(70px,13vh,130px); z-index:-1; background:
+  linear-gradient(to bottom, var(--violet) 0 4px, #24104a 4px 8px, transparent 8px),
+  repeating-linear-gradient(90deg, #170a2b 0 48px, #12081f 48px 96px), #12081f}
+.hero__floor::after{content:""; position:absolute; left:50%; top:4px; width:min(640px,90vw); height:60%; transform:translateX(-50%); background:radial-gradient(closest-side, rgba(255,46,147,.35), transparent); filter:blur(4px)}
+.hero__grid{display:grid; grid-template-columns:minmax(0,1fr) auto; gap:clamp(24px,5vw,80px); align-items:end; width:100%}
+.hero__copy{align-self:center; padding-bottom:clamp(60px,14vh,150px)}
+.hero__title{margin:0; font-family:var(--f-display); font-weight:400; font-size:clamp(3.2rem,7vw,6.8rem); line-height:.92; letter-spacing:.005em; text-wrap:balance; text-shadow:.06em .06em 0 var(--violet-deep)}
+.hero__title .row{display:block}
+.hero__title .hl{color:var(--yellow)}
+.hero__sub{margin:1.1rem 0 0; max-width:42ch; color:var(--ink-2); font-size:clamp(1rem,1.25vw,1.15rem)}
+.hero__hint{display:flex; flex-wrap:wrap; align-items:center; gap:.7rem .9rem; margin:clamp(22px,3.5vh,34px) 0 0; font-size:.58rem; color:var(--ink-3)}
+.key{display:inline-grid; place-items:center; width:2.3em; height:2.3em; border-radius:50%; color:#14030c; background:var(--pink); box-shadow:0 3px 0 var(--pink-deep); font-size:.95em}
+.key--b{background:var(--cyan); color:#021417; box-shadow:0 3px 0 var(--cyan-deep)}
+.key--j{background:#1d1133; color:var(--ink); box-shadow:0 3px 0 #05030a; border-radius:0}
+
+.cab{--w:min(440px, calc((100svh - var(--hud) - 70px) * .6)); width:var(--w); display:flex; flex-direction:column; align-items:center; margin-bottom:clamp(40px,9vh,96px); font-size:calc(var(--w) * 16 / 440)}
+.cab__marquee{position:relative; width:100%; height:6.6em; display:grid; place-items:center; background:radial-gradient(ellipse at 50% 55%, #4a1f73, #170a2b 72%); box-shadow:0 -4px 0 var(--pink), 0 4px 0 var(--pink), -4px 0 0 var(--pink), 4px 0 0 var(--pink), 0 0 50px -6px rgba(255,46,147,.7); overflow:hidden}
+.cab__marquee img{height:5.2em; width:auto; filter:drop-shadow(0 0 12px rgba(255,255,255,.25))}
+.cab__marquee::after{content:""; position:absolute; inset:0; background:linear-gradient(105deg, transparent 30%, rgba(255,255,255,.18) 45%, transparent 60%); transform:translateX(-120%); animation:sheen 6s steps(24) infinite 2s}
+@keyframes sheen{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.is-live .cab__marquee img{animation:flicker 1.1s steps(1) both}
+@keyframes flicker{0%{opacity:.15}12%{opacity:1}18%{opacity:.25}30%{opacity:1}36%{opacity:.5}44%,100%{opacity:1}}
+.cab__head{position:relative; width:92%; padding:1em 1em 1.1em; background:linear-gradient(#1b0f30, #120a20); box-shadow:-4px 0 0 var(--cyan), 4px 0 0 var(--cyan), 0 0 30px -10px rgba(39,240,255,.6)}
+.crt{position:relative; aspect-ratio:4/3; border-radius:1.4em / 1.1em; overflow:hidden; background:radial-gradient(ellipse at 50% 42%, #22175a 0%, #0b0827 62%, #04030c 100%); box-shadow:0 0 0 .55em #06040c, 0 0 0 .8em #2b1d47}
+.crt__hud{position:absolute; left:6%; right:6%; top:6%; display:flex; justify-content:space-between; font-size:.5em; color:var(--ink-2); z-index:2}
+.crt__hud b{color:var(--yellow); font-weight:400}
+.crt__go{position:absolute; inset:13% 10% 35%; display:grid; place-items:center; z-index:1}
+.crt__go img{position:absolute; inset:0; margin:auto; max-height:100%; max-width:100%; width:auto; height:auto; object-fit:contain; filter:drop-shadow(0 .8em 1em rgba(0,0,0,.6)); animation:bob 2s steps(2) infinite}
+.crt__go::after{content:""; position:absolute; left:20%; right:20%; bottom:-2%; height:12%; background:radial-gradient(closest-side, color-mix(in srgb, var(--c) 60%, transparent), transparent); z-index:-1}
+.crt__info{position:absolute; left:6%; right:6%; bottom:17%; text-align:center; z-index:2}
+.crt__name{margin:0; font-family:var(--f-display); font-weight:400; font-size:1.6em; line-height:1; color:var(--ink); text-shadow:0 2px 0 #000}
+.crt__price{margin:.35em 0 0; font-size:.55em; color:var(--c)}
+.crt__nav{position:absolute; left:4%; right:4%; bottom:5%; display:flex; align-items:center; justify-content:space-between; gap:.5em; z-index:3}
+.crt__arrow{width:2.6em; height:2.6em; display:grid; place-items:center; color:var(--yellow)}
+.crt__arrow span{width:.9em; height:1.1em; background:currentColor; clip-path:polygon(100% 0, 0 50%, 100% 100%)}
+.crt__arrow--r span{clip-path:polygon(0 0, 100% 50%, 0 100%)}
+.crt__arrow:hover{color:var(--ink)}
+.crt__label{font-size:.55em; color:var(--c); text-align:center}
+.crt__scan,.crt__glare,.crt__noise{position:absolute; inset:0; pointer-events:none; z-index:4}
+.crt__scan{background:repeating-linear-gradient(to bottom, rgba(0,0,0,.35) 0 2px, transparent 2px 4px)}
+.crt__glare{background:radial-gradient(ellipse at 28% 12%, rgba(255,255,255,.13), transparent 42%), radial-gradient(ellipse at 50% 50%, transparent 62%, rgba(0,0,0,.55) 100%)}
+.crt__noise{background-image:var(--noise, none); background-size:120px; opacity:0; mix-blend-mode:screen}
+.crt.is-switch .crt__noise{animation:static .26s steps(3) both}
+.crt.is-switch .crt__go,.crt.is-switch .crt__info{animation:roll .26s steps(4) both}
+@keyframes static{0%{opacity:.9}100%{opacity:0}}
+@keyframes roll{0%{transform:translateY(-18%) scaleY(.7); opacity:.2}100%{transform:none; opacity:1}}
+.cab__panel{position:relative; width:106%; height:7.6em; display:flex; align-items:center; justify-content:space-between; padding:0 2.2em 0 2.4em; background:linear-gradient(#2a1550, #170b2c); clip-path:polygon(3% 0, 97% 0, 100% 100%, 0 100%); border-top:4px solid var(--pink)}
+.stick{position:relative; width:4.6em; height:5.6em; display:block}
+.stick__base{position:absolute; left:50%; bottom:.6em; width:4.4em; height:1.5em; margin-left:-2.2em; border-radius:50%; background:#06040c; box-shadow:inset 0 3px 0 #2b1d47}
+.stick__shaft{position:absolute; left:50%; bottom:1.2em; width:.55em; height:3em; margin-left:-.275em; background:linear-gradient(90deg,#b8b2c8,#5f5873); transform-origin:50% 100%; transition:transform .12s steps(2)}
+.stick__ball{position:absolute; left:50%; top:-1.5em; width:2.3em; height:2.3em; margin-left:-1.15em; border-radius:50%; background:radial-gradient(circle at 34% 30%, #ffd0e6 0 12%, var(--pink) 34%, var(--pink-deep) 100%); box-shadow:0 .25em 0 rgba(0,0,0,.35)}
+.stick.l .stick__shaft{transform:rotate(-22deg)}
+.stick.r .stick__shaft{transform:rotate(22deg)}
+.abtns{display:flex; gap:1.4em}
+.abtn{display:grid; justify-items:center; gap:.55em; text-decoration:none; color:var(--ink-2)}
+.abtn__cap{width:3.6em; height:3.6em; display:grid; place-items:center; border-radius:50%; font-family:var(--f-pixel); font-size:1em; color:#14030c; background:radial-gradient(circle at 34% 28%, #ffc1df 0 10%, var(--pink) 36%, #c2156a 100%); box-shadow:0 .38em 0 #5c0631, 0 0 0 .3em #06040c, 0 0 1.6em rgba(255,46,147,.55); transition:transform .07s, box-shadow .07s}
+.abtn--b .abtn__cap{color:#021417; background:radial-gradient(circle at 34% 28%, #d4fdff 0 10%, var(--cyan) 36%, #0aa5b6 100%); box-shadow:0 .38em 0 #064a52, 0 0 0 .3em #06040c, 0 0 1.6em rgba(39,240,255,.5)}
+.abtn:active .abtn__cap,.abtn.is-press .abtn__cap{transform:translateY(.3em); box-shadow:0 .08em 0 #5c0631, 0 0 0 .3em #06040c, 0 0 2.2em rgba(255,46,147,.8)}
+.abtn--b:active .abtn__cap,.abtn--b.is-press .abtn__cap{box-shadow:0 .08em 0 #064a52, 0 0 0 .3em #06040c, 0 0 2.2em rgba(39,240,255,.8)}
+.abtn__lbl{font-family:var(--f-pixel); font-size:.5em; letter-spacing:.06em; text-transform:uppercase}
+.abtn:hover .abtn__lbl{color:var(--ink)}
+.abtn:focus-visible{outline-offset:4px}
+.cab__lower{position:relative; width:86%; height:8.4em; display:grid; place-items:center; background:linear-gradient(#150b26, #0d0718); box-shadow:-4px 0 0 var(--cyan), 4px 0 0 var(--cyan)}
+.coin-door{display:flex; gap:1.2em; padding:1em 1.4em; background:#1c1030; box-shadow:0 -3px 0 var(--edge-2), 0 3px 0 var(--edge-2), -3px 0 0 var(--edge-2), 3px 0 0 var(--edge-2)}
+.slot{display:grid; justify-items:center; gap:.5em; color:var(--ink-3)}
+.slot__mouth{width:2.4em; height:3em; display:grid; place-items:center; background:#2c0b17; box-shadow:inset 0 0 0 3px #4a1225}
+.slot__mouth i{width:.32em; height:1.7em; background:#ffb347; box-shadow:0 0 .8em #ff8a00; animation:blink 1.6s steps(1) infinite}
+.slot:nth-child(2) .slot__mouth i{animation-delay:-.8s}
+.slot__txt{font-family:var(--f-pixel); font-size:.45em}
+.slot:hover .slot__txt{color:var(--yellow)}
+/* entrance */
+@media (prefers-reduced-motion:no-preference){
+  .js .hero [data-in]{opacity:0}
+  .is-live .hero [data-in]{animation:pxrise .7s steps(7) both; animation-delay:calc(var(--d,0) * 1ms)}
+  .is-live .cab{animation:cabin .9s var(--clack) both .15s}
+}
+@keyframes pxrise{from{opacity:0; transform:translateY(32px)}to{opacity:1; transform:none}}
+@keyframes cabin{from{opacity:0; transform:translateY(60px)}to{opacity:1; transform:none}}
+
+/* ============ Marquee ============ */
+.marquee{position:relative; z-index:5; background:var(--pink); color:#14030c; overflow:hidden; border-block:4px solid #14030c; box-shadow:0 18px 50px -12px rgba(255,46,147,.5)}
+.marquee__track{display:flex; width:max-content; animation:marq 30s linear infinite}
+.marquee__group{display:flex; align-items:center; flex:none}
+.marquee__item{font-family:var(--f-display); font-weight:400; font-size:clamp(1.9rem,4vw,3.2rem); text-transform:uppercase; padding:.3em .55em; white-space:nowrap; display:flex; align-items:center; gap:.55em}
+.marquee__item .pix{width:.7em; height:.7em}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ============ Section shell ============ */
+.sec{position:relative; padding-block:clamp(80px,10vw,140px)}
+.h2{margin:0; font-family:var(--f-display); font-weight:400; font-size:clamp(2.9rem,6.2vw,5.6rem); line-height:.95; letter-spacing:.005em; text-wrap:balance; text-shadow:.05em .05em 0 var(--violet-deep)}
+.lead{margin:1.1rem 0 0; max-width:56ch; color:var(--ink-2); font-size:clamp(1.02rem,1.3vw,1.2rem)}
+@media (prefers-reduced-motion:no-preference){
+  .js .reveal{clip-path:inset(0 100% 0 0)}
+  .js .reveal.is-in{animation:wipe .55s steps(7) forwards}
+}
+@keyframes wipe{to{clip-path:inset(0 0 0 0)}}
+
+/* RPG-style window */
+.screen{--bc:var(--ink); position:relative; margin:4px; background:linear-gradient(#18124d, #0b0926); box-shadow:var(--pxb), inset 0 0 0 4px #0a0612, inset 0 0 0 7px #4b3fb0}
+
+/* ============ High scores ============ */
+.scores .screen{padding:clamp(36px,6vw,72px) clamp(20px,5vw,72px); text-align:center}
+.scores__title{margin:0 0 clamp(26px,4vw,44px); font-size:clamp(.85rem,2vw,1.25rem); color:var(--ink)}
+.scores__title span{color:var(--pink)}
+.board{list-style:none; margin:0 auto; padding:0; display:grid; gap:clamp(16px,2.6vw,26px); width:max-content; max-width:100%}
+.board li{display:grid; grid-template-columns:4.5ch auto; align-items:baseline; gap:clamp(12px,3vw,40px); text-align:left; color:var(--c)}
+.board__rank{font-family:var(--f-pixel); font-size:clamp(.7rem,1.6vw,1.05rem)}
+.board__main{display:grid; grid-template-columns:auto minmax(0,31ch); align-items:baseline; gap:.3rem clamp(14px,2.4vw,32px)}
+.board__num{font-family:var(--f-pixel); font-size:clamp(1.8rem,6vw,4.4rem); line-height:1; text-shadow:4px 4px 0 rgba(0,0,0,.6); text-align:right; min-width:5em}
+.board__label{font-weight:500; color:var(--ink-2); font-size:clamp(1rem,1.6vw,1.3rem)}
+.board li:first-child .board__rank{animation:blink 1.1s steps(1) infinite}
+
+/* ============ Player select ============ */
+.players__grid{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(18px,2.2vw,30px); margin-top:clamp(40px,6vw,72px)}
+.player{--c:var(--pink); position:relative; display:flex; flex-direction:column; justify-content:flex-end; text-align:left; min-height:clamp(340px,34vw,460px); margin:4px; padding:22px; background:linear-gradient(to top, var(--bg-2) 30%, color-mix(in srgb, var(--c) 10%, var(--bg-2))); box-shadow:var(--pxb); transition:transform .2s steps(3); isolation:isolate}
+.player::before{content:""; position:absolute; left:0; right:0; bottom:0; height:52%; background:linear-gradient(to top, var(--bg-2) 38%, transparent); z-index:-1; pointer-events:none}
+.player__tag{--bw:3px; --bc:var(--c); position:absolute; top:16px; left:16px; font-family:var(--f-pixel); font-size:.8rem; color:var(--c); padding:.45rem .55rem; background:var(--bg); box-shadow:var(--pxb)}
+.player__img{position:absolute; inset:28px 10px 110px; display:grid; place-items:center; z-index:-2; transition:transform .3s steps(4)}
+.player__img img{max-height:100%; width:auto; object-fit:contain; filter:drop-shadow(0 24px 30px rgba(0,0,0,.6))}
+.player__name{font-family:var(--f-display); font-weight:400; font-size:clamp(1.75rem,2.5vw,2.4rem); line-height:.95}
+.player__meta{margin-top:.55rem; color:var(--ink-2); font-size:.95rem; display:flex; flex-wrap:wrap; gap:.2rem .7rem}
+.player__meta b{color:var(--c); font-weight:700}
+.player__ready{position:absolute; left:50%; top:42%; font-family:var(--f-pixel); font-size:.9rem; color:#14030c; background:var(--c); padding:.6rem .8rem; transform:translate(-50%,-50%) scale(.6); opacity:0; pointer-events:none; white-space:nowrap; box-shadow:0 0 30px var(--c)}
+.player.is-picked .player__ready{animation:ready .9s steps(6) both}
+@keyframes ready{0%{opacity:0; transform:translate(-50%,-50%) scale(.6)}25%{opacity:1; transform:translate(-50%,-50%) scale(1.1)}75%{opacity:1; transform:translate(-50%,-50%) scale(1)}100%{opacity:0; transform:translate(-50%,-60%) scale(1)}}
+.corners{position:absolute; inset:-14px; pointer-events:none; opacity:0;
+  background:
+    linear-gradient(var(--c),var(--c)) top left/18px 4px, linear-gradient(var(--c),var(--c)) top left/4px 18px,
+    linear-gradient(var(--c),var(--c)) top right/18px 4px, linear-gradient(var(--c),var(--c)) top right/4px 18px,
+    linear-gradient(var(--c),var(--c)) bottom left/18px 4px, linear-gradient(var(--c),var(--c)) bottom left/4px 18px,
+    linear-gradient(var(--c),var(--c)) bottom right/18px 4px, linear-gradient(var(--c),var(--c)) bottom right/4px 18px;
+  background-repeat:no-repeat}
+.player:hover,.player:focus-visible{--bc:var(--c); transform:translateY(-6px)}
+.player:focus-visible{outline:none}
+.player:hover .corners,.player:focus-visible .corners{opacity:1; animation:blink .8s steps(1) infinite}
+.player:hover .player__img,.player:focus-visible .player__img{transform:translateY(-10px) scale(1.04)}
+.player:active{transform:translateY(-2px)}
+.p2{--c:var(--cyan)} .p3{--c:var(--yellow)} .p4{--c:var(--violet-ink)}
+
+/* pixel dissolve (mask sprite-sheet generated in JS) */
+.dissolve{position:absolute; inset:0; pointer-events:none; background:var(--c); opacity:0; -webkit-mask-image:var(--dissolve); mask-image:var(--dissolve); -webkit-mask-size:800% 100%; mask-size:800% 100%}
+.is-dissolving .dissolve{animation:dissolve .5s steps(1) both}
+@keyframes dissolve{
+  0%{opacity:.95; -webkit-mask-position:0% 0; mask-position:0% 0}
+  12%{-webkit-mask-position:14.285% 0; mask-position:14.285% 0}
+  24%{-webkit-mask-position:28.571% 0; mask-position:28.571% 0}
+  36%{-webkit-mask-position:42.857% 0; mask-position:42.857% 0}
+  48%{-webkit-mask-position:57.142% 0; mask-position:57.142% 0}
+  58%{-webkit-mask-position:42.857% 0; mask-position:42.857% 0}
+  68%{-webkit-mask-position:28.571% 0; mask-position:28.571% 0}
+  78%{-webkit-mask-position:14.285% 0; mask-position:14.285% 0}
+  88%{-webkit-mask-position:0% 0; mask-position:0% 0; opacity:.95}
+  100%{opacity:0}
+}
+
+/* ============ Shop ============ */
+.dialog{display:grid; grid-template-columns:auto 1fr; gap:clamp(14px,2vw,24px); align-items:start; margin-top:clamp(24px,3vw,36px); max-width:860px; padding:clamp(18px,2.4vw,26px) clamp(18px,2.4vw,28px) clamp(26px,3vw,32px)}
+.dialog__npc{width:clamp(56px,7vw,84px); aspect-ratio:12/14; animation:bob 1.4s steps(2) infinite}
+.dialog__who{margin:0 0 .5rem; font-size:.6rem; color:var(--yellow)}
+.dialog__txt{margin:0; font-size:clamp(1rem,1.3vw,1.15rem); color:var(--ink); min-height:3.2em}
+.dialog__more{position:absolute; right:22px; bottom:16px; width:14px; height:10px; background:var(--yellow); clip-path:polygon(0 0, 100% 0, 50% 100%); animation:blink .8s steps(1) infinite}
+.tabs{display:flex; gap:14px; margin-top:clamp(30px,4vw,46px); overflow-x:auto; scrollbar-width:none; padding:8px 6px 12px; scroll-snap-type:x proximity}
+.tabs::-webkit-scrollbar{display:none}
+.tab{--bw:3px; --c:var(--ink); --bc:var(--edge-2); flex:none; scroll-snap-align:start; margin:3px; font-family:var(--f-pixel); font-size:.6rem; text-transform:uppercase; letter-spacing:.04em; padding:.95rem 1.05rem; min-height:44px; color:var(--ink-2); background:var(--bg-2); box-shadow:var(--pxb); transition:transform .08s}
+.tab sup{font-size:.5rem; margin-left:.4em; color:var(--ink-3); vertical-align:baseline}
+.tab:hover{--bc:var(--c); color:var(--ink)}
+.tab:active{transform:translateY(2px)}
+.tab[aria-pressed="true"]{--bc:var(--c); background:var(--c); color:#14030c}
+.tab[aria-pressed="true"] sup{color:inherit}
+.tab[data-filter="consolas"][aria-pressed="true"]{--bc:var(--violet); background:var(--violet); color:#fff}
+.grid{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(18px,2.2vw,30px); margin-top:clamp(18px,2.4vw,28px)}
+.card{--c:var(--pink); --ci:#14030c; position:relative; display:flex; flex-direction:column; margin:4px; background:var(--bg-2); box-shadow:var(--pxb); transition:transform .2s steps(3)}
+.card[hidden]{display:none}
+.card::before{content:""; position:absolute; left:50%; top:-4px; width:56px; height:8px; transform:translateX(-50%); z-index:2; background:repeating-linear-gradient(90deg, var(--edge-2) 0 4px, var(--bg) 4px 8px)}
+.card__media{position:relative; aspect-ratio:5/4; overflow:hidden; display:grid; place-items:center; padding:7%; background:radial-gradient(60% 55% at 50% 55%, color-mix(in srgb, var(--c) 22%, transparent), transparent 75%)}
+.card__media img{width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 18px 22px rgba(0,0,0,.55)); transition:transform .3s steps(4)}
+.badge{--bw:3px; --bc:var(--pink); position:absolute; z-index:2; top:14px; left:14px; text-transform:uppercase; font-family:var(--f-pixel); font-size:.55rem; letter-spacing:.04em; padding:.45rem .55rem; background:var(--pink); color:#14030c; box-shadow:var(--pxb)}
+.badge--top{--bc:var(--yellow); background:var(--yellow); color:#120d00}
+.badge--liq{--bc:var(--cyan); background:var(--cyan); color:#021417}
+.card__body{display:flex; flex-direction:column; gap:.45rem; padding:18px 20px 20px; flex:1}
+.card__cat{font-size:.8rem; color:var(--c); font-weight:700; margin:0}
+.card__name{margin:0; font-family:var(--f-display); font-weight:400; font-size:clamp(1.4rem,1.75vw,1.7rem); line-height:1.02; text-wrap:balance}
+.card__spec{margin:0; color:var(--ink-3); font-size:.92rem; line-height:1.4}
+.card__buy{margin-top:auto; padding-top:.9rem; display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap}
+.price{display:flex; flex-direction:column; gap:.35rem; margin:0}
+.price s{font-size:.82rem; color:var(--ink-3); text-decoration-thickness:1px}
+.price s .off{color:var(--yellow); text-decoration:none; display:inline-block; margin-left:.4rem; font-weight:700}
+.price strong{font-family:var(--f-pixel); font-weight:400; font-size:clamp(.82rem,1.1vw,.98rem); color:var(--ink); letter-spacing:-.02em}
+.btn-add{--bw:3px; --bc:var(--c); margin:3px; font-family:var(--f-pixel); font-size:.58rem; letter-spacing:.04em; text-transform:uppercase; padding:.85rem .95rem; min-height:42px; background:var(--c); color:var(--ci); box-shadow:var(--pxb), inset -3px -4px 0 0 var(--cd,#000), inset 3px 3px 0 0 rgba(255,255,255,.3); transition:transform .08s, filter .15s; white-space:nowrap}
+.btn-add:hover{filter:brightness(1.1)}
+.btn-add:active{transform:translateY(3px); box-shadow:var(--pxb), inset 3px 3px 0 0 var(--cd,#000)}
+.btn-add.is-added{--bc:var(--ink); background:var(--ink); color:var(--bg)}
+.card:hover{--bc:var(--c)}
+.card:hover .card__media img{transform:translateY(-8px) scale(1.035)}
+.c-pinball{--c:var(--cyan); --ci:#021417; --cd:var(--cyan-deep)}
+.c-arcade{--c:var(--pink); --ci:#14030c; --cd:var(--pink-deep)}
+.c-pandora{--c:var(--yellow); --ci:#120d00; --cd:var(--yellow-deep)}
+.c-consolas{--c:var(--violet); --ci:#fff; --cd:var(--violet-deep)}
+.c-consolas .card__cat{color:var(--violet-ink)}
+@media (prefers-reduced-motion:no-preference){
+  .js .card.pre{opacity:0; transform:translateY(-34px)}
+  .js .card.in{animation:insert .5s steps(6) both; animation-delay:calc(var(--i,0) * 55ms)}
+}
+@keyframes insert{0%{opacity:0; transform:translateY(-34px)}60%{opacity:1; transform:translateY(4px)}100%{opacity:1; transform:none}}
+.shop__note{margin-top:28px; color:var(--ink-3); font-size:.95rem}
+
+/* ============ Pandora ============ */
+.pandora{overflow:hidden}
+.pandora__grid{display:grid; grid-template-columns:1.05fr 1fr; gap:clamp(32px,5vw,80px); align-items:center}
+.pandora__visual{position:relative}
+.pandora__visual::before{content:""; position:absolute; inset:-10% -5%; background:radial-gradient(closest-side, rgba(255,210,63,.3), rgba(255,46,147,.1) 55%, transparent); z-index:-1}
+.pandora__visual img{width:100%; transform:rotate(-6deg); filter:drop-shadow(0 40px 50px rgba(0,0,0,.6))}
+.pandora .h2{font-size:clamp(2.5rem,4.6vw,4.2rem)}
+.big9800{display:block; font-family:var(--f-pixel); font-size:clamp(3rem,9vw,7.4rem); color:var(--yellow); line-height:1; letter-spacing:-.04em; text-shadow:6px 6px 0 var(--pink-deep); margin-bottom:.4rem}
+.games{margin-top:clamp(26px,3.5vw,40px)}
+.games .screen{padding:22px 24px}
+.games__hint{display:flex; justify-content:space-between; gap:12px; font-size:.55rem; color:var(--ink-3); margin:0 0 16px}
+.games__hint b{color:var(--yellow); font-weight:400}
+.chips{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:12px}
+.chip{--bw:3px; --bc:#3d3590; margin:3px; font-family:var(--f-pixel); font-size:.56rem; text-transform:uppercase; padding:.7rem .8rem; color:var(--ink-2); background:#100c33; box-shadow:var(--pxb)}
+.chip.is-sel{--bc:var(--yellow); background:var(--yellow); color:#120d00}
+.chip--more{--bc:var(--yellow); color:var(--yellow); font-family:var(--f-display); font-size:1.25rem; font-weight:400; text-transform:none; padding:.45rem .8rem}
+.feats{list-style:none; padding:0; margin:clamp(26px,3vw,36px) 0 0; display:grid; grid-template-columns:1fr 1fr; gap:14px 28px}
+.feats li{display:flex; gap:12px; align-items:flex-start; color:var(--ink-2)}
+.feats .pix{width:14px; height:14px; margin-top:.35em; flex:none}
+.pandora__cta{margin-top:clamp(28px,3vw,40px)}
+
+/* ============ Pinball sizes ============ */
+.pinball__grid{display:grid; grid-template-columns:1fr 1.1fr; gap:clamp(32px,5vw,80px); align-items:center; margin-top:clamp(40px,6vw,72px)}
+.sizer{display:flex; gap:14px; flex-wrap:wrap}
+.size-btn{--bw:3px; --bc:var(--edge-2); margin:3px; font-family:var(--f-pixel); font-size:.72rem; padding:1rem 1.1rem; min-height:48px; color:var(--ink-2); background:var(--bg-2); box-shadow:var(--pxb); transition:transform .08s}
+.size-btn small{display:block; margin-top:.5em; font-size:.5rem; color:var(--ink-3)}
+.size-btn:hover{--bc:var(--cyan); color:var(--ink)}
+.size-btn:active{transform:translateY(2px)}
+.size-btn[aria-selected="true"]{--bc:var(--cyan); background:var(--cyan); color:#021417}
+.size-btn[aria-selected="true"] small{color:#043a40}
+.ruler{margin-top:22px; position:relative; height:34px}
+.ruler__track{position:absolute; left:0; right:0; top:14px; height:8px; background:repeating-linear-gradient(90deg, var(--edge-2) 0 4px, transparent 4px 12px)}
+.ruler__fill{position:absolute; left:0; top:14px; height:8px; width:100%; background:linear-gradient(90deg, var(--cyan), var(--pink)); transform-origin:left; transform:scaleX(var(--r,.48)); transition:transform .5s steps(8); -webkit-mask:repeating-linear-gradient(90deg,#000 0 8px, transparent 8px 10px); mask:repeating-linear-gradient(90deg,#000 0 8px, transparent 8px 10px)}
+.ruler__mark{position:absolute; top:0; font-family:var(--f-pixel); font-size:.5rem; color:var(--ink-3); transform:translateX(-50%)}
+.pin-panel{margin-top:30px}
+.pin-panel[hidden]{display:none}
+.pin-panel h3{margin:0; font-family:var(--f-display); font-weight:400; font-size:clamp(2.1rem,3.2vw,3rem); line-height:1}
+.specs{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:22px 0 0; padding:0}
+.specs div{--bw:3px; margin:3px; background:var(--bg-2); box-shadow:var(--pxb); padding:14px}
+.specs dt{font-size:.8rem; color:var(--ink-3)}
+.specs dd{margin:.3rem 0 0; font-family:var(--f-display); font-weight:400; font-size:1.45rem; line-height:1.1}
+.pin-buy{display:flex; align-items:center; gap:18px; flex-wrap:wrap; margin-top:24px}
+.pin-buy .price strong{font-size:1.2rem}
+.pin-stage{position:relative; display:grid; place-items:end center; height:clamp(360px,44vw,600px)}
+.pin-stage::before{content:""; position:absolute; left:10%; right:10%; bottom:2%; height:14%; border-radius:50%; background:radial-gradient(closest-side, rgba(39,240,255,.45), transparent); filter:blur(8px)}
+.pin-stage img{position:absolute; bottom:4%; max-height:100%; width:auto; object-fit:contain; transform-origin:50% 100%; transition:transform .45s steps(6), opacity .3s steps(3); filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+.pin-stage img:not(.on){opacity:0; transform:scale(.7)}
+.pin-tech{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px}
+.pin-tech span{--bw:2px; --bc:var(--cyan-deep); margin:2px; font-size:.88rem; font-weight:500; padding:.4rem .75rem; background:rgba(39,240,255,.07); box-shadow:var(--pxb); color:var(--ink)}
+
+/* ============ Power-ups ============ */
+.powerups__grid{display:grid; grid-template-columns:1.25fr 1fr; gap:clamp(18px,2.2vw,30px); margin-top:clamp(40px,6vw,72px)}
+.pu{position:relative; margin:4px; padding:clamp(24px,3vw,40px); background:var(--bg-2); box-shadow:var(--pxb); overflow:hidden}
+.pu--main{--bc:var(--pink-deep); grid-row:span 2; background:radial-gradient(90% 70% at 15% 10%, rgba(255,46,147,.2), transparent 60%), var(--bg-2); display:flex; flex-direction:column; justify-content:flex-end; min-height:clamp(360px,36vw,500px)}
+.pu__icon{width:clamp(56px,6vw,84px); height:clamp(56px,6vw,84px); margin-bottom:auto; animation:bob 1.6s steps(2) infinite}
+.pu--main .pu__icon{width:clamp(88px,10vw,140px); height:clamp(88px,10vw,140px)}
+.pu__k{text-transform:uppercase; font-family:var(--f-pixel); font-size:clamp(.62rem,1vw,.75rem); color:var(--c); margin:24px 0 10px}
+.pu h3{margin:0; font-family:var(--f-display); font-weight:400; font-size:clamp(2rem,3.2vw,3rem); line-height:.98}
+.pu--main h3{font-size:clamp(2.6rem,5vw,4.4rem)}
+.pu p{margin:.8rem 0 0; color:var(--ink-2); max-width:46ch}
+.pu--side{display:flex; flex-direction:column}
+.perks{display:flex; flex-wrap:wrap; gap:14px; margin-top:clamp(22px,2.4vw,30px)}
+.perks span{--bw:2px; --bc:var(--edge-2); margin:2px; font-size:.92rem; color:var(--ink-2); padding:.55rem .9rem; box-shadow:var(--pxb)}
+
+/* ============ Continue ============ */
+.cont{text-align:center; padding-bottom:clamp(110px,12vw,160px)}
+.cont .screen{padding:clamp(48px,8vw,110px) clamp(20px,5vw,80px)}
+.cont__q{margin:0; text-transform:uppercase; font-family:var(--f-pixel); font-size:clamp(1.3rem,4.4vw,3.2rem); color:var(--ink); line-height:1.3}
+.cont__n{display:block; font-family:var(--f-pixel); font-size:clamp(4.5rem,15vw,11rem); color:var(--yellow); line-height:1.05; margin:.15em 0 .2em; text-shadow:8px 8px 0 var(--pink-deep)}
+.cont p{margin:0 auto; max-width:46ch; color:var(--ink-2); font-size:clamp(1.05rem,1.6vw,1.3rem)}
+.cont__cta{display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-top:clamp(28px,4vw,40px)}
+.cont__info{display:flex; flex-wrap:wrap; justify-content:center; gap:10px 28px; margin-top:clamp(28px,4vw,40px); color:var(--ink-2); font-size:.98rem}
+.cont__info a{display:inline-flex; align-items:center; gap:8px; text-decoration:none; text-align:left}
+.cont__info a:hover{color:var(--ink)}
+.cont__info svg{width:18px; height:18px; color:var(--cyan); flex:none}
+
+/* ============ Footer ============ */
+.foot{border-top:4px solid var(--edge); padding-block:44px 120px; color:var(--ink-3); font-size:.92rem}
+.foot__in{display:flex; flex-wrap:wrap; gap:24px 48px; align-items:flex-start; justify-content:space-between}
+.foot img{height:48px; width:auto}
+.foot p{margin:0 0 .3rem}
+.foot__demo{max-width:52ch}
+.foot__demo b{color:var(--yellow); font-weight:500}
+
+/* ============ Cart drawer ============ */
+.backdrop{position:fixed; inset:0; z-index:var(--z-backdrop); background:rgba(5,2,10,.65); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); opacity:0; pointer-events:none; transition:opacity .25s}
+.backdrop.is-open{opacity:1; pointer-events:auto}
+.cart{--bc:var(--edge-2); position:fixed; top:4px; right:4px; bottom:4px; z-index:var(--z-drawer); width:min(440px, calc(100vw - 8px)); background:#0e081a; box-shadow:var(--pxb), -30px 0 80px rgba(0,0,0,.5); display:flex; flex-direction:column; transform:translateX(110%); transition:transform .35s steps(7); visibility:hidden}
+.cart.is-open{transform:none; visibility:visible}
+.cart__head{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 20px; border-bottom:4px solid var(--edge)}
+.cart__head h2{margin:0; font-family:var(--f-display); font-weight:400; font-size:2.2rem}
+.cart__head .px{font-size:.55rem; color:var(--ink-3); margin:.3rem 0 0}
+.cart__head .px b{color:var(--yellow); font-weight:400}
+.cart__list{list-style:none; margin:0; padding:8px 20px; overflow-y:auto; flex:1; overscroll-behavior:contain}
+.line{display:grid; grid-template-columns:72px 1fr auto; gap:16px; align-items:center; padding:16px 0; border-bottom:2px dashed var(--edge)}
+.line:last-child{border-bottom:0}
+.line__img{--bw:2px; width:68px; height:68px; margin:2px; background:radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--c) 25%, transparent), var(--bg-2) 70%); box-shadow:var(--pxb); display:grid; place-items:center; padding:6px}
+.line__img img{max-height:100%; object-fit:contain}
+.line__name{font-weight:700; font-size:.95rem; line-height:1.25; margin:0}
+.line__price{font-family:var(--f-pixel); font-size:.6rem; color:var(--ink-2); margin:.45rem 0 0}
+.qty{display:flex; align-items:center; gap:8px; margin-top:.6rem}
+.qty button{--bw:2px; --bc:var(--edge-2); width:30px; height:30px; margin:2px; display:grid; place-items:center; background:var(--bg-2); box-shadow:var(--pxb); transition:transform .08s}
+.qty button:hover{--bc:var(--cyan)}
+.qty button:active{transform:translateY(2px)}
+.qty svg{width:16px; height:16px}
+.qty output{min-width:2.2ch; text-align:center; font-family:var(--f-pixel); font-size:.65rem}
+.line__del{width:40px; height:40px; display:grid; place-items:center; color:var(--ink-3); transition:color .15s}
+.line__del:hover{color:var(--pink)}
+.line__del svg{width:18px; height:18px}
+.cart__empty{display:grid; justify-items:center; text-align:center; gap:16px; padding:48px 24px; color:var(--ink-2)}
+.cart__empty .pix{width:64px; height:64px; animation:bob 1.2s steps(2) infinite}
+.cart__empty p{margin:0; max-width:28ch}
+.cart__foot{padding:18px 20px calc(20px + env(safe-area-inset-bottom)); border-top:4px solid var(--edge); background:#120a20}
+.cart__total{display:flex; justify-content:space-between; align-items:baseline; margin:0 0 6px}
+.cart__total span{color:var(--ink-2)}
+.cart__total strong{font-family:var(--f-pixel); font-weight:400; font-size:1.05rem; color:var(--yellow)}
+.cart__note{margin:0 0 18px; font-size:.88rem; color:var(--ink-3)}
+.cart__foot .btn{width:calc(100% - 8px)}
+.cart__foot[hidden]{display:none}
+
+/* ============ Mobile bar, demo, toasts ============ */
+.mbar{display:none}
+.demo{--bc:var(--edge-2); position:fixed; left:20px; bottom:20px; z-index:var(--z-demo); display:flex; align-items:center; gap:10px; max-width:min(380px, calc(100vw - 40px)); padding:10px 10px 10px 14px; background:rgba(19,11,34,.95); box-shadow:var(--pxb); color:var(--ink-2); font-size:.82rem; line-height:1.35}
+.demo b{color:var(--yellow); font-weight:500}
+#demo-x{flex:none; width:32px; height:32px; display:grid; place-items:center; color:var(--ink-3)}
+#demo-x:hover{color:var(--ink)}
+.demo svg{width:16px; height:16px}
+.demo[hidden]{display:none}
+.demo__chip{display:none; font-family:var(--f-pixel); font-size:.55rem; color:var(--yellow); padding:.2rem .1rem}
+.demo.is-min{padding:6px 6px 6px 12px}
+.demo.is-min .demo__txt{display:none}
+.demo.is-min .demo__chip{display:block}
+.toasts{position:fixed; z-index:var(--z-toast); top:calc(var(--hud) + 24px); right:var(--gutter); display:grid; gap:12px; justify-items:end; pointer-events:none}
+.toast{--bc:var(--c, var(--cyan)); font-family:var(--f-pixel); font-size:.6rem; text-transform:uppercase; line-height:1.5; padding:.8rem 1rem; margin:4px; background:#0b0926; box-shadow:var(--pxb); color:var(--ink); animation:toast 2.4s steps(1) both}
+.toast b{display:block; margin-top:.35rem; font-family:var(--f-body); font-size:.9rem; font-weight:700; text-transform:none; letter-spacing:0; color:var(--c, var(--cyan))}
+@keyframes toast{0%{opacity:0; transform:translateY(-8px)}6%{opacity:1; transform:none}88%{opacity:1}100%{opacity:0}}
+.fly{position:fixed; left:0; top:0; z-index:var(--z-toast); width:22px; height:22px; pointer-events:none}
+.fly__y{width:100%; height:100%}
+.sprite{position:fixed; z-index:var(--z-sprite); left:0; top:0; pointer-events:none; will-change:transform}
+.rain{position:fixed; top:-40px; z-index:var(--z-rain); width:28px; height:28px; pointer-events:none}
+
+/* ============ Responsive ============ */
+@media (max-width:1100px){
+  .hud__nav,.hud__score{display:none}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .players__grid{grid-template-columns:repeat(2,1fr)}
+  .player{min-height:clamp(320px,52vw,420px)}
+}
+@media (max-width:900px){
+  :root{--hud:58px}
+  .hero{padding-top:calc(var(--hud) + 22px)}
+  .hero__grid{grid-template-columns:1fr; justify-items:center; gap:22px}
+  .hero__copy{padding-bottom:0; text-align:center; justify-self:stretch}
+  .hero__title{font-size:clamp(2.6rem,11.4vw,4.4rem)}
+  .hero__sub{margin-inline:auto; font-size:1rem}
+  .hero__hint{display:none}
+  .cab{--w:min(380px, calc(100vw - 2 * var(--gutter) - 24px)); margin-bottom:clamp(30px,6vh,60px)}
+  .cab__lower{height:5em}
+  .coin-door{padding:.6em 1em}
+  .slot__mouth{height:2.2em}
+  .slot__txt{display:none}
+  .hero__floor{height:clamp(50px,9vh,90px)}
+  .pandora__grid,.pinball__grid{grid-template-columns:1fr}
+  .pandora__visual{max-width:560px}
+  .pin-stage{order:-1; height:clamp(300px,80vw,460px)}
+  .powerups__grid{grid-template-columns:1fr}
+  .pu--main{grid-row:auto; min-height:auto}
+  .pu--main .pu__icon{margin-bottom:28px}
+  .pu__icon{margin-bottom:22px}
+  .demo{bottom:calc(88px + env(safe-area-inset-bottom)); left:16px}
+  .mbar{position:fixed; z-index:var(--z-hud); left:0; right:0; bottom:0; display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:10px 14px calc(10px + env(safe-area-inset-bottom)); background:rgba(10,6,18,.94); border-top:4px solid var(--edge); transition:transform .3s steps(4)}
+  .mbar .btn{min-height:48px; padding:.85rem .5rem; font-size:.56rem}
+  .hero-in .mbar,.hero-in .demo{transform:translateY(calc(100% + 120px))}
+  .demo{transition:transform .3s steps(4)}
+  .hud .cred-btn{display:none}
+  .foot{padding-bottom:150px}
+}
+@media (max-width:640px){
+  body{font-size:1rem}
+  .grid{gap:16px}
+  .card__body{padding:14px 14px 16px}
+  .card__spec{font-size:.84rem}
+  .card__buy{flex-direction:column; align-items:stretch; gap:10px}
+  .btn-add{width:calc(100% - 6px); padding:.85rem .4rem}
+  .badge{top:10px; left:10px; font-size:.48rem}
+  .players__grid{gap:16px}
+  .player{padding:16px; min-height:300px}
+  .player__img{inset:44px 6px 104px}
+  .player__tag{top:12px; left:12px; font-size:.65rem}
+  .player__name{font-size:1.45rem}
+  .player__meta{font-size:.85rem; flex-direction:column}
+  .board li{grid-template-columns:1fr; gap:4px; text-align:center}
+  .board__main{grid-template-columns:1fr; justify-items:center}
+  .board__num{min-width:0; text-align:center}
+  .feats{grid-template-columns:1fr}
+  .specs{grid-template-columns:1fr 1fr}
+  .games__hint span:last-child{display:none}
+  .dialog{grid-template-columns:1fr}
+  .dialog__npc{width:52px}
+  .demo{font-size:.76rem}
+  .xp__lv{display:none}
+}
+@media (max-width:340px){ .grid{grid-template-columns:1fr} }
+
+/* ============ Reduced motion ============ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important}
+  .blink,.board li:first-child .board__rank,.slot__mouth i{animation:none!important}
+  .marquee__track{animation:none!important}
+}
+</style>
+</head>
+<body class="booting">
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<!-- ===== Boot: INSERT COIN ===== -->
+<div class="boot" id="boot" role="dialog" aria-modal="true" aria-labelledby="boot-title">
+  <div class="boot__screen">
+    <h2 id="boot-title" class="sr">Pantalla de inicio de Retro Universe</h2>
+    <p class="boot__hi px" aria-hidden="true"><span>1UP <b>000000</b></span><span>HI-SCORE <b>009800</b></span></p>
+    <img class="boot__logo" src="img/logo.png" alt="Retro Universe" width="315" height="168">
+    <button class="boot__coin" id="insert-coin" type="button"><span class="blink">INSERT COIN</span></button>
+    <p class="boot__hint">Pulsa el botón o la tecla Enter para entrar</p>
+    <p class="boot__cred px">Credit <span id="boot-cred">00</span></p>
+    <p class="boot__legal px">© Retro Universe S.L. Mijas Costa</p>
+  </div>
+</div>
+<div class="crt-flash" id="crt-flash" aria-hidden="true"></div>
+
+<!-- ===== HUD ===== -->
+<header class="hud" id="hud">
+  <div class="wrap hud__in">
+    <a class="hud__logo" href="#inicio" aria-label="Retro Universe, volver al inicio"><img src="img/logo.png" alt="" width="315" height="168"></a>
+    <p class="hud__score px" aria-hidden="true">Score <b id="score">000000</b></p>
+    <nav class="hud__nav" aria-label="Secciones">
+      <a href="#jugador">Máquinas</a>
+      <a href="#tienda">Tienda</a>
+      <a href="#pandora">Pandora Box</a>
+      <a href="#pinball">Pinball</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="hud__right">
+      <button class="icon-btn" id="snd" type="button" aria-pressed="false" aria-label="Sonidos 8-bit">
+        <svg class="snd-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>
+        <svg class="snd-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+      </button>
+      <button class="cred-btn" type="button" data-open-cart aria-label="Abrir cesta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="px">Cesta <b data-count>00</b></span>
+      </button>
+    </div>
+  </div>
+  <div class="xp" aria-hidden="true">
+    <div class="xp__bar"></div><div class="xp__fill" id="xp"></div>
+    <span class="xp__lv px">LV <b id="lv">1</b></span>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ===== Hero: arcade cabinet ===== -->
+  <section class="hero" id="inicio" data-stage="1">
+    <canvas id="space" aria-hidden="true"></canvas>
+    <div class="hero__floor" aria-hidden="true"></div>
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <h1 class="hero__title"><span class="sr">Retro Universe: </span><span class="row" data-in style="--d:120">Donde los clásicos</span><span class="row hl" data-in style="--d:240">cobran vida.</span></h1>
+        <p class="hero__sub" data-in style="--d:380">Arcades, bartops, pinball virtual y Pandora Box listos para enchufar y jugar, con 3 años de garantía.</p>
+        <p class="hero__hint px" data-in style="--d:520" aria-hidden="true"><span class="key key--j">&lt;&gt;</span> elige <span class="key">A</span> tienda <span class="key key--b">B</span> WhatsApp</p>
+      </div>
+
+      <div class="cab" id="cab" aria-label="Recreativa interactiva de Retro Universe" role="group">
+        <div class="cab__marquee"><img src="img/logo.png" alt="Retro Universe" width="315" height="168"></div>
+        <div class="cab__head">
+          <div class="crt" id="crt">
+            <p class="crt__hud px" aria-hidden="true"><span>Hi-score <b>009800</b></span><span>Credit <b data-count>00</b></span></p>
+            <button class="crt__go" id="crt-go" type="button" style="--c:var(--pink)"><img id="crt-img" src="img/p/bartop-ghost.webp" width="900" height="900" alt=""><span class="sr" id="crt-sr">Ver Arcades y Bartops en la tienda</span></button>
+            <div class="crt__info" aria-hidden="true">
+              <p class="crt__name" id="crt-name">Arcades y Bartops</p>
+              <p class="crt__price px" id="crt-price" style="--c:var(--pink)">desde 185,99 €</p>
+            </div>
+            <div class="crt__nav">
+              <button class="crt__arrow" type="button" data-cab="-1" aria-label="Máquina anterior"><span></span></button>
+              <span class="crt__label px" id="crt-label" style="--c:var(--pink)">P1 Arcades</span>
+              <button class="crt__arrow crt__arrow--r" type="button" data-cab="1" aria-label="Máquina siguiente"><span></span></button>
+            </div>
+            <div class="crt__noise" aria-hidden="true"></div>
+            <div class="crt__scan" aria-hidden="true"></div>
+            <div class="crt__glare" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="cab__panel">
+          <button class="stick" id="stick" type="button" aria-label="Joystick: siguiente máquina"><span class="stick__base"></span><span class="stick__shaft"><span class="stick__ball"></span></span></button>
+          <div class="abtns">
+            <a class="abtn" id="btn-a" href="#tienda" aria-label="Botón A: ver la tienda"><span class="abtn__cap" aria-hidden="true">A</span><span class="abtn__lbl" aria-hidden="true">Tienda</span></a>
+            <a class="abtn abtn--b" id="btn-b" data-wa href="https://wa.me/34672835894" target="_blank" rel="noopener" aria-label="Botón B: escríbenos por WhatsApp"><span class="abtn__cap" aria-hidden="true">B</span><span class="abtn__lbl" aria-hidden="true">WhatsApp</span></a>
+          </div>
+        </div>
+        <div class="cab__lower">
+          <div class="coin-door">
+            <button class="slot" type="button" data-coin aria-label="Insertar moneda"><span class="slot__mouth"><i></i></span><span class="slot__txt">100 ptas</span></button>
+            <button class="slot" type="button" data-coin aria-label="Insertar moneda"><span class="slot__mouth"><i></i></span><span class="slot__txt">100 ptas</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Marquee ===== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" id="marquee"></div>
+  </div>
+
+  <!-- ===== High scores ===== -->
+  <section class="sec scores" aria-labelledby="scores-t" data-stage="2">
+    <div class="wrap">
+      <div class="screen">
+        <h2 class="scores__title px" id="scores-t">High <span>scores</span></h2>
+        <ol class="board">
+          <li style="--c:var(--pink)"><span class="board__rank" aria-hidden="true">1ST</span><span class="board__main"><span class="board__num" data-count-to="20" data-prefix="+">+20</span><span class="board__label">años montando máquinas</span></span></li>
+          <li style="--c:var(--cyan)"><span class="board__rank" aria-hidden="true">2ND</span><span class="board__main"><span class="board__num" data-count-to="9800">9.800</span><span class="board__label">juegos en una sola máquina</span></span></li>
+          <li style="--c:var(--yellow)"><span class="board__rank" aria-hidden="true">3RD</span><span class="board__main"><span class="board__num" data-count-to="3">3</span><span class="board__label">años de garantía en cada compra</span></span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Player select ===== -->
+  <section class="sec players" id="jugador" aria-labelledby="players-t" data-stage="3">
+    <div class="wrap">
+      <div>
+        <h2 class="h2 reveal" id="players-t">Selecciona tu jugador</h2>
+        <p class="lead">Cuatro formas de volver a los 80 y 90. Elige una y te llevamos directo a sus máquinas.</p>
+      </div>
+      <div class="players__grid">
+        <button class="player p1" type="button" data-pick="arcade" aria-label="Ver Arcades y Bartops en la tienda">
+          <span class="player__tag" aria-hidden="true">P1</span>
+          <span class="player__img"><img src="img/p/bartop-ghost.webp" width="900" height="900" alt="" loading="lazy"><span class="dissolve"></span></span>
+          <span class="player__name">Arcades y Bartops</span>
+          <span class="player__meta"><span data-cat-count="arcade"></span><b data-cat-from="arcade"></b></span>
+          <span class="player__ready" aria-hidden="true">P1 READY!</span>
+          <span class="corners" aria-hidden="true"></span>
+        </button>
+        <button class="player p2" type="button" data-pick="pinball" aria-label="Ver Pinball Virtual en la tienda">
+          <span class="player__tag" aria-hidden="true">P2</span>
+          <span class="player__img"><img src="img/p/pinball-bttf.webp" width="600" height="900" alt="" loading="lazy"><span class="dissolve"></span></span>
+          <span class="player__name">Pinball Virtual</span>
+          <span class="player__meta"><span data-cat-count="pinball"></span><b data-cat-from="pinball"></b></span>
+          <span class="player__ready" aria-hidden="true">P2 READY!</span>
+          <span class="corners" aria-hidden="true"></span>
+        </button>
+        <button class="player p3" type="button" data-pick="pandora" aria-label="Ver Pandora Box en la tienda">
+          <span class="player__tag" aria-hidden="true">P3</span>
+          <span class="player__img"><img src="img/p/pandora-10.webp" width="900" height="600" alt="" loading="lazy"><span class="dissolve"></span></span>
+          <span class="player__name">Pandora Box</span>
+          <span class="player__meta"><span data-cat-count="pandora"></span><b data-cat-from="pandora"></b></span>
+          <span class="player__ready" aria-hidden="true">P3 READY!</span>
+          <span class="corners" aria-hidden="true"></span>
+        </button>
+        <button class="player p4" type="button" data-pick="consolas" aria-label="Ver Consolas Retro en la tienda">
+          <span class="player__tag" aria-hidden="true">P4</span>
+          <span class="player__img"><img src="img/p/r36s.webp" width="600" height="900" alt="" loading="lazy"><span class="dissolve"></span></span>
+          <span class="player__name">Consolas Retro</span>
+          <span class="player__meta"><span data-cat-count="consolas"></span><b data-cat-from="consolas"></b></span>
+          <span class="player__ready" aria-hidden="true">P4 READY!</span>
+          <span class="corners" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Shop ===== -->
+  <section class="sec shop" id="tienda" aria-labelledby="shop-t" data-stage="4">
+    <div class="wrap">
+      <div>
+        <h2 class="h2 reveal" id="shop-t">Elige tu máquina</h2>
+        <div class="screen dialog">
+          <span class="dialog__npc pix" data-pix="npc" aria-hidden="true"></span>
+          <div>
+            <p class="dialog__who px">Tendero</p>
+            <p class="dialog__txt" id="npc-txt">¡Bienvenido, jugador! Todos los precios llevan IVA. Mete en la cesta lo que te guste y mándanos el pedido por WhatsApp: te confirmamos stock y envío antes de pagar nada.</p>
+          </div>
+          <span class="dialog__more" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="tabs" role="group" aria-label="Filtrar por categoría">
+        <button class="tab" type="button" data-filter="all" aria-pressed="true">Todo<sup data-cat-n="all"></sup></button>
+        <button class="tab" type="button" data-filter="arcade" style="--c:var(--pink)" aria-pressed="false">Arcades y Bartops<sup data-cat-n="arcade"></sup></button>
+        <button class="tab" type="button" data-filter="pinball" style="--c:var(--cyan)" aria-pressed="false">Pinball Virtual<sup data-cat-n="pinball"></sup></button>
+        <button class="tab" type="button" data-filter="pandora" style="--c:var(--yellow)" aria-pressed="false">Pandora Box<sup data-cat-n="pandora"></sup></button>
+        <button class="tab" type="button" data-filter="consolas" style="--c:var(--violet-ink)" aria-pressed="false">Consolas Retro<sup data-cat-n="consolas"></sup></button>
+      </div>
+      <div class="grid" id="grid"></div>
+      <p class="shop__note">¿Buscas otro modelo, tamaño o temática? Tenemos más en el almacén: <a data-wa href="https://wa.me/34672835894" target="_blank" rel="noopener">pregúntanos por WhatsApp</a>.</p>
+    </div>
+  </section>
+
+  <!-- ===== Pandora ===== -->
+  <section class="sec pandora" id="pandora" aria-labelledby="pandora-t" data-stage="5">
+    <div class="wrap pandora__grid">
+      <div class="pandora__visual">
+        <img src="img/p/pandora-premium.webp" width="900" height="600" alt="Pandora Box Premium con dos joysticks, botones arcade y trackball" loading="lazy">
+      </div>
+      <div>
+        <h2 class="h2 reveal" id="pandora-t"><span class="big9800" aria-hidden="true" data-count-to="9800">9.800</span><span class="sr">9.800</span> juegos. Una sola máquina.</h2>
+        <p class="lead">La Pandora Box mete décadas de recreativas en una consola para dos jugadores. La enchufas a la tele por HDMI y a jugar.</p>
+        <div class="games">
+          <div class="screen">
+            <p class="games__hint px" aria-hidden="true"><span>Select game</span><span>Press <b>Start</b></span></p>
+            <ul class="chips" id="chips" aria-label="Algunos de los juegos incluidos">
+              <li class="chip">Pac-Man</li><li class="chip">Street Fighter II</li><li class="chip">Metal Slug</li><li class="chip">Final Fight</li><li class="chip">Bubble Bobble</li><li class="chip">Donkey Kong</li><li class="chip">Galaga</li><li class="chip">Toki</li><li class="chip chip--more">Y miles más</li>
+            </ul>
+          </div>
+        </div>
+        <ul class="feats">
+          <li><span class="pix" data-pix="dot" data-c="pink"></span>Guarda la partida y sigue otro día</li>
+          <li><span class="pix" data-pix="dot" data-c="cyan"></span>Busca cualquier juego por su nombre</li>
+          <li><span class="pix" data-pix="dot" data-c="yellow"></span>Vídeo de cada juego antes de elegirlo</li>
+          <li><span class="pix" data-pix="dot" data-c="violet"></span>Filtro scanline para el look de tubo</li>
+        </ul>
+        <div class="pandora__cta"><button class="btn" type="button" data-pick="pandora" style="--b:var(--yellow); --bd:var(--yellow-deep); --bi:#120d00">Ver Pandora Box</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Pinball sizes ===== -->
+  <section class="sec pinball" id="pinball" aria-labelledby="pinball-t" data-stage="6">
+    <div class="wrap">
+      <h2 class="h2 reveal" id="pinball-t">Elige el tamaño de tu mesa</h2>
+      <p class="lead">Pinballs virtuales optimizados para Visual Pinball X y Future Pinball, con opciones de solenoides, shaker y DOF para que cada bola se sienta de verdad.</p>
+      <div class="pinball__grid">
+        <div>
+          <div class="sizer" role="tablist" aria-label="Tamaño de pantalla">
+            <button class="size-btn" role="tab" type="button" id="tab-13" aria-controls="pin-13" aria-selected="false">13,3"<small>Mini</small></button>
+            <button class="size-btn" role="tab" type="button" id="tab-18" aria-controls="pin-18" aria-selected="true">18,5"<small>Normal</small></button>
+            <button class="size-btn" role="tab" type="button" id="tab-27" aria-controls="pin-27" aria-selected="false">27,5"<small>Pro</small></button>
+          </div>
+          <div class="ruler" aria-hidden="true">
+            <div class="ruler__track"></div><div class="ruler__fill" id="ruler"></div>
+            <span class="ruler__mark" style="left:48%">13,3</span><span class="ruler__mark" style="left:67%">18,5</span><span class="ruler__mark" style="left:96%">27,5</span>
+          </div>
+          <div class="pin-panel" id="pin-13" role="tabpanel" aria-labelledby="tab-13" hidden>
+            <h3>Mini Pinball en acero</h3>
+            <dl class="specs"><div><dt>Pantalla</dt><dd>13,3" 1080p</dd></div><div><dt>PC</dt><dd>Intel N95</dd></div><div><dt>Botones</dt><dd>12 arcade</dd></div></dl>
+            <div class="pin-buy"><p class="price"><s><span class="sr">Antes </span>659,99 €<span class="off">-17%</span></s><strong>549,99 €</strong></p><button class="btn" type="button" data-add="pin-mini" style="--b:var(--cyan); --bd:var(--cyan-deep); --bi:#021417">+ Añadir</button></div>
+          </div>
+          <div class="pin-panel" id="pin-18" role="tabpanel" aria-labelledby="tab-18">
+            <h3>Pinball Virtual 18,5"</h3>
+            <dl class="specs"><div><dt>Playfield</dt><dd>18,5"</dd></div><div><dt>Backglass</dt><dd>15"</dd></div><div><dt>PC</dt><dd>Ryzen 5</dd></div></dl>
+            <div class="pin-buy"><p class="price"><strong>949,99 €</strong></p><button class="btn" type="button" data-add="pin-18" style="--b:var(--cyan); --bd:var(--cyan-deep); --bi:#021417">+ Añadir</button></div>
+          </div>
+          <div class="pin-panel" id="pin-27" role="tabpanel" aria-labelledby="tab-27" hidden>
+            <h3>Pinball Virtual 27,5"</h3>
+            <dl class="specs"><div><dt>Playfield</dt><dd>27,5"</dd></div><div><dt>Backglass + DMD</dt><dd>19" + 7"</dd></div><div><dt>PC</dt><dd>Ryzen 7</dd></div></dl>
+            <div class="pin-buy"><p class="price"><s><span class="sr">Antes </span>2.199,99 €<span class="off">-9%</span></s><strong>1.999,99 €</strong></p><button class="btn" type="button" data-add="pin-27" style="--b:var(--cyan); --bd:var(--cyan-deep); --bi:#021417">+ Añadir</button></div>
+          </div>
+          <div class="pin-tech"><span>Visual Pinball X</span><span>Future Pinball</span><span>Solenoides</span><span>Shaker</span><span>DOF</span></div>
+        </div>
+        <div class="pin-stage" aria-hidden="true">
+          <img src="img/p/pinball-mini.webp" width="900" height="600" alt="" loading="lazy" data-pin="0" style="height:46%">
+          <img src="img/p/pinball-185.webp" width="600" height="900" alt="" loading="lazy" data-pin="1" class="on" style="height:78%">
+          <img src="img/p/pinball-bttf.webp" width="600" height="900" alt="" loading="lazy" data-pin="2" style="height:98%">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Power-ups ===== -->
+  <section class="sec powerups" aria-labelledby="pu-t" data-stage="7">
+    <div class="wrap">
+      <h2 class="h2 reveal" id="pu-t">Power-ups incluidos</h2>
+      <div class="powerups__grid">
+        <article class="pu pu--main" style="--c:var(--pink)">
+          <span class="pu__icon pix" data-pix="heart" aria-hidden="true"></span>
+          <p class="pu__k" aria-hidden="true">+3 vidas</p>
+          <h3>3 años de garantía y servicio técnico propio</h3>
+          <p>Si algo falla, lo arreglamos nosotros desde Mijas Costa: reparaciones, recambios y asesoramiento en español, sin intermediarios.</p>
+        </article>
+        <article class="pu pu--side" style="--c:var(--yellow)">
+          <span class="pu__icon pix" data-pix="star" aria-hidden="true"></span>
+          <p class="pu__k" aria-hidden="true">Nivel experto</p>
+          <h3>Más de 20 años de experiencia</h3>
+          <p>Montamos y configuramos cada máquina para que la enciendas y juegues.</p>
+        </article>
+        <article class="pu pu--side" style="--c:var(--cyan)">
+          <span class="pu__icon pix" data-pix="bolt" aria-hidden="true"></span>
+          <p class="pu__k" aria-hidden="true">Speed up</p>
+          <h3>Envío desde España</h3>
+          <p>Con seguimiento y seguro a todo riesgo. Gratis a partir de 80 € en península y Portugal.</p>
+        </article>
+      </div>
+      <div class="perks"><span>Contrarreembolso sin recargo</span><span>Factura con IVA desglosado</span><span>14 días para devolver</span></div>
+    </div>
+  </section>
+
+  <!-- ===== Continue ===== -->
+  <section class="sec cont" id="contacto" aria-labelledby="cont-t" data-stage="8">
+    <div class="wrap">
+      <div class="screen">
+        <h2 class="cont__q" id="cont-t">Continue?</h2>
+        <span class="cont__n" id="countdown" aria-hidden="true">9</span>
+        <p>¿Dudas con el tamaño, los juegos o el envío? Escríbenos y te ayudamos a elegir tu máquina.</p>
+        <div class="cont__cta">
+          <a class="btn btn--wa" data-wa href="https://wa.me/34672835894" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg>
+            WhatsApp
+          </a>
+        </div>
+        <div class="cont__info">
+          <a href="mailto:info@retrouniverse.es"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>info@retrouniverse.es</a>
+          <a href="https://maps.google.com/?q=C%2F+Archidona+nave+30%2C+29649+Mijas+Costa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>C/ Archidona, nave 30, Mijas Costa (Málaga)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div><img src="img/logo.png" alt="Retro Universe" width="315" height="168" loading="lazy"></div>
+    <div>
+      <p>RETRO UNIVERSE S.L. CIF B56157308</p>
+      <p>Todos los precios incluyen IVA.</p>
+    </div>
+    <div class="foot__demo">
+      <p><b>Propuesta de diseño de ejemplo, no es la web oficial.</b> Imágenes de producto retocadas a partir de las fotos de retrouniverse.es. Diseño: Ismail Belabbes.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== Cart ===== -->
+<div class="backdrop" id="backdrop"></div>
+<aside class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-t" aria-hidden="true">
+  <div class="cart__head">
+    <div>
+      <h2 id="cart-t">Tu cesta</h2>
+      <p class="px">Credit <b data-count>00</b></p>
+    </div>
+    <button class="icon-btn" type="button" id="cart-close" aria-label="Cerrar cesta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  </div>
+  <ul class="cart__list" id="cart-list"></ul>
+  <div class="cart__foot" id="cart-foot" hidden>
+    <p class="cart__total"><span>Total con IVA</span><strong id="cart-total">0,00 €</strong></p>
+    <p class="cart__note">Te confirmamos disponibilidad y plazo de envío por WhatsApp. No pagas nada todavía.</p>
+    <a class="btn btn--wa" id="cart-wa" href="https://wa.me/34672835894" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg>
+      Pedir por WhatsApp
+    </a>
+  </div>
+</aside>
+
+<!-- ===== Mobile bar ===== -->
+<nav class="mbar" aria-label="Acciones rápidas">
+  <button class="btn" type="button" data-open-cart>Cesta <span data-count>00</span></button>
+  <a class="btn btn--wa" data-wa href="https://wa.me/34672835894" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg>
+    WhatsApp
+  </a>
+</nav>
+
+<div class="demo" id="demo" role="note">
+  <button type="button" class="demo__chip" id="demo-chip" aria-expanded="true">Demo</button><span class="demo__txt"><b>Propuesta de muestra:</b> aún hay mucho margen de mejora.</span>
+  <button type="button" id="demo-x" aria-label="Ocultar aviso"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+</div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<div class="fx fx-grain" aria-hidden="true"></div>
+<div class="fx fx-scan" aria-hidden="true"></div>
+<div class="fx fx-vignette" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></symbol>
+</svg>
+
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const root = document.documentElement;
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = matchMedia('(pointer: fine)').matches;
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+const WA = '34672835894';
+const dots = s => s.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const fmt = n => { const [i, d] = n.toFixed(2).split('.'); return dots(i) + ',' + d + ' €'; };
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/* ---------- Pixel art (bitmaps drawn as crisp SVG rects) ---------- */
+const PAL = { O: '#0a0612', F: '#27f0ff', B: '#ff2e93', W: '#f4eeff', P: '#1b1b6b', Y: '#ffd23f', D: '#c97a00', R: '#ff2e93', C: '#27f0ff', V: '#7a3cff', S: '#ffc89a', K: '#7a3cff' };
+const BMP = {
+  arrow: ['O..........', 'OO.........', 'OFO........', 'OFFO.......', 'OFFFO......', 'OFFFFO.....', 'OFFFFFO....', 'OFFFFFFO...', 'OFFFFFFFO..', 'OFFFFFFFFO.', 'OFFFFFOOOOO', 'OFFOFFO....', 'OFO.OFFO...', 'OO..OFFO...', 'O....OFFO..', '.....OFFO..', '......OO...'],
+  ghost: ['....BBBBBB....', '..BBBBBBBBBB..', '.BBBBBBBBBBBB.', '.BBWWBBBBWWBB.', 'BBWWWWBBWWWWBB', 'BBWWPPBBWWPPBB', 'BBWWPPBBWWPPBB', 'BBBWWBBBBWWBBB', 'BBBBBBBBBBBBBB', 'BBBBBBBBBBBBBB', 'BBBBBBBBBBBBBB', 'BBBBBBBBBBBBBB', 'BB.BBB..BBB.BB', 'B...BB..BB...B'],
+  ship: ['......C......', '.....CCC.....', '.....CCC.....', '.Y...CWC...Y.', '.C..CCWCC..C.', '.C.CCCCCCC.C.', '.CCCCBCBCCCC.', 'CCCCCCCCCCCCC', 'CC.BB.C.BB.CC', 'C.....C.....C'],
+  coin: ['...YYYY...', '.YYDDDDYY.', '.YDYYYYDY.', 'YDYYDDYYDY', 'YDYYDYYYDY', 'YDYYDYYYDY', 'YDYYDDYYDY', '.YDYYYYDY.', '.YYDDDDYY.', '...YYYY...'],
+  heart: ['.RR...RR.', 'RRRR.RRRR', 'RRWRRRRRR', 'RWRRRRRRR', 'RRRRRRRRR', '.RRRRRRR.', '..RRRRR..', '...RRR...', '....R....'],
+  star: ['.....Y.....', '....YYY....', '....YYY....', 'YYYYYYYYYYY', '.YYYYWYYYY.', '..YYYYYYY..', '..YYYYYYY..', '.YYYY.YYYY.', '.YYY...YYY.', 'YY.......YY'],
+  bolt: ['.....CCCC', '....CCCC.', '...CCCC..', '..CCCC...', '.CCCCCCCC', '....CCCC.', '...CCCC..', '..CCC....', '.CCC.....', 'CC.......'],
+  npc: ['....RRRR....', '...RRRRRR...', '..RRRRRRRRR.', '...SSSSSS...', '...SOSSOS...', '...SSSSSS...', '....SRRS....', '..CCCCCCCC..', '.CCCYCCYCCC.', '.SCCCCCCCCS.', '.S.CCCCCC.S.', '...KK..KK...', '...KK..KK...', '..OOO..OOO..'],
+  dot: ['.XX.', 'XXXX', 'XXXX', '.XX.']
+};
+function pix(name, pal = PAL) {
+  const rows = BMP[name], h = rows.length, w = rows[0].length;
+  let r = '';
+  rows.forEach((row, y) => {
+    let x = 0;
+    while (x < w) {
+      const ch = row[x];
+      if (ch === '.') { x++; continue; }
+      let run = 1;
+      while (x + run < w && row[x + run] === ch) run++;
+      r += `<rect x="${x}" y="${y}" width="${run}" height="1" fill="${pal[ch]}"/>`;
+      x += run;
+    }
+  });
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`;
+}
+$$('[data-pix]').forEach(el => {
+  const c = el.dataset.c, p = { ...PAL };
+  if (c) p.X = { pink: '#ff2e93', cyan: '#27f0ff', yellow: '#ffd23f', violet: '#b69cff' }[c];
+  el.innerHTML = pix(el.dataset.pix, p);
+});
+
+/* pixel cursor */
+if (finePointer) {
+  const mk = fill => `url("data:image/svg+xml,${encodeURIComponent(pix('arrow', { ...PAL, F: fill }).replace(' aria-hidden="true"', '').replace('viewBox', 'width="22" height="34" viewBox'))}")`;
+  root.style.setProperty('--cursor', `${mk('#27f0ff')} 1 1, auto`);
+  root.style.setProperty('--cursor-hit', `${mk('#ff2e93')} 1 1, pointer`);
+}
+
+/* CRT grain + pixel dissolve sprite sheet (generated once) */
+(() => {
+  const c = document.createElement('canvas'); c.width = c.height = 160;
+  const x = c.getContext('2d'), img = x.createImageData(160, 160);
+  for (let i = 0; i < img.data.length; i += 4) { const v = Math.random() * 255; img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255; }
+  x.putImageData(img, 0, 0);
+  root.style.setProperty('--noise', `url(${c.toDataURL('image/png')})`);
+  const N = 8, S = 16, cell = 12, d = document.createElement('canvas');
+  d.width = N * S * cell; d.height = S * cell;
+  const dx = d.getContext('2d'), order = [...Array(S * S).keys()].sort(() => Math.random() - .5);
+  dx.fillStyle = '#000';
+  for (let f = 0; f < N; f++) {
+    const upto = Math.round((f / (N - 1)) * S * S);
+    for (let k = 0; k < upto; k++) { const p = order[k]; dx.fillRect(f * S * cell + (p % S) * cell, Math.floor(p / S) * cell, cell, cell); }
+  }
+  root.style.setProperty('--dissolve', `url(${d.toDataURL('image/png')})`);
+})();
+
+/* ---------- 8-bit sound (off by default) ---------- */
+const Snd = {
+  on: store.get('ru-snd', false), ctx: null,
+  ensure() { if (!this.ctx) { const A = window.AudioContext || window.webkitAudioContext; if (A) this.ctx = new A(); } if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); return this.ctx; },
+  tone(f, t0, dur, type = 'square', vol = .06) {
+    const c = this.ensure(); if (!c) return;
+    const o = c.createOscillator(), g = c.createGain(), t = c.currentTime + t0;
+    o.type = type; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    o.connect(g).connect(c.destination); o.start(t); o.stop(t + dur + .02);
+  },
+  play(name, force) {
+    if (!this.on && !force) return;
+    ({
+      coin: [[988, 0, .08], [1319, .08, .38]],
+      add: [[523, 0, .06], [659, .05, .06], [784, .1, .06], [1047, .15, .16]],
+      pick: [[660, 0, .06], [880, .06, .1]],
+      tick: [[440, 0, .03, 'square', .03]],
+      level: [[784, 0, .08], [988, .08, .08], [1175, .16, .08], [1568, .24, .22]],
+      cheat: [[523, 0, .08], [659, .08, .08], [784, .16, .08], [1047, .24, .08], [1319, .32, .08], [1568, .4, .3]]
+    }[name] || []).forEach(a => this.tone(...a));
+  }
+};
+const sndBtn = $('#snd');
+const syncSnd = () => sndBtn.setAttribute('aria-pressed', String(Snd.on));
+syncSnd();
+sndBtn.addEventListener('click', () => { Snd.on = !Snd.on; store.set('ru-snd', Snd.on); syncSnd(); if (Snd.on) Snd.play('pick'); });
+
+/* ---------- Score (scroll progress + bonuses) ---------- */
+let maxProg = 0, bonus = 0;
+const scoreEl = $('#score');
+const drawScore = () => { scoreEl.textContent = String(Math.round(maxProg * 900) * 10 + bonus).padStart(6, '0'); };
+const addBonus = n => { bonus += n; drawScore(); };
+
+/* ---------- Toasts ---------- */
+function toast(html, color) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.innerHTML = html; if (color) t.style.setProperty('--c', color);
+  $('#toasts').append(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+/* ---------- Boot: INSERT COIN + CRT power-on ---------- */
+const boot = $('#boot');
+let live = false;
+function goLive() {
+  if (live) return; live = true;
+  document.body.classList.remove('booting');
+  root.classList.add('is-live');
+  startAmbient();
+}
+if (root.classList.contains('booted') || !boot) goLive();
+else {
+  const coin = $('#insert-coin');
+  coin.focus({ preventScroll: true });
+  const start = () => {
+    if (boot.classList.contains('is-ready')) return;
+    Snd.play('coin', true);
+    boot.classList.add('is-ready');
+    $('#boot-cred').textContent = '01';
+    coin.firstElementChild.textContent = 'READY!';
+    try { sessionStorage.setItem('ru-booted', '1'); } catch (e) {}
+    if (reduce) {
+      boot.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }).onfinish = () => { boot.remove(); goLive(); };
+      return;
+    }
+    setTimeout(() => {
+      boot.animate([{ transform: 'scale(1)', opacity: 1, filter: 'brightness(1)' }, { transform: 'scale(1.02, .006)', opacity: 1, filter: 'brightness(3)' }, { transform: 'scale(0, .006)', opacity: 0 }], { duration: 420, easing: 'cubic-bezier(.7,0,.84,0)', fill: 'forwards' })
+        .onfinish = () => {
+          boot.remove();
+          $('#crt-flash').animate([{ transform: 'scaleX(0)', opacity: 1 }, { transform: 'scaleX(1)', opacity: 1, offset: .35 }, { transform: 'scaleX(1) scaleY(260)', opacity: 0 }], { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)' });
+          $('main').animate([{ transform: 'scaleY(.02)', opacity: .2, filter: 'brightness(2.4)' }, { transform: 'scaleY(1)', opacity: 1, filter: 'brightness(1)' }], { duration: 520, easing: 'cubic-bezier(.16,1,.3,1)' });
+          goLive();
+        };
+    }, 360);
+  };
+  coin.addEventListener('click', start);
+  boot.addEventListener('keydown', e => { if (e.key === 'Tab') { e.preventDefault(); coin.focus(); } });
+  document.addEventListener('keydown', e => { if (!live && (e.key === 'Enter' || e.key === ' ') && document.activeElement !== coin) { e.preventDefault(); start(); } });
+}
+
+/* ---------- Pixel space backdrop (low-res canvas, scaled up crisp) ---------- */
+function startSpace() {
+  const cv = $('#space'), hero = $('.hero');
+  if (!cv) return;
+  const g = cv.getContext('2d');
+  const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const SKY = ['#05020b', '#080414', '#0c051d', '#120727', '#190a32', '#210c3c', '#2a0f47'].map(rgb);
+  const PLANET = ['#1a0730', '#3d0f5c', '#7a1d7e', '#c4237f', '#ff2e93', '#ff8fc4'].map(rgb);
+  const RING = ['#5c2a00', '#c97a00', '#ffd23f', '#fff1b0'].map(rgb);
+  const MOON = ['#2a2440', '#5a5470', '#8c87a0', '#c9c5d6'].map(rgb);
+  let W = 0, H = 0, layers = null, stars = [], shoot = null, frame = 0, raf = 0, last = 0, onScreen = true;
+  const dith = (pal, v, x, y) => { const t = Math.max(0, Math.min(.999, v)) * (pal.length - 1), i = Math.floor(t); return pal[(t - i) * 16 > BAYER[(x & 3) + (y & 3) * 4] ? Math.min(i + 1, pal.length - 1) : i]; };
+  function build() {
+    const r = hero.getBoundingClientRect(), s = r.width > 900 ? 4 : 3;
+    W = Math.ceil(r.width / s); H = Math.ceil(r.height / s);
+    cv.width = W; cv.height = H;
+    const mobile = r.width <= 900;
+    const sky = new ImageData(W, H), fg = new ImageData(W, H);
+    const put = (img, x, y, c) => { const k = (y * W + x) * 4; img.data[k] = c[0]; img.data[k + 1] = c[1]; img.data[k + 2] = c[2]; img.data[k + 3] = 255; };
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) put(sky, x, y, dith(SKY, y / H, x, y));
+    const R = Math.round(Math.min(W, H) * (mobile ? .16 : .14)), cx = Math.round(W * (mobile ? .8 : .56)), cy = Math.round(H * (mobile ? .37 : .18));
+    for (let y = Math.max(0, cy - R * 2); y < Math.min(H, cy + R * 2); y++) {
+      for (let x = Math.max(0, cx - R * 2); x < Math.min(W, cx + R * 2); x++) {
+        const dx = (x - cx) / R, dy = (y - cy) / R, d2 = dx * dx + dy * dy;
+        const rx = dx * .94 + dy * .34, ry = -dx * .34 + dy * .94;
+        const e = (rx / 1.85) ** 2 + (ry / .42) ** 2;
+        const ring = e > .62 && e < 1 && !(e > .78 && e < .83);
+        if (ring && (d2 > 1 || ry > 0)) { put(fg, x, y, dith(RING, 1.15 - e * .9 + (ry > 0 ? .15 : -.1), x, y)); continue; }
+        if (d2 <= 1) {
+          const nz = Math.sqrt(1 - d2), light = -dx * .5 - dy * .55 + nz * .7;
+          const band = .14 * Math.sin((dy * 9 + dx * 1.5) * 1.7) + .06 * Math.sin(dy * 23);
+          put(fg, x, y, dith(PLANET, light * .75 + .25 + band, x, y));
+        }
+      }
+    }
+    const mr = Math.max(5, Math.round(H * .045)), mx = Math.round(W * (mobile ? .14 : .08)), my = Math.round(H * (mobile ? .12 : .16));
+    for (let y = my - mr; y <= my + mr; y++) for (let x = mx - mr; x <= mx + mr; x++) {
+      const dx = (x - mx) / mr, dy = (y - my) / mr, d2 = dx * dx + dy * dy;
+      if (d2 > 1 || x < 0 || y < 0 || x >= W || y >= H) continue;
+      const crater = ((dx + .3) ** 2 + (dy + .2) ** 2 < .06) || ((dx - .35) ** 2 + (dy - .3) ** 2 < .04);
+      put(fg, x, y, dith(MOON, (-dx * .5 - dy * .5 + Math.sqrt(1 - d2) * .8) * .7 + .25 - (crater ? .3 : 0), x, y));
+    }
+    layers = { sky, fg };
+    const n = Math.round(W * H / 140);
+    stars = Array.from({ length: n }, () => {
+      const l = Math.random() < .6 ? 0 : Math.random() < .7 ? 1 : 2;
+      return { x: Math.random() * W, y: Math.random() * H, v: [.06, .16, .38][l], s: l === 2 ? 2 : 1, c: ['#5d4c88', '#c9bde3', ['#ffffff', '#27f0ff', '#ff8fc4', '#ffd23f'][Math.floor(Math.random() * 4)]][l], tw: Math.random() < .3, p: Math.floor(Math.random() * 60) };
+    });
+    skyC.width = fgC.width = W; skyC.height = fgC.height = H;
+    skyC.getContext('2d').putImageData(sky, 0, 0); fgC.getContext('2d').putImageData(fg, 0, 0);
+    draw();
+  }
+  const skyC = document.createElement('canvas'), fgC = document.createElement('canvas');
+  function draw() {
+    g.drawImage(skyC, 0, 0);
+    for (const s of stars) {
+      if (s.tw && (frame + s.p) % 60 < 6) continue;
+      g.fillStyle = s.c; g.fillRect(s.x | 0, s.y | 0, s.s, s.s);
+    }
+    if (shoot) {
+      g.fillStyle = '#fff';
+      for (let k = 0; k < 7; k++) { g.globalAlpha = 1 - k / 7; g.fillRect((shoot.x - k * 2) | 0, (shoot.y - k) | 0, 2, 1); }
+      g.globalAlpha = 1;
+    }
+    g.drawImage(fgC, 0, 0);
+  }
+  function tick(t) {
+    raf = requestAnimationFrame(tick);
+    if (t - last < 33) return;
+    last = t; frame++;
+    for (const s of stars) { s.x -= s.v; if (s.x < 0) { s.x += W; s.y = Math.random() * H; } }
+    if (!shoot && Math.random() < .004) shoot = { x: W * (.3 + Math.random() * .7), y: Math.random() * H * .4 };
+    if (shoot) { shoot.x -= 4; shoot.y += 2; if (shoot.x < 0 || shoot.y > H) shoot = null; }
+    draw();
+  }
+  build();
+  let rt = 0;
+  addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 200); });
+  if (reduce) return;
+  const run = () => { cancelAnimationFrame(raf); if (onScreen && !document.hidden) raf = requestAnimationFrame(tick); };
+  new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; run(); }).observe(hero);
+  document.addEventListener('visibilitychange', run);
+}
+startSpace();
+
+/* ---------- Marquee ---------- */
+(() => {
+  const words = ['Arcades', 'Bartops', 'Pinball virtual', 'Pandora Box', '9.800 juegos', 'Consolas retro', 'Envío desde España'];
+  const group = () => `<div class="marquee__group">${words.map(w => `<span class="marquee__item">${w}<span class="pix">${pix('coin')}</span></span>`).join('')}</div>`;
+  $('#marquee').innerHTML = group() + group();
+})();
+
+/* ---------- Catalogue ---------- */
+const CATS = {
+  arcade: { label: 'Arcades y Bartops', short: 'Arcades', p: 'P1', color: '#ff2e93', img: 'bartop-ghost', w: 900, h: 900 },
+  pinball: { label: 'Pinball Virtual', short: 'Pinball', p: 'P2', color: '#27f0ff', img: 'pinball-bttf', w: 600, h: 900 },
+  pandora: { label: 'Pandora Box', short: 'Pandora', p: 'P3', color: '#ffd23f', img: 'pandora-10', w: 900, h: 600 },
+  consolas: { label: 'Consolas Retro', short: 'Consolas', p: 'P4', color: '#b69cff', img: 'r36s', w: 600, h: 900 }
+};
+const P = [
+  { id: 'pin-27', cat: 'pinball', name: 'Pinball Virtual 27,5" Back to the Future', spec: 'Playfield 27,5", backglass 19", DMD 7" y Ryzen 7', price: 1999.99, old: 2199.99, img: 'pinball-bttf', w: 600, h: 900, badge: 'top' },
+  { id: 'pin-mini', cat: 'pinball', name: 'Mini Pinball Virtual en acero 13,3"', spec: 'Pantalla 1080p, PC Intel N95 y 12 botones', price: 549.99, old: 659.99, img: 'pinball-mini', w: 900, h: 600 },
+  { id: 'pin-18', cat: 'pinball', name: 'Pinball Virtual 18,5" Ryzen 5', spec: 'Backglass de 15" y patas incluidas', price: 949.99, img: 'pinball-185', w: 600, h: 900 },
+  { id: 'lamp-pulp', cat: 'pinball', name: 'Lámpara RGB Backglass Pulp Fiction', spec: 'Arte de pinball retroiluminado, con mando a distancia', price: 69.99, old: 199.99, img: 'lampara-pulp', w: 900, h: 900, acc: true },
+  { id: 'arc-19', cat: 'arcade', name: 'Arcade recreativa 19" de 160 cm', spec: '9.800 títulos y peana incluida', price: 599.99, img: 'arcade-19', w: 600, h: 900 },
+  { id: 'bar-19', cat: 'arcade', name: 'Bartop arcade 19" 4:3', spec: 'La más recomendada: mueble de 19 mm y joysticks americanos', price: 339.99, old: 419.99, img: 'bartop-ghost', w: 900, h: 900, badge: 'top' },
+  { id: 'bar-22', cat: 'arcade', name: 'Bartop arcade 22" con monedero', spec: '9.800 títulos y monedero de fichas', price: 299.99, img: 'bartop-22', w: 900, h: 900 },
+  { id: 'bar-n100', cat: 'arcade', name: 'Bartop moderno Intel N100, blanca', spec: '16 GB de RAM y mueble blanco', price: 899.99, old: 999.99, img: 'bartop-n100', w: 900, h: 900 },
+  { id: 'maletin', cat: 'arcade', name: 'Arcade maletín Pandora 17"', spec: '+20.000 juegos y batería para jugar sin cables', price: 185.99, old: 249.99, img: 'maletin', w: 900, h: 900 },
+  { id: 'pb-premium', cat: 'pandora', name: 'Pandora Box Premium i5', spec: 'Windows 11 + Batocera y trackball', price: 299.99, old: 399.99, img: 'pandora-premium', w: 900, h: 600 },
+  { id: 'pb-10', cat: 'pandora', name: 'Pandora Box 10', spec: '9.800 juegos para 2 jugadores', price: 99.99, old: 133.99, img: 'pandora-10', w: 900, h: 600 },
+  { id: 'pb-df', cat: 'pandora', name: 'Pandora Box 3D Double Fist', spec: '6.525 juegos, últimas unidades', price: 159.99, img: 'pandora-doublefist', w: 900, h: 600, badge: 'liq' },
+  { id: 'stick-ps2', cat: 'consolas', name: 'Consola retro M88 PS2 Stick', spec: 'HDMI, 128 GB y +20.000 títulos', price: 69.99, old: 79.99, img: 'stick-ps2', w: 900, h: 600 },
+  { id: 'stick-m8', cat: 'consolas', name: 'Retro consola Stick M8', spec: '20.000 juegos y dos mandos', price: 27.99, old: 65.99, img: 'stick-m8', w: 900, h: 600 },
+  { id: 'r36s', cat: 'consolas', name: 'Consola portátil Anbernic R36S', spec: '128 GB y +15.000 títulos', price: 49.99, img: 'r36s', w: 600, h: 900 }
+];
+const byId = Object.fromEntries(P.map(p => [p.id, p]));
+const off = p => p.old ? Math.round((1 - p.price / p.old) * 100) : 0;
+const badgeOf = p => p.badge === 'top' ? '<span class="badge badge--top">TOP</span>' : p.badge === 'liq' ? '<span class="badge badge--liq">Fin de stock</span>' : off(p) >= 25 ? '<span class="badge">Oferta</span>' : '';
+const catOrder = Object.keys(CATS);
+const counts = { all: P.length };
+const fromPrice = {};
+P.forEach(p => {
+  counts[p.cat] = (counts[p.cat] || 0) + 1;
+  if (!p.acc) fromPrice[p.cat] = Math.min(fromPrice[p.cat] ?? Infinity, p.price);
+});
+
+$('#grid').innerHTML = P.map(p => `
+  <article class="card c-${p.cat} pre" data-cat="${p.cat}">
+    <div class="card__media">${badgeOf(p)}<img src="img/p/${p.img}.webp" width="${p.w}" height="${p.h}" alt="${esc(p.name)}" loading="lazy" decoding="async"><span class="dissolve"></span></div>
+    <div class="card__body">
+      <p class="card__cat">${CATS[p.cat].label}</p>
+      <h3 class="card__name">${esc(p.name)}</h3>
+      <p class="card__spec">${esc(p.spec)}</p>
+      <div class="card__buy">
+        <p class="price">${p.old ? `<s><span class="sr">Antes </span>${fmt(p.old)}<span class="off">-${off(p)}%</span></s>` : ''}<strong>${fmt(p.price)}</strong></p>
+        <button class="btn-add" type="button" data-add="${p.id}" aria-label="Añadir ${esc(p.name)} a la cesta">+ Añadir</button>
+      </div>
+    </div>
+  </article>`).join('');
+$$('[data-cat-n]').forEach(el => el.textContent = counts[el.dataset.catN]);
+$$('[data-cat-count]').forEach(el => el.textContent = `${counts[el.dataset.catCount]} modelos`);
+$$('[data-cat-from]').forEach(el => el.textContent = `desde ${fmt(fromPrice[el.dataset.catFrom])}`);
+
+/* cartridge insert on view */
+const cards = $$('.card');
+const insertIO = new IntersectionObserver(es => {
+  es.filter(e => e.isIntersecting).forEach((e, k) => { e.target.style.setProperty('--i', k); e.target.classList.replace('pre', 'in'); insertIO.unobserve(e.target); });
+}, { rootMargin: '0px 0px -8% 0px' });
+cards.forEach(c => insertIO.observe(c));
+
+function dissolve(el) {
+  if (reduce || !el) return;
+  el.classList.remove('is-dissolving'); void el.offsetWidth; el.classList.add('is-dissolving');
+  setTimeout(() => el.classList.remove('is-dissolving'), 520);
+}
+if (finePointer) cards.forEach(c => c.querySelector('.card__media').addEventListener('mouseenter', e => dissolve(e.currentTarget)));
+
+/* ---------- Filters ---------- */
+const tabs = $$('.tab');
+function filter(cat, scroll) {
+  tabs.forEach(t => t.setAttribute('aria-pressed', String(t.dataset.filter === cat)));
+  let k = 0;
+  cards.forEach(c => {
+    const show = cat === 'all' || c.dataset.cat === cat;
+    c.hidden = !show;
+    if (show && !reduce) { c.classList.remove('pre', 'in'); c.style.setProperty('--i', Math.min(k++, 6)); void c.offsetWidth; c.classList.add('in'); insertIO.unobserve(c); }
+  });
+  if (scroll) $('#tienda').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+}
+tabs.forEach(t => t.addEventListener('click', () => { filter(t.dataset.filter); Snd.play('tick'); }));
+
+/* ---------- Player select ---------- */
+$$('[data-pick]').forEach(b => b.addEventListener('click', () => {
+  const cat = b.dataset.pick;
+  Snd.play('pick');
+  if (b.classList.contains('player')) {
+    b.classList.remove('is-picked'); void b.offsetWidth; b.classList.add('is-picked');
+    dissolve(b.querySelector('.player__img'));
+    setTimeout(() => filter(cat, true), reduce ? 0 : 650);
+  } else filter(cat, true);
+}));
+if (finePointer) $$('.player').forEach(p => p.addEventListener('mouseenter', () => { dissolve(p.querySelector('.player__img')); Snd.play('tick'); }));
+
+/* ---------- Hero cabinet: attract mode ---------- */
+(() => {
+  const crt = $('#crt'), img = $('#crt-img'), stick = $('#stick');
+  let i = 0, timer = 0, idleUntil = 0;
+  function show(n, dir = 1) {
+    i = (n + catOrder.length) % catOrder.length;
+    const k = catOrder[i], c = CATS[k];
+    if (!reduce) { crt.classList.remove('is-switch'); void crt.offsetWidth; crt.classList.add('is-switch'); }
+    stick.classList.remove('l', 'r'); stick.classList.add(dir < 0 ? 'l' : 'r');
+    setTimeout(() => stick.classList.remove('l', 'r'), 220);
+    img.src = `img/p/${c.img}.webp`; img.width = c.w; img.height = c.h;
+    $('#crt-name').textContent = c.label;
+    $('#crt-price').textContent = `desde ${fmt(fromPrice[k])}`;
+    $('#crt-label').textContent = `${c.p} ${c.short}`;
+    $('#crt-sr').textContent = `Ver ${c.label} en la tienda`;
+    [$('#crt-go'), $('#crt-price'), $('#crt-label')].forEach(el => el.style.setProperty('--c', c.color));
+  }
+  const user = (d) => { idleUntil = Date.now() + 9000; show(i + d, d); Snd.play('tick'); };
+  $$('[data-cab]').forEach(b => b.addEventListener('click', () => user(+b.dataset.cab)));
+  stick.addEventListener('click', () => user(1));
+  $('#cab').addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); user(e.key === 'ArrowLeft' ? -1 : 1); }
+  });
+  $('#crt-go').addEventListener('click', () => { Snd.play('pick'); filter(catOrder[i], true); });
+  $('#btn-a').addEventListener('click', e => { e.preventDefault(); Snd.play('pick'); filter('all', true); });
+  $$('[data-coin]').forEach(b => b.addEventListener('click', () => {
+    Snd.play('coin', true); addBonus(100);
+    b.closest('.cab').querySelector('.cab__marquee').animate([{ filter: 'brightness(2)' }, { filter: 'brightness(1)' }], { duration: 400, easing: 'steps(4)' });
+    toast('Insert coin<br><b>+100 puntos</b>', '#ffd23f');
+  }));
+  if (reduce) return;
+  timer = setInterval(() => { if (heroOn && !document.hidden && Date.now() > idleUntil) show(i + 1, 1); }, 3800);
+})();
+let heroOn = true;
+new IntersectionObserver(([e]) => { heroOn = e.isIntersecting; document.body.classList.toggle('hero-in', e.isIntersecting && e.intersectionRatio > .35); }, { threshold: [0, .35, .6] }).observe($('.hero'));
+
+/* ---------- Cart ---------- */
+let cart = store.get('ru-cart', {});
+Object.keys(cart).forEach(id => { if (!byId[id] || !(cart[id] > 0)) delete cart[id]; });
+const cartEl = $('#cart'), backdrop = $('#backdrop');
+let lastFocus = null;
+const totalQty = () => Object.values(cart).reduce((a, b) => a + b, 0);
+const totalEur = () => Object.entries(cart).reduce((a, [id, q]) => a + byId[id].price * q, 0);
+function waOrderURL() {
+  const lines = Object.entries(cart).map(([id, q]) => `• ${q} x ${byId[id].name}: ${fmt(byId[id].price * q)}`).join('\n');
+  const msg = `¡Hola, Retro Universe! Me gustaría hacer este pedido:\n\n${lines}\n\nTotal: ${fmt(totalEur())} (IVA incluido)\n\n¿Me confirmáis disponibilidad y plazo de envío? Gracias.`;
+  return `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+}
+const ICON = {
+  minus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>'
+};
+function renderCart() {
+  const n = totalQty();
+  $$('[data-count]').forEach(el => el.textContent = String(n).padStart(2, '0'));
+  const list = $('#cart-list');
+  if (!n) {
+    list.innerHTML = `<li class="cart__empty"><span class="pix">${pix('ghost')}</span><p>La cesta está vacía. Inserta una máquina para empezar la partida.</p><a class="btn btn--ghost" href="#tienda" data-close-cart>Ver la tienda</a></li>`;
+    $('#cart-foot').hidden = true;
+  } else {
+    list.innerHTML = Object.entries(cart).map(([id, q]) => {
+      const p = byId[id];
+      return `<li class="line" style="--c:${CATS[p.cat].color}">
+        <div class="line__img"><img src="img/p/${p.img}.webp" alt="" width="${p.w}" height="${p.h}"></div>
+        <div><p class="line__name">${esc(p.name)}</p><p class="line__price">${fmt(p.price)}</p>
+          <div class="qty"><button type="button" data-dec="${id}" aria-label="Quitar una unidad">${ICON.minus}</button><output aria-label="Cantidad">${q}</output><button type="button" data-inc="${id}" aria-label="Añadir una unidad">${ICON.plus}</button></div>
+        </div>
+        <button class="line__del" type="button" data-del="${id}" aria-label="Eliminar ${esc(p.name)}">${ICON.trash}</button>
+      </li>`;
+    }).join('');
+    $('#cart-total').textContent = fmt(totalEur());
+    $('#cart-wa').href = waOrderURL();
+    $('#cart-foot').hidden = false;
+  }
+  store.set('ru-cart', cart);
+}
+function openCart() {
+  lastFocus = document.activeElement;
+  cartEl.classList.add('is-open'); backdrop.classList.add('is-open');
+  cartEl.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => $('#cart-close').focus(), 50);
+}
+function closeCart() {
+  cartEl.classList.remove('is-open'); backdrop.classList.remove('is-open');
+  cartEl.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus({ preventScroll: true });
+}
+$$('[data-open-cart]').forEach(b => b.addEventListener('click', openCart));
+$('#cart-close').addEventListener('click', closeCart);
+backdrop.addEventListener('click', closeCart);
+cartEl.addEventListener('click', e => {
+  const t = e.target.closest('button, a'); if (!t) return;
+  const { inc, dec, del } = t.dataset;
+  if (inc) cart[inc]++;
+  if (dec) { cart[dec]--; if (cart[dec] < 1) delete cart[dec]; }
+  if (del) delete cart[del];
+  if (inc || dec || del) {
+    Snd.play('tick'); renderCart();
+    const id = inc || dec, sel = inc ? 'inc' : 'dec';
+    (id && cart[id] ? $(`[data-${sel}="${id}"]`, cartEl) : $('#cart-close')).focus();
+  }
+  if (t.hasAttribute('data-close-cart')) closeCart();
+});
+document.addEventListener('keydown', e => {
+  if (!cartEl.classList.contains('is-open')) return;
+  if (e.key === 'Escape') closeCart();
+  if (e.key === 'Tab') {
+    const f = $$('button, a[href]', cartEl).filter(x => x.offsetParent !== null);
+    if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+  }
+});
+
+function flyCoin(from) {
+  const to = $$('[data-open-cart]').find(el => el.offsetParent !== null && getComputedStyle(el.closest('.mbar') || el).transform === 'none');
+  if (!to || reduce) return Promise.resolve(to);
+  const a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+  const x0 = a.left + a.width / 2 - 11, y0 = a.top + a.height / 2 - 11, x1 = b.left + b.width / 2 - 11, y1 = b.top + b.height / 2 - 11;
+  const outer = document.createElement('div'); outer.className = 'fly';
+  outer.innerHTML = `<div class="fly__y">${pix('coin')}</div>`;
+  document.body.append(outer);
+  const dur = 700, lift = Math.min(160, Math.abs(y1 - y0) * .5 + 80);
+  outer.animate([{ transform: `translate(${x0}px,0)` }, { transform: `translate(${x1}px,0)` }], { duration: dur, easing: 'cubic-bezier(.45,0,.55,1)', fill: 'forwards' });
+  return new Promise(res => {
+    outer.firstElementChild.animate([
+      { transform: `translateY(${y0}px) rotateY(0)` },
+      { transform: `translateY(${Math.min(y0, y1) - lift}px) rotateY(540deg)`, offset: .45, easing: 'cubic-bezier(.2,0,.6,1)' },
+      { transform: `translateY(${y1}px) rotateY(1080deg) scale(.6)` }
+    ], { duration: dur, easing: 'cubic-bezier(.3,0,.7,1)', fill: 'forwards' }).onfinish = () => { outer.remove(); res(to); };
+  });
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-add]'); if (!b) return;
+  const id = b.dataset.add, p = byId[id]; if (!p) return;
+  cart[id] = (cart[id] || 0) + 1;
+  Snd.play('add'); addBonus(500);
+  b.classList.add('is-added'); const label = b.textContent; b.textContent = '¡Añadido!';
+  setTimeout(() => { b.classList.remove('is-added'); b.textContent = label; }, 1100);
+  flyCoin(b).then(to => {
+    renderCart();
+    if (to) { to.classList.remove('bump'); void to.offsetWidth; to.classList.add('bump'); }
+    toast(`+1 a la cesta<br><b>${esc(p.name)}</b>`, CATS[p.cat].color);
+  });
+});
+renderCart();
+
+/* ---------- General WhatsApp ---------- */
+const waHello = `https://wa.me/${WA}?text=${encodeURIComponent('¡Hola, Retro Universe! Vengo de vuestra web y quería preguntaros por una máquina.')}`;
+$$('[data-wa]').forEach(a => a.href = waHello);
+
+/* ---------- Pinball size selector ---------- */
+(() => {
+  const btns = $$('.size-btn'), imgs = $$('[data-pin]'), ruler = $('#ruler'), scale = [.48, .67, 1];
+  function sel(i, focus) {
+    btns.forEach((b, k) => { const on = k === i; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; $('#' + b.getAttribute('aria-controls')).hidden = !on; });
+    imgs.forEach((im, k) => im.classList.toggle('on', k === i));
+    ruler.style.setProperty('--r', scale[i]);
+    if (focus) btns[i].focus();
+  }
+  btns.forEach((b, i) => {
+    b.addEventListener('click', () => { sel(i); Snd.play('tick'); });
+    b.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); sel((i + (e.key === 'ArrowRight' ? 1 : 2)) % 3, true); }
+    });
+  });
+  sel(1);
+})();
+
+/* ---------- Heading wipes, score counters, shopkeeper text ---------- */
+const countUp = el => {
+  const to = +el.dataset.countTo, pre = el.dataset.prefix || '';
+  if (reduce) { el.textContent = pre + dots(String(to)); return; }
+  const t0 = performance.now(), dur = to > 100 ? 1600 : 1100;
+  (function step(t) {
+    const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 4);
+    el.textContent = pre + dots(String(Math.round(to * e)));
+    if (k < 1) requestAnimationFrame(step);
+  })(t0);
+};
+const npc = $('#npc-txt'), npcFull = npc.textContent;
+function typeNpc() {
+  if (reduce) return;
+  npc.setAttribute('aria-label', npcFull);
+  let n = 0;
+  const t = setInterval(() => { n += 2; npc.textContent = npcFull.slice(0, n); if (n >= npcFull.length) { clearInterval(t); npc.removeAttribute('aria-label'); } }, 28);
+}
+/* clip-path hides .reveal from IntersectionObserver, so watch its parent instead */
+const onceIO = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target;
+  $$(':scope > .reveal', el).forEach(r => r.classList.add('is-in'));
+  [el, ...$$('[data-count-to]', el)].forEach(c => { if (c.dataset.countTo) countUp(c); });
+  if (el.contains(npc)) typeNpc();
+  onceIO.unobserve(el);
+}), { rootMargin: '0px 0px -18% 0px' });
+new Set([...$$('.reveal').map(r => r.parentElement), ...$$('[data-count-to]').filter(c => !c.closest('.reveal'))]).forEach(el => onceIO.observe(el));
+
+/* ---------- XP bar, score + stage clear ---------- */
+const xp = $('#xp');
+let ticking = false;
+const onScroll = () => {
+  const h = root.scrollHeight - innerHeight, p = h > 0 ? Math.min(1, scrollY / h) : 0;
+  xp.style.setProperty('--p', p);
+  if (p > maxProg) { maxProg = p; drawScore(); }
+  ticking = false;
+};
+addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+onScroll();
+let level = 1;
+const stageIO = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting || !live) return;
+  const lv = +e.target.dataset.stage;
+  if (lv > level) {
+    level = lv; $('#lv').textContent = lv;
+    if (lv > 2) { toast(`Stage clear<br><b>Nivel ${lv - 1} superado</b>`, '#ffd23f'); Snd.play('level'); addBonus(250); }
+  }
+}), { rootMargin: '-45% 0px -45% 0px' });
+$$('[data-stage]').forEach(s => stageIO.observe(s));
+
+/* ---------- Pandora: game select cursor ---------- */
+(() => {
+  const chips = $$('#chips .chip'); let i = 0, timer = null;
+  const tick = () => { chips.forEach((c, k) => c.classList.toggle('is-sel', k === i)); i = (i + 1) % chips.length; };
+  tick();
+  if (reduce) return;
+  new IntersectionObserver(es => es.forEach(e => {
+    clearInterval(timer); timer = null;
+    if (e.isIntersecting) timer = setInterval(tick, 850);
+  })).observe($('#chips'));
+})();
+
+/* ---------- Continue countdown ---------- */
+(() => {
+  const n = $('#countdown'); let v = 9, timer = null;
+  if (reduce) return;
+  new IntersectionObserver(es => es.forEach(e => {
+    clearInterval(timer); timer = null;
+    if (!e.isIntersecting) return;
+    timer = setInterval(() => {
+      v = v <= 0 ? 9 : v - 1;
+      n.textContent = v;
+      n.animate([{ transform: 'scale(1.25)', opacity: .4 }, { transform: 'scale(1)', opacity: 1 }], { duration: 300, easing: 'steps(3)' });
+      if (v === 0) Snd.play('tick');
+    }, 1000);
+  }), { threshold: .4 }).observe(n);
+})();
+
+/* ---------- Ambient: sprites crossing ---------- */
+function startAmbient() {
+  if (reduce) return;
+  const kinds = [
+    () => ({ html: pix('coin') + pix('coin') + pix('coin') + pix('ghost'), chase: true }),
+    () => ({ html: pix('ship'), rot: true }),
+    () => ({ html: pix('ghost', { ...PAL, B: '#27f0ff' }) })
+  ];
+  let n = 0;
+  function spawn() {
+    if (document.hidden) return;
+    const k = kinds[n++ % kinds.length]();
+    const s = document.createElement('div');
+    s.className = 'sprite'; s.setAttribute('aria-hidden', 'true');
+    s.style.cssText = `display:flex; gap:${k.chase ? 22 : 0}px; align-items:center; height:30px`;
+    s.innerHTML = k.html;
+    const svgs = $$('svg', s);
+    svgs.forEach((v, i) => { v.style.height = (k.chase && i < svgs.length - 1 ? 16 : 30) + 'px'; v.style.width = 'auto'; if (k.rot) v.style.transform = 'rotate(90deg)'; });
+    document.body.append(s);
+    const ltr = n % 2 === 0, y = 90 + Math.random() * (innerHeight * .55), wpx = 260, flip = ltr ? '' : ' scaleX(-1)';
+    const from = ltr ? -wpx : innerWidth + 40, to = ltr ? innerWidth + 40 : -wpx;
+    s.animate([{ transform: `translate(${from}px, ${y}px)${flip}` }, { transform: `translate(${to}px, ${y + (Math.random() * 60 - 30)}px)${flip}` }],
+      { duration: 7000 + Math.random() * 3000, easing: 'linear' }).onfinish = () => s.remove();
+  }
+  setTimeout(spawn, 2600);
+  setInterval(spawn, 11000);
+}
+
+/* ---------- Konami: coin rain ---------- */
+(() => {
+  const code = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  let pos = 0;
+  document.addEventListener('keydown', e => {
+    const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    pos = k === code[pos] ? pos + 1 : (k === code[0] ? 1 : 0);
+    if (pos < code.length) return;
+    pos = 0;
+    Snd.play('cheat', true); addBonus(3000);
+    toast('Cheat activado<br><b>Código Konami: lluvia de monedas</b>', '#ffd23f');
+    if (reduce) return;
+    const svg = pix('coin');
+    for (let i = 0; i < 46; i++) {
+      const c = document.createElement('div'); c.className = 'rain'; c.innerHTML = svg; c.setAttribute('aria-hidden', 'true');
+      c.style.left = Math.random() * 100 + 'vw';
+      document.body.append(c);
+      c.animate([{ transform: 'translateY(0) rotateY(0)' }, { transform: `translateY(${innerHeight + 80}px) rotateY(${720 + Math.random() * 720}deg)` }],
+        { duration: 1400 + Math.random() * 1400, delay: Math.random() * 900, easing: 'cubic-bezier(.4,0,.9,.6)', fill: 'both' }).onfinish = () => c.remove();
+    }
+  });
+})();
+
+/* ---------- Demo notice ---------- */
+const demo = $('#demo'), chip = $('#demo-chip');
+if (store.get('ru-demo-x', false)) demo.hidden = true;
+$('#demo-x').addEventListener('click', () => { demo.hidden = true; store.set('ru-demo-x', true); });
+const minDemo = () => { demo.classList.add('is-min'); chip.setAttribute('aria-expanded', 'false'); };
+setTimeout(minDemo, 9000);
+chip.addEventListener('click', () => { demo.classList.remove('is-min'); chip.setAttribute('aria-expanded', 'true'); setTimeout(minDemo, 6000); });
+})();
+</script>
+</body>
+</html>
