@@ -777,3 +777,19 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 .field--sm{min-width:0; width:auto; padding:.4rem 1.7rem .4rem .7rem; font-size:.85rem; font-family:var(--f-pixel); letter-spacing:.03em}
 .hud__lang .field--sm{min-width:4.6rem}
 @media (max-width:1240px){ .hud__account{display:none} .cart-link .lbl{display:none} }
+
+/* ============ Precios destacados (estilo marcador de recreativa) ============ */
+.price strong{color:var(--yellow); text-shadow:2px 2px 0 var(--pink-deep); letter-spacing:0}
+.price s{color:var(--ink-3); font-size:.82rem}
+.price .off{display:inline-block; margin-left:.5rem; padding:.2rem .45rem; background:var(--pink); color:var(--on-pink); font-family:var(--f-pixel); font-size:.55rem; font-weight:400; letter-spacing:.02em; text-shadow:none; vertical-align:middle}
+.card .price strong{font-size:clamp(1.05rem,1.6vw,1.35rem)}
+/* Ficha: el precio es el protagonista del bloque de compra */
+.prod__info .price{display:inline-flex; gap:.5rem; margin:1.1rem 0; padding:14px 20px 16px; background:linear-gradient(var(--bg-3), var(--bg-2)); border:4px solid var(--yellow); box-shadow:6px 6px 0 var(--pink-deep)}
+.prod__info .price strong{font-size:clamp(2rem,3.4vw,3rem); line-height:1; text-shadow:3px 3px 0 var(--pink-deep)}
+.prod__info .price s{font-size:1rem}
+.prod__info .price .off{font-size:.65rem}
+.prod__info .price__note{margin:0}
+.sticky-buy__p{font-size:1rem; text-shadow:2px 2px 0 var(--pink-deep)}
+.fship + .lines .line__total,.line__total{color:var(--yellow)}
+.cart-sum .tot strong,.drawer__foot .tot strong{font-size:1.3rem; text-shadow:2px 2px 0 var(--pink-deep)}
+.pin-buy .price strong{font-size:1.5rem}
