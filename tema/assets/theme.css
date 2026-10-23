@@ -703,3 +703,7 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
   -webkit-mask-image:linear-gradient(to top, #000 15%, transparent 95%); mask-image:linear-gradient(to top, #000 15%, transparent 95%)}
 @keyframes bg-floor{from{transform:perspective(420px) rotateX(63deg) translateY(0)} to{transform:perspective(420px) rotateX(63deg) translateY(64px)}}
 @media (max-width:749px){ .bg-floor::after{height:48vh; background-size:48px 48px} }
+
+/* El fondo decorativo nunca debe competir con la lectura: velo detrás de los textos largos */
+.prose,.prod__desc,.coll-head .lead,.rt .lead,.cartp .lead,.page .lead{background:color-mix(in srgb, var(--bg) 84%, transparent); box-shadow:0 0 0 .7rem color-mix(in srgb, var(--bg) 84%, transparent); border-radius:2px}
+@media (max-width:749px){ .bg-carpet::after{opacity:.13} .bg-floor::after{opacity:.7} }
