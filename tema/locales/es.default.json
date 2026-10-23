@@ -10,6 +10,8 @@
     "cart_items": "Cesta, {{ count }} artículos",
     "home": "Inicio",
     "view_all": "Ver todo",
+    "read_more": "Leer más",
+    "read_less": "Leer menos",
     "back_to_shop": "Volver a la tienda",
     "pagination": "Paginación",
     "page_n": "Página {{ n }}",

@@ -629,20 +629,24 @@ body[data-motion="false"] .reveal.pre{opacity:1; transform:none}
 body.drawer-open{overflow:hidden}
 @media (prefers-reduced-motion:reduce){ .drawer{transition:none} }
 
-/* ============ Fotos de producto: encuadre, segunda foto y zoom ============ */
+/* ============ Fotos de producto: encuadre, animación retro y zoom ============ */
 .card__media{--pad:7%}
 .card--cover .card__media{--pad:0; padding:0}
 .card--cover .card__media img{object-fit:cover}
-.card--cover .card__media img.card__img1{filter:none}
 .card--cover .card__media::after{content:""; position:absolute; inset:auto 0 0 0; height:35%; background:linear-gradient(to top, var(--bg-2), transparent); pointer-events:none}
-.card__img2{position:absolute; inset:var(--pad); width:calc(100% - 2 * var(--pad)); height:calc(100% - 2 * var(--pad)); object-fit:contain; opacity:0; transition:opacity .35s var(--ease), transform .3s steps(4)}
-.card--cover .card__img2{object-fit:cover}
+/* brillo de pantalla CRT que cruza la foto al pasar el ratón */
+.card__media::before{content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(105deg, transparent 35%, rgba(255,255,255,.13) 48%, transparent 60%); transform:translateX(-120%)}
+@keyframes sheen-card{to{transform:translateX(120%)}}
+@keyframes px-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes flicker{0%{opacity:.15}15%{opacity:1}22%{opacity:.35}38%{opacity:1}46%{opacity:.6}58%,100%{opacity:1}}
 @media (hover:hover){
-  .card--hover:hover .card__img2{opacity:1}
-  .card--hover:hover .card__img1{opacity:0}
+  .card:hover .card__media::before{animation:sheen-card .8s steps(12) both}
+  .card.card--contain:hover .card__img1{animation:px-bob .9s steps(2) infinite}
   .card--cover:hover .card__media img{transform:scale(1.06)}
 }
-.card__img1{transition:opacity .35s var(--ease), transform .3s steps(4)}
+/* al entrar en pantalla la foto «se enciende» como un tubo CRT */
+.card.in .card__img1{animation:flicker .6s steps(1) both; animation-delay:calc(var(--i,0) * 55ms + 250ms)}
+.card__img1{transition:transform .3s steps(4)}
 
 .gallery__main{overflow:hidden; touch-action:pan-y; position:relative}
 .gallery--cover{padding:0}
@@ -650,11 +654,11 @@ body.drawer-open{overflow:hidden}
 .gallery--zoomable{cursor:zoom-in}
 .gallery--zoomable.is-zoom{cursor:zoom-out}
 .gallery--zoomable [data-slide].is-on img{transition:transform .25s var(--ease)}
+.gallery__main [data-slide].is-on img{animation:flicker .4s steps(1) both}
 .gallery--zoomable.is-zoom [data-slide].is-on img{transform:scale(1.9); transform-origin:var(--zx,50%) var(--zy,50%)}
 .gallery__hint{position:absolute; right:10px; bottom:10px; font-family:var(--f-pixel); font-size:.5rem; color:var(--ink-3); background:var(--bg); padding:.4rem .5rem; pointer-events:none; text-transform:uppercase}
 .gallery--zoomable.is-zoom .gallery__hint{display:none}
-@media (prefers-reduced-motion:reduce){ .gallery--zoomable [data-slide].is-on img,.card__img1,.card__img2{transition:none} }
-
+@media (prefers-reduced-motion:reduce){ .gallery--zoomable [data-slide].is-on img,.card__img1{transition:none} }
 /* ============ Envío gratuito y barra de compra fija ============ */
 .fship{margin:0; padding:12px 20px 14px; background:var(--bg-2); border-bottom:2px dashed var(--edge)}
 .cartp .fship{border:4px solid var(--edge); margin-bottom:20px; padding:14px 18px}
@@ -673,5 +677,18 @@ body.drawer-open{overflow:hidden}
 @media (min-width:900px){ .sticky-buy{display:none!important} }
 @media (prefers-reduced-motion:reduce){ .sticky-buy,.fship__bar i{transition:none} }
 
-.prod__desc.is-collapsed{max-height:34rem; overflow:hidden; position:relative; -webkit-mask-image:linear-gradient(#000 70%, transparent); mask-image:linear-gradient(#000 70%, transparent)}
+[data-collapsible].is-collapsed{max-height:var(--cmax,34rem); overflow:hidden; position:relative; -webkit-mask-image:linear-gradient(#000 70%, transparent); mask-image:linear-gradient(#000 70%, transparent)}
 .desc-toggle{margin:12px 0 0}
+.lead + .desc-toggle,.lead.is-collapsed + .desc-toggle{margin-top:8px}
+
+/* ============ Fondo decorativo (Ajustes del tema > Efectos arcade) ============ */
+body::before,body::after{content:""; position:fixed; z-index:-1; pointer-events:none}
+body::before{inset:0; background:
+  radial-gradient(60% 45% at 12% 0%, color-mix(in srgb, var(--violet) 22%, transparent), transparent 70%),
+  radial-gradient(45% 40% at 95% 18%, color-mix(in srgb, var(--pink) 11%, transparent), transparent 70%),
+  radial-gradient(70% 50% at 50% 105%, color-mix(in srgb, var(--cyan) 9%, transparent), transparent 70%)}
+body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect x='164' y='76' width='3' height='3' fill='%23c9bde3' fill-opacity='0.25'/%3E%3Crect x='272' y='48' width='2' height='2' fill='%23b69cff' fill-opacity='0.25'/%3E%3Crect x='256' y='108' width='2' height='2' fill='%23c9bde3' fill-opacity='0.7'/%3E%3Crect x='212' y='32' width='2' height='2' fill='%23c9bde3' fill-opacity='0.7'/%3E%3Crect x='28' y='288' width='2' height='2' fill='%2327f0ff' fill-opacity='0.25'/%3E%3Crect x='292' y='296' width='3' height='3' fill='%23c9bde3' fill-opacity='0.35'/%3E%3Crect x='20' y='284' width='2' height='2' fill='%23c9bde3' fill-opacity='0.7'/%3E%3Crect x='72' y='276' width='2' height='2' fill='%23b69cff' fill-opacity='0.5'/%3E%3Crect x='284' y='348' width='2' height='2' fill='%23c9bde3' fill-opacity='0.35'/%3E%3Crect x='188' y='48' width='4' height='4' fill='%23c9bde3' fill-opacity='0.25'/%3E%3Crect x='316' y='104' width='3' height='3' fill='%23b69cff' fill-opacity='0.7'/%3E%3Crect x='396' y='160' width='3' height='3' fill='%23b69cff' fill-opacity='0.7'/%3E%3Crect x='184' y='152' width='2' height='2' fill='%23c9bde3' fill-opacity='0.35'/%3E%3Crect x='40' y='292' width='2' height='2' fill='%23b69cff' fill-opacity='0.7'/%3E%3Crect x='172' y='372' width='3' height='3' fill='%23ff2e93' fill-opacity='0.25'/%3E%3Crect x='60' y='260' width='3' height='3' fill='%23c9bde3' fill-opacity='0.5'/%3E%3Crect x='76' y='248' width='3' height='3' fill='%23c9bde3' fill-opacity='0.25'/%3E%3Crect x='388' y='284' width='4' height='4' fill='%23ff2e93' fill-opacity='0.5'/%3E%3Crect x='352' y='176' width='4' height='4' fill='%23c9bde3' fill-opacity='0.7'/%3E%3Crect x='32' y='44' width='2' height='2' fill='%23ffd23f' fill-opacity='0.25'/%3E%3Crect x='28' y='372' width='2' height='2' fill='%23b69cff' fill-opacity='0.7'/%3E%3Crect x='144' y='364' width='3' height='3' fill='%23c9bde3' fill-opacity='0.25'/%3E%3Crect x='236' y='180' width='2' height='2' fill='%23b69cff' fill-opacity='0.25'/%3E%3Crect x='252' y='28' width='2' height='2' fill='%23ff2e93' fill-opacity='0.35'/%3E%3Crect x='376' y='124' width='3' height='3' fill='%23c9bde3' fill-opacity='0.7'/%3E%3Crect x='40' y='84' width='3' height='3' fill='%23ffd23f' fill-opacity='0.5'/%3E%3Crect x='68' y='220' width='4' height='4' fill='%23ff2e93' fill-opacity='0.7'/%3E%3Crect x='180' y='348' width='3' height='3' fill='%23c9bde3' fill-opacity='0.35'/%3E%3Crect x='40' y='88' width='2' height='2' fill='%2327f0ff' fill-opacity='0.35'/%3E%3Crect x='4' y='248' width='4' height='4' fill='%2327f0ff' fill-opacity='0.5'/%3E%3Crect x='144' y='0' width='2' height='2' fill='%23c9bde3' fill-opacity='0.5'/%3E%3Crect x='312' y='288' width='2' height='2' fill='%2327f0ff' fill-opacity='0.25'/%3E%3Crect x='232' y='396' width='4' height='4' fill='%23ffd23f' fill-opacity='0.7'/%3E%3Crect x='204' y='200' width='2' height='2' fill='%23c9bde3' fill-opacity='0.7'/%3E%3C/svg%3E"); background-size:400px 400px; opacity:.55; animation:bg-drift 160s linear infinite}
+@keyframes bg-drift{to{transform:translateY(400px)}}
+.bg-none::before,.bg-none::after{display:none}
+.bg-glow::after,.bg-grid::after{display:none}
+.bg-grid::after{display:block; top:0; background-image:linear-gradient(rgba(190,165,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(190,165,255,.07) 1px, transparent 1px); background-size:56px 56px; opacity:1; animation:none; -webkit-mask-image:linear-gradient(to bottom, transparent, #000 55%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 55%, transparent)}

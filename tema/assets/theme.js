@@ -198,12 +198,18 @@
     });
   }
 
+  /* quita la clase de entrada cuando acaba la animación, para que no se repita al pasar el ratón */
+  const settle = card => {
+    const img = $('.card__img1', card) || card;
+    img.addEventListener('animationend', () => card.classList.remove('in'), { once: true });
+  };
+
   /* ---------- Cartuchos que caen al entrar en pantalla (solo los que están bajo el pliegue) ---------- */
   if (motionOn && !design && 'IntersectionObserver' in window) {
     const cio = new IntersectionObserver(es => {
       es.filter(e => e.isIntersecting).forEach((e, k) => {
         e.target.style.setProperty('--i', k);
-        e.target.classList.replace('pre', 'in');
+        e.target.classList.replace('pre', 'in'); settle(e.target);
         cio.unobserve(e.target);
       });
     }, { rootMargin: '0px 0px -8% 0px' });
@@ -244,7 +250,7 @@
       const show = cat === 'all' || li.dataset.cat === cat;
       li.hidden = !show;
       const c = $('.card', li);
-      if (show && c && motionOn) { c.classList.remove('pre', 'in'); void c.offsetWidth; c.style.setProperty('--i', Math.min(k++, 6)); c.classList.add('in'); }
+      if (show && c && motionOn) { c.classList.remove('pre', 'in'); void c.offsetWidth; c.style.setProperty('--i', Math.min(k++, 6)); c.classList.add('in'); settle(c); }
     });
     $$('[data-more]', scope).forEach(a => { a.hidden = a.dataset.more !== cat; });
   });
@@ -347,4 +353,21 @@
     setTimeout(spawn, 2600);
     setInterval(spawn, 11000);
   }
+
+  /* ---------- Textos largos plegables: ficha, descripción de colección... ---------- */
+  const collapse = () => $$('[data-collapsible]').forEach(el => {
+    const max = +el.dataset.max || 560;
+    if (el.dataset.ready || el.scrollHeight < max + 60) return;
+    el.dataset.ready = '1';
+    el.classList.add('is-collapsed'); el.style.setProperty('--cmax', max + 'px');
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'btn btn--ghost desc-toggle'; btn.setAttribute('aria-expanded', 'false');
+    const more = el.dataset.more, less = el.dataset.less; btn.textContent = more;
+    btn.addEventListener('click', () => {
+      const open = el.classList.toggle('is-collapsed') === false;
+      btn.setAttribute('aria-expanded', String(open)); btn.textContent = open ? less : more;
+    });
+    el.after(btn);
+  });
+  if (document.readyState === 'complete') collapse(); else addEventListener('load', collapse);
 })();

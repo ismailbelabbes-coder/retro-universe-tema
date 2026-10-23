@@ -17,7 +17,7 @@
     <nav class="crumbs" aria-label="Migas de pan"><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a> / <a href="{{ routes.collections_url }}">{{ 'collections.title' | t }}</a></nav>
     <h1 class="h2">{{ collection.title | escape }}</h1>
     {%- if section.settings.show_description and collection.description != blank -%}
-      <div class="lead rich">{{ collection.description | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
+      <div class="lead rich" data-collapsible data-max="110" data-more="{{ 'general.read_more' | t }}" data-less="{{ 'general.read_less' | t }}">{{ collection.description | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
     {%- endif -%}
   </header>
 
@@ -72,7 +72,7 @@
     <ul class="grid cols-{{ section.settings.columns }}" role="list">
       {%- for product in collection.products -%}
         {%- assign is_eager = false -%}{%- if forloop.index <= 2 -%}{%- assign is_eager = true -%}{%- endif -%}
-        <li>{% render 'card-product', product: product, eager: is_eager, fit: section.settings.image_fit, hover: section.settings.hover_image %}</li>
+        <li>{% render 'card-product', product: product, eager: is_eager, fit: section.settings.image_fit %}</li>
       {%- endfor -%}
     </ul>
     {% render 'pagination', paginate: paginate %}
@@ -93,7 +93,6 @@
       { "value": "contain", "label": "Foto completa (no recorta)" },
       { "value": "cover", "label": "Recortada (llena el marco)" }
     ], "info": "«Recortada» usa el punto de enfoque que se define en cada imagen de Shopify (Productos > imagen > Editar > Punto de enfoque)." },
-    { "type": "checkbox", "id": "hover_image", "label": "Mostrar la segunda foto al pasar el ratón", "default": true },
     { "type": "checkbox", "id": "show_description", "label": "Mostrar descripción de la colección", "default": true },
     { "type": "checkbox", "id": "show_filters", "label": "Mostrar filtros", "info": "Se configuran en Shopify > Contenido > Menús > Filtros de búsqueda y descubrimiento.", "default": true },
     { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },

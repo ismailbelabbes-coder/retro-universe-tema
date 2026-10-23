@@ -39,6 +39,12 @@
   {
     "name": "Efectos arcade",
     "settings": [
+      { "type": "select", "id": "bg_style", "label": "Fondo decorativo de la página", "default": "stars", "options": [
+        { "value": "stars", "label": "Brillos suaves y estrellas que caen despacio" },
+        { "value": "glow", "label": "Solo brillos suaves de color" },
+        { "value": "grid", "label": "Brillos y rejilla tenue" },
+        { "value": "none", "label": "Fondo liso" }
+      ], "info": "Con «reducir movimiento» activado en el dispositivo, las estrellas quedan quietas." },
       { "type": "checkbox", "id": "fx_scanlines", "label": "Líneas de pantalla CRT sobre la página", "default": true },
       { "type": "checkbox", "id": "fx_vignette", "label": "Viñeta en los bordes", "default": true },
       { "type": "checkbox", "id": "fx_motion", "label": "Animaciones (marquesina, fondo de estrellas, aparición de elementos)", "info": "Si la persona usa «reducir movimiento» en su dispositivo, siempre se ve la versión estática.", "default": true },

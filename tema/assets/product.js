@@ -89,23 +89,3 @@
   const price = document.querySelector('[data-price]'), out = bar.querySelector('[data-sticky-price]');
   if (price && out) new MutationObserver(() => { const s = price.querySelector('strong'); if (s) out.textContent = s.textContent; }).observe(price, { childList: true, subtree: true });
 })();
-
-/* Descripción larga plegable: solo se pliega si es muy larga; sin JavaScript se ve completa. */
-(() => {
-  const run = () => {
-  const el = document.querySelector('[data-collapsible]');
-  if (!el || el.scrollHeight < 760) return;
-  el.classList.add('is-collapsed');
-  const btn = document.createElement('button');
-  btn.type = 'button'; btn.className = 'btn btn--ghost desc-toggle'; btn.setAttribute('aria-expanded', 'false');
-  const more = el.dataset.more || 'Ver toda la descripción', less = el.dataset.less || 'Ver menos';
-  btn.textContent = more;
-  btn.addEventListener('click', () => {
-    const open = el.classList.toggle('is-collapsed') === false;
-    btn.setAttribute('aria-expanded', String(open)); btn.textContent = open ? less : more;
-    if (!open) el.scrollIntoView({ block: 'start', behavior: 'smooth' });
-  });
-  el.after(btn);
-  };
-  if (document.readyState === 'complete') run(); else addEventListener('load', run);
-})();

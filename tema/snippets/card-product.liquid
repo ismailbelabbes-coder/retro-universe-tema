@@ -1,6 +1,6 @@
 {%- comment -%}
   Tarjeta de producto. Parámetros: product (obligatorio), eager (true en las primeras),
-  fit ('contain' = foto completa, 'cover' = recortada), hover (true = segunda foto al pasar el ratón)
+  fit ('contain' = foto completa, 'cover' = recortada)
 {%- endcomment -%}
 {%- liquid
   assign k = product.id | modulo: 4
@@ -18,12 +18,10 @@
 -%}
 {%- liquid
   assign fit_mode = fit | default: 'contain'
-  assign second = product.images[1]
   assign card_title = product.metafields.custom.titulo_corto.value | default: product.title
   assign focal = product.featured_image.presentation.focal_point | default: '50% 50%'
-  assign focal2 = second.presentation.focal_point | default: '50% 50%'
 -%}
-<article class="card k-{{ k }} card--{{ fit_mode }}{% if hover and second %} card--hover{% endif %}">
+<article class="card k-{{ k }} card--{{ fit_mode }}">
   <div class="card__media">
     {%- unless product.available -%}
       <span class="badge badge--out">{{ 'products.sold_out' | t }}</span>
@@ -35,9 +33,6 @@
         {% render 'img', image: product.featured_image, alt: product.title, sizes: '(min-width: 990px) 30vw, 48vw', widths: '240, 360, 540, 720', loading: 'eager', class: 'card__img1', focal: focal %}
       {%- else -%}
         {% render 'img', image: product.featured_image, alt: product.title, sizes: '(min-width: 990px) 30vw, 48vw', widths: '240, 360, 540, 720', class: 'card__img1', focal: focal %}
-      {%- endif -%}
-      {%- if hover and second -%}
-        {% render 'img', image: second, alt: '', sizes: '(min-width: 990px) 30vw, 48vw', widths: '240, 360, 540, 720', class: 'card__img2', focal: focal2 %}
       {%- endif -%}
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}

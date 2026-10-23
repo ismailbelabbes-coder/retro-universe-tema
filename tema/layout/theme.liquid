@@ -126,7 +126,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="template-{{ request.page_type | handle }}{% if settings.boot_enabled and request.page_type == 'index' %} booting{% endif %}"
+  <body class="bg-{{ settings.bg_style }} template-{{ request.page_type | handle }}{% if settings.boot_enabled and request.page_type == 'index' %} booting{% endif %}"
     data-motion="{{ settings.fx_motion }}" data-design="{{ request.design_mode }}">
     <a class="skip" href="#MainContent">{{ 'general.skip' | t }}</a>
 

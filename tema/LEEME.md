@@ -96,7 +96,9 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 ## Fotos de producto y conversión
 
 - **Encuadre de fotos:** en las secciones «Cuadrícula de colección» y «Colección» (y la ficha de producto) se elige «Foto completa» o «Recortada». En modo recortado se usa el punto de enfoque de cada imagen (Shopify > Productos > imagen > Editar > Punto de enfoque).
-- **Segunda foto al pasar el ratón** en las tarjetas (solo escritorio). Si la segunda foto de algún producto es un banner o tiene texto, desactívalo en esa sección o pon otra foto en segundo lugar.
+- **Animación retro de las fotos:** al entrar en pantalla la foto «se enciende» como un tubo CRT, y al pasar el ratón rebota en dos fotogramas y un brillo de pantalla la cruza (solo `transform` y `opacity`; sin movimiento con «reducir movimiento»).
+- **Fondo decorativo** (Ajustes del tema > Efectos arcade): brillos suaves y estrellas que caen muy despacio, solo brillos, rejilla tenue o fondo liso.
+- **Textos largos plegables** («Leer más»): descripciones de colección y de producto.
 - **Zoom** al pasar el ratón en la ficha, al tocar en móvil, y deslizamiento para cambiar de foto.
 - **Envío gratuito:** barra de progreso en el cajón y en la página del carrito. Se configura en Ajustes del tema > Envío gratuito (30 € por defecto, el de su web actual). Solo informa: la condición real se configura en los envíos de Shopify.
 - **Barra de compra fija en móvil** en la ficha (se puede apagar en la sección).
