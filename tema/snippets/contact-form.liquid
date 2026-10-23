@@ -1,0 +1,35 @@
+{%- comment -%}
+  Formulario de contacto nativo de Shopify ({% form 'contact' %}). Incluye casilla de consentimiento de privacidad (RGPD).
+{%- endcomment -%}
+{%- assign privacy_url = pages['politica-de-privacidad'].url | default: shop.privacy_policy.url -%}
+{%- form 'contact', id: 'ContactForm', class: 'cform' -%}
+  {%- if form.posted_successfully? -%}
+    <p class="msg" role="status" tabindex="-1" data-focus>{{ 'contact.success' | t }}</p>
+  {%- endif -%}
+  {%- if form.errors -%}
+    <div class="msg" role="alert">{{ form.errors | default_errors }}</div>
+  {%- endif -%}
+  <div class="cform__row">
+    <div>
+      <label class="lbl" for="cf-name">{{ 'contact.name' | t }}</label>
+      <input class="field" id="cf-name" name="contact[name]" type="text" autocomplete="name" value="{{ form.name | escape }}">
+    </div>
+    <div>
+      <label class="lbl" for="cf-email">{{ 'contact.email' | t }} <span aria-hidden="true">*</span></label>
+      <input class="field" id="cf-email" name="contact[email]" type="email" autocomplete="email" inputmode="email" required value="{{ form.email | escape }}">
+    </div>
+  </div>
+  <div>
+    <label class="lbl" for="cf-phone">{{ 'contact.phone' | t }}</label>
+    <input class="field" id="cf-phone" name="contact[phone]" type="tel" autocomplete="tel" inputmode="tel" value="{{ form.phone | escape }}">
+  </div>
+  <div>
+    <label class="lbl" for="cf-body">{{ 'contact.message' | t }} <span aria-hidden="true">*</span></label>
+    <textarea class="field" id="cf-body" name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+  </div>
+  <label class="chk-consent">
+    <input type="checkbox" name="contact[Consentimiento privacidad]" value="Sí" required>
+    <span>{{ 'contact.consent_before' | t }}{% if privacy_url != blank %} <a href="{{ privacy_url }}" target="_blank" rel="noopener">{{ 'contact.consent_link' | t }}</a>{% else %} {{ 'contact.consent_link' | t }}{% endif %}{{ 'contact.consent_after' | t }}</span>
+  </label>
+  <button class="btn" type="submit">{{ 'contact.send' | t }}</button>
+{%- endform -%}

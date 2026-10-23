@@ -719,3 +719,14 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 .price__note{display:block; margin-top:.4rem; font-size:.8rem; color:var(--ink-3)}
 .vat-note{margin:.4rem 0 0; font-size:.85rem; color:var(--ink-3)}
 .vat-note a{color:var(--ink-2)}
+
+/* ============ Formulario de contacto ============ */
+.cform-wrap{max-width:680px; margin-top:28px}
+.cform{display:grid; gap:18px}
+.cform__row{display:grid; gap:18px}
+.cform textarea.field{resize:vertical; min-height:9rem}
+.cform .msg{margin:0}
+.chk-consent{display:flex; gap:12px; align-items:flex-start; color:var(--ink-2); font-size:.95rem; cursor:pointer}
+.chk-consent input{width:24px; height:24px; flex:none; margin-top:2px; accent-color:var(--pink)}
+.chk-consent a{color:var(--cyan)}
+@media (min-width:750px){ .cform__row{grid-template-columns:1fr 1fr} }

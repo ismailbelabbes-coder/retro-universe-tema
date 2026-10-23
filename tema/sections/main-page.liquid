@@ -2,6 +2,9 @@
 <div class="wrap page">
   <h1>{{ page.title | escape }}</h1>
   <div class="prose rich">{{ page.content | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
+  {%- if page.handle == 'contact' or page.handle == 'contacto' -%}
+    <div class="cform-wrap">{% render 'contact-form' %}</div>
+  {%- endif -%}
 </div>
 
 {% schema %}

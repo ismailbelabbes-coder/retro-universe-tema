@@ -1,0 +1,19 @@
+{% render 'section-style', section: section %}
+<div class="wrap page">
+  <h1>{{ page.title | escape }}</h1>
+  <div class="prose rich">{{ page.content | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
+  <div class="cform-wrap">{% render 'contact-form' %}</div>
+  {%- if settings.whatsapp_number != blank -%}
+    <p style="margin-top:24px"><a class="btn btn--wa" href="{% render 'whatsapp-url' %}" target="_blank" rel="noopener">{% render 'icon', name: 'whatsapp' %}WhatsApp</a></p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Página de contacto",
+  "settings": [
+    { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
+  ]
+}
+{% endschema %}

@@ -134,6 +134,17 @@
     "group": "Recreativa interactiva",
     "from": "desde"
   },
+  "contact": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "message": "Mensaje",
+    "send": "Enviar",
+    "success": "Gracias por escribirnos. Hemos recibido tu mensaje y te responderemos lo antes posible.",
+    "consent_before": "He leído y acepto la",
+    "consent_link": "Política de privacidad",
+    "consent_after": ", y consiento el tratamiento de mis datos para gestionar mi consulta."
+  },
   "password": {
     "title": "Tienda en preparación",
     "text": "Volveremos muy pronto."

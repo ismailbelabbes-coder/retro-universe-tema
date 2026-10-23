@@ -93,6 +93,10 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 - Los elementos que aparecen con animación solo se ocultan si están bajo el pliegue y los gestiona JavaScript: si algo falla, todo queda visible. En el editor de temas nunca se ocultan.
 - Comprobado en la vista previa de la tienda real a 375 px y a 1366 px: sin desbordamiento horizontal.
 
+## Página de contacto
+
+La web actual tiene una página `/pages/contact` con formulario (nombre, correo, teléfono y comentario). El tema incluye la plantilla `page.contact` y el formulario nativo de Shopify con casilla de consentimiento de privacidad. Si esa página usa la plantilla por defecto, el formulario también aparece cuando su dirección es `contact` o `contacto`. **Comprobar en la vista previa que /pages/contact muestra el formulario y que un mensaje de prueba llega a info@retrouniverse.es.**
+
 ## Cumplimiento legal (UE / España)
 
 Lo que hace el tema, y lo que no puede hacer, porque lo decide Shopify o el negocio:
