@@ -97,7 +97,7 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 
 La web actual ya funciona en varios idiomas con **Shopify Markets** (`/de`, `/fr`, `/it`, `/pt`...) y publica las etiquetas `hreflang` automáticamente; el tema nuevo las conserva (comprobado en la vista previa: 20 etiquetas). Qué hay que saber:
 
-- **Textos de la interfaz** (Añadir, Cesta, filtros, formulario...): el tema incluye `locales/` en español, inglés, alemán, francés, italiano, portugués y neerlandés. Para cualquier otro idioma publicado (polaco, húngaro, noruego, ruso, rumano, hebreo...) se verá en español hasta que se añada su archivo.
+- **Textos de la interfaz** (Añadir, Cesta, filtros, formulario...): el tema incluye `locales/` en español, inglés, alemán, francés, italiano, catalán, portugués y neerlandés. Para cualquier otro idioma publicado (polaco, húngaro, noruego, ruso, rumano, hebreo...) se verá en español hasta que se añada su archivo.
 - **Textos que se escriben en el editor** (portada, banners, pie, ajustes de tema): son contenido del tema y hay que traducirlos para el tema nuevo con **Translate & Adapt** o con la app de traducción. Las traducciones del tema actual no se copian solas.
 - **Productos, colecciones, menús y páginas**: se traducen a nivel de tienda y no dependen del tema.
 - **Google necesita cada página en su idioma en el propio HTML.** Hoy, en `/de`, la interfaz sale en alemán pero los títulos y descripciones de producto salen en español en el HTML (probablemente los traduce en el navegador la app Transtore). Para el SEO internacional conviene que las traducciones estén guardadas en Shopify (Translate & Adapt o Markets), no solo aplicadas por JavaScript.

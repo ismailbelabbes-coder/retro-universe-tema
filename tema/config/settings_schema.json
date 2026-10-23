@@ -97,7 +97,7 @@
   {
     "name": "Idiomas y países",
     "settings": [
-      { "type": "paragraph", "content": "Los idiomas y los mercados se activan en Shopify (Ajustes > Idiomas y Mercados). El tema incluye los textos de la interfaz en español, inglés, alemán, francés, italiano, portugués y neerlandés. Los textos que escribas en el editor y los de los productos se traducen con Shopify Translate & Adapt o con tu app de traducción." },
+      { "type": "paragraph", "content": "Los idiomas y los mercados se activan en Shopify (Ajustes > Idiomas y Mercados). El tema incluye los textos de la interfaz en español, inglés, alemán, francés, italiano, catalán, portugués y neerlandés. Los textos que escribas en el editor y los de los productos se traducen con Shopify Translate & Adapt o con tu app de traducción." },
       { "type": "checkbox", "id": "show_localization", "label": "Mostrar el selector de idioma y país de Shopify en el pie", "info": "Déjalo apagado si ya usas el selector de tu app de traducción, para no tener dos.", "default": false }
     ]
   },

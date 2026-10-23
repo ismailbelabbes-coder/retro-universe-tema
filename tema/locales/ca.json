@@ -1,0 +1,163 @@
+{
+  "general": {
+    "skip": "Vés al contingut",
+    "menu": "Menú",
+    "close": "Tanca",
+    "search": "Cerca",
+    "account": "El meu compte",
+    "payment_methods": "Mitjans de pagament acceptats",
+    "cart": "Cistella",
+    "cart_items": "Cistella, {{ count }} articles",
+    "home": "Inici",
+    "view_all": "Veure-ho tot",
+    "read_more": "Llegeix més",
+    "read_less": "Llegeix menys",
+    "back_to_shop": "Torna a la botiga",
+    "pagination": "Paginació",
+    "page_n": "Pàgina {{ n }}",
+    "next": "Següent",
+    "previous": "Anterior",
+    "page_of": "Pàgina {{ current }} de {{ total }}",
+    "whatsapp": "WhatsApp",
+    "email": "Correu",
+    "ask_whatsapp": "Pregunta per WhatsApp",
+    "main_menu": "Menú principal",
+    "footer_menu": "Menú del peu de pàgina",
+    "breadcrumbs": "Camí de navegació",
+    "language": "Idioma",
+    "apply": "Aplica"
+  },
+  "products": {
+    "add": "+ Afegeix",
+    "added": "Afegit!",
+    "add_to_cart": "Afegeix a la cistella",
+    "read_more": "Veure tota la descripció",
+    "read_less": "Veure'n menys",
+    "sold_out": "Esgotat",
+    "choose_options": "Veure opcions",
+    "sale": "Oferta",
+    "from": "des de",
+    "price_regular": "Preu habitual",
+    "price_sale": "Preu d'oferta",
+    "unavailable": "No disponible",
+    "quantity": "Quantitat",
+    "vat_included": "IVA inclòs.",
+    "vat_excluded": "IVA no inclòs.",
+    "shipping_link": "Les despeses d'enviament es calculen en finalitzar la compra",
+    "shipping_policy": "Política d'enviament",
+    "decrease": "Treu una unitat",
+    "increase": "Afegeix una unitat",
+    "added_toast": "Afegit a la cistella",
+    "view_cart": "Veure cistella",
+    "gallery": "Galeria d'imatges",
+    "image_n": "Imatge {{ n }} de {{ total }}",
+    "ask_product": "Pregunta per WhatsApp",
+    "ask_message": "Hola, Retro Universe! Volia preguntar-vos per: {{ title }} ({{ url }})",
+    "models": {
+      "one": "{{ count }} model",
+      "other": "{{ count }} models"
+    },
+    "no_products": "Encara no hi ha productes en aquesta col·lecció.",
+    "sort_by": "Ordena per",
+    "filters": "Filtres",
+    "apply": "Aplica",
+    "clear": "Treu els filtres",
+    "in_stock": "Disponibilitat",
+    "available": "En estoc",
+    "price": "Preu",
+    "price_from": "Des de",
+    "price_to": "Fins a",
+    "results": {
+      "one": "{{ count }} resultat",
+      "other": "{{ count }} resultats"
+    },
+    "zoom": "Zoom"
+  },
+  "cart": {
+    "title": "La teva cistella",
+    "empty": "La cistella és buida. Insereix una màquina per començar la partida.",
+    "continue": "Segueix comprant",
+    "product": "Producte",
+    "price": "Preu",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "taxes_note": "Els impostos i les despeses d'enviament es calculen en finalitzar la compra.",
+    "taxes_note_included": "IVA inclòs. Les despeses d'enviament es calculen en finalitzar la compra.",
+    "checkout": "Finalitza la compra",
+    "update": "Actualitza la cistella",
+    "remove": "Elimina {{ title }}",
+    "note": "Notes per a la comanda",
+    "whatsapp_help": "Vols ajuda abans de pagar? Escriu-nos per WhatsApp.",
+    "whatsapp_message": "Hola, Retro Universe! Tinc dubtes sobre la meva cistella ({{ url }})."
+  },
+  "search": {
+    "title": "Cerca",
+    "placeholder": "Cerca una màquina",
+    "submit": "Cerca",
+    "results_for": "Resultats per a «{{ terms }}»",
+    "no_results": "No hem trobat res per a «{{ terms }}». Prova amb una altra paraula o mira les col·leccions.",
+    "label": "Cerca a la botiga"
+  },
+  "blog": {
+    "read_more": "Llegeix més",
+    "published": "Publicat el {{ date }}",
+    "by": "Per {{ author }}",
+    "back": "Torna al blog",
+    "empty": "Encara no hi ha entrades.",
+    "tags": "Etiquetes"
+  },
+  "collections": {
+    "title": "Col·leccions",
+    "empty": "Encara no hi ha col·leccions."
+  },
+  "not_found": {
+    "title": "Game over",
+    "text": "Aquesta pàgina no existeix o ha canviat de lloc.",
+    "button": "Torna a la botiga"
+  },
+  "footer": {
+    "follow": "Segueix-nos",
+    "contact": "Contacte",
+    "prices_note": "Tots els preus inclouen l'IVA.",
+    "cookie_prefs": "Preferències de cookies",
+    "withdrawal": "Desistir del contracte",
+    "accessibility": "Declaració d'accessibilitat",
+    "social_aria": "Xarxes socials"
+  },
+  "boot": {
+    "label": "Pantalla d'inici de Retro Universe",
+    "skip": "Entra a la botiga",
+    "skip_hint": "Toca la pantalla, prem Enter o espera uns segons per entrar",
+    "ready": "READY!"
+  },
+  "hero": {
+    "prev": "Màquina anterior",
+    "next": "Màquina següent",
+    "joystick": "Joystick: màquina següent",
+    "see": "Veure {{ title }} a la botiga",
+    "group": "Recreativa interactiva",
+    "from": "des de"
+  },
+  "contact": {
+    "name": "Nom",
+    "email": "Correu electrònic",
+    "phone": "Telèfon",
+    "message": "Missatge",
+    "send": "Envia",
+    "success": "Gràcies per escriure'ns. Hem rebut el teu missatge i et respondrem tan aviat com puguem.",
+    "consent_before": "He llegit i accepto la",
+    "consent_link": "Política de privacitat",
+    "consent_after": ", i consento el tractament de les meves dades per gestionar la meva consulta."
+  },
+  "password": {
+    "title": "Botiga en preparació",
+    "text": "Tornarem molt aviat."
+  },
+  "gift_card": {
+    "title": "Targeta regal",
+    "balance": "Saldo",
+    "code": "Codi",
+    "copy": "Copia el codi",
+    "use": "Utilitza a la botiga"
+  }
+}
