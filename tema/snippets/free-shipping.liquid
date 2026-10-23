@@ -1,0 +1,15 @@
+{%- comment -%} Barra de progreso del envío gratuito. Se configura en Ajustes del tema > Envío gratuito. {%- endcomment -%}
+{%- if settings.free_shipping_threshold > 0 and cart.item_count > 0 -%}
+  {%- liquid
+    assign goal = settings.free_shipping_threshold | times: 100
+    assign left = goal | minus: cart.total_price
+    assign pct = cart.total_price | times: 100 | divided_by: goal | at_most: 100
+    assign left_money = left | money
+  -%}
+  <div class="fship{% if left <= 0 %} fship--done{% endif %}" role="status">
+    <p class="fship__t">
+      {%- if left > 0 -%}{{ settings.free_shipping_text | replace: '[importe]', left_money | escape }}{%- else -%}{{ settings.free_shipping_done | escape }}{%- endif -%}
+    </p>
+    <div class="fship__bar" aria-hidden="true"><i style="--p: {{ pct | divided_by: 100.0 }}"></i></div>
+  </div>
+{%- endif -%}

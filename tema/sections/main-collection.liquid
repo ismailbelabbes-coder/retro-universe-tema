@@ -72,7 +72,7 @@
     <ul class="grid cols-{{ section.settings.columns }}" role="list">
       {%- for product in collection.products -%}
         {%- assign is_eager = false -%}{%- if forloop.index <= 2 -%}{%- assign is_eager = true -%}{%- endif -%}
-        <li>{% render 'card-product', product: product, eager: is_eager %}</li>
+        <li>{% render 'card-product', product: product, eager: is_eager, fit: section.settings.image_fit, hover: section.settings.hover_image %}</li>
       {%- endfor -%}
     </ul>
     {% render 'pagination', paginate: paginate %}
@@ -88,6 +88,12 @@
   "settings": [
     { "type": "range", "id": "per_page", "label": "Productos por página", "min": 8, "max": 48, "step": 4, "default": 24 },
     { "type": "select", "id": "columns", "label": "Columnas en escritorio", "default": "3", "options": [ { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ] },
+    { "type": "header", "content": "Fotos de producto" },
+    { "type": "select", "id": "image_fit", "label": "Encuadre de la foto", "default": "contain", "options": [
+      { "value": "contain", "label": "Foto completa (no recorta)" },
+      { "value": "cover", "label": "Recortada (llena el marco)" }
+    ], "info": "«Recortada» usa el punto de enfoque que se define en cada imagen de Shopify (Productos > imagen > Editar > Punto de enfoque)." },
+    { "type": "checkbox", "id": "hover_image", "label": "Mostrar la segunda foto al pasar el ratón", "default": true },
     { "type": "checkbox", "id": "show_description", "label": "Mostrar descripción de la colección", "default": true },
     { "type": "checkbox", "id": "show_filters", "label": "Mostrar filtros", "info": "Se configuran en Shopify > Contenido > Menús > Filtros de búsqueda y descubrimiento.", "default": true },
     { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 24 },

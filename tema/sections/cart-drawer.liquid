@@ -20,6 +20,7 @@
         <a class="btn btn--ghost" href="{{ routes.all_products_collection_url }}">{{ 'cart.continue' | t }}</a>
       </div>
     {%- else -%}
+      {% render 'free-shipping' %}
       <ul class="drawer__list" role="list">
         {%- for item in cart.items -%}
           <li class="dline">

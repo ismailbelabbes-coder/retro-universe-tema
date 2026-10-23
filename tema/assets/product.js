@@ -16,6 +16,35 @@
   thumbs.forEach((t, i) => t.addEventListener('click', () => showSlide(i)));
   if (slides.length) showSlide(0);
 
+  /* ampliar al pasar el ratón (escritorio) o al tocar (móvil) y deslizar para cambiar de foto */
+  const main = root.querySelector('.gallery__main');
+  if (main && main.classList.contains('gallery--zoomable')) {
+    const hover = matchMedia('(hover:hover)').matches;
+    const move = e => {
+      const r = main.getBoundingClientRect();
+      main.style.setProperty('--zx', ((e.clientX - r.left) / r.width * 100) + '%');
+      main.style.setProperty('--zy', ((e.clientY - r.top) / r.height * 100) + '%');
+    };
+    if (hover) {
+      main.addEventListener('mouseenter', e => { move(e); main.classList.add('is-zoom'); });
+      main.addEventListener('mousemove', move);
+      main.addEventListener('mouseleave', () => main.classList.remove('is-zoom'));
+    } else {
+      main.addEventListener('click', e => { move(e.touches ? e.touches[0] : e); main.classList.toggle('is-zoom'); });
+    }
+  }
+  if (main && slides.length > 1) {
+    let x0 = null;
+    const current = () => Math.max(0, slides.findIndex(s => s.classList.contains('is-on')));
+    const goto = n => showSlide((n + slides.length) % slides.length);
+    main.addEventListener('touchstart', e => { x0 = main.classList.contains('is-zoom') ? null : e.touches[0].clientX; }, { passive: true });
+    main.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 45) { goto(current() + (dx < 0 ? 1 : -1)); main.classList.remove('is-zoom'); }
+    });
+  }
+
   /* variantes */
   if (!form || data.variants.length < 2) return;
   const idInput = form.querySelector('[name="id"]');
@@ -42,4 +71,21 @@
     if (v.featured_media_index != null && slides[v.featured_media_index]) showSlide(v.featured_media_index);
   }
   form.addEventListener('change', e => { if (e.target.closest('.opt')) update(); });
+})();
+
+/* Barra de compra fija en móvil: aparece cuando el botón principal sale de la pantalla. */
+(() => {
+  const bar = document.querySelector('[data-sticky-buy]');
+  const form = document.querySelector('form[data-product-form]');
+  if (!bar || !form || !('IntersectionObserver' in window)) return;
+  const btn = form.querySelector('[data-submit]');
+  bar.hidden = false;
+  new IntersectionObserver(([e]) => {
+    const below = e.boundingClientRect.top > 0;
+    bar.classList.toggle('is-on', !e.isIntersecting && !below);
+  }).observe(btn);
+  bar.querySelector('[data-sticky-submit]').addEventListener('click', () => { if (form.requestSubmit) form.requestSubmit(btn); else form.submit(); });
+  /* mantiene el precio de la barra igual que el de la ficha (cambia al elegir variante) */
+  const price = document.querySelector('[data-price]'), out = bar.querySelector('[data-sticky-price]');
+  if (price && out) new MutationObserver(() => { const s = price.querySelector('strong'); if (s) out.textContent = s.textContent; }).observe(price, { childList: true, subtree: true });
 })();

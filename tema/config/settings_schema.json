@@ -59,6 +59,15 @@
     ]
   },
   {
+    "name": "Envío gratuito",
+    "settings": [
+      { "type": "paragraph", "content": "Barra de progreso en el carrito. Pon aquí la misma condición que tengas configurada en los envíos de Shopify; esta barra solo informa." },
+      { "type": "range", "id": "free_shipping_threshold", "label": "Importe mínimo para envío gratuito", "min": 0, "max": 500, "step": 5, "unit": "€", "default": 30, "info": "0 = no mostrar la barra." },
+      { "type": "text", "id": "free_shipping_text", "label": "Texto mientras falta importe", "default": "Te faltan [importe] para el envío gratuito (Península y Portugal)", "info": "[importe] se sustituye por lo que falta." },
+      { "type": "text", "id": "free_shipping_done", "label": "Texto al conseguirlo", "default": "Tienes el envío gratuito (Península y Portugal)" }
+    ]
+  },
+  {
     "name": "Contacto y WhatsApp",
     "settings": [
       { "type": "text", "id": "whatsapp_number", "label": "Número de WhatsApp (con prefijo, sin + ni espacios)", "default": "34672835894" },

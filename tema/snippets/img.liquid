@@ -1,16 +1,20 @@
 {%- comment -%}
   Imagen responsive con srcset. Parámetros:
   image (obligatorio, objeto imagen), alt, sizes, widths, class, loading ('lazy' por defecto o 'eager'),
-  priority (true para la imagen principal de la página), ratio (opcional, no recorta si está vacío)
+  priority (true para la imagen principal de la página), focal (punto de enfoque para object-position, p. ej. '50% 30%')
 {%- endcomment -%}
 {%- liquid
   assign img_widths = widths | default: '240, 360, 540, 720, 960, 1200, 1500'
   assign img_sizes = sizes | default: '100vw'
   assign img_loading = loading | default: 'lazy'
   assign img_alt = image.alt | default: alt | default: ''
+  assign img_style = ''
+  if focal != blank
+    assign img_style = 'object-position:' | append: focal
+  endif
 -%}
 {%- if priority -%}
-  {{ image | image_url: width: 1500 | image_tag: widths: img_widths, sizes: img_sizes, loading: 'eager', fetchpriority: 'high', class: class, alt: img_alt }}
+  {{ image | image_url: width: 1500 | image_tag: widths: img_widths, sizes: img_sizes, loading: 'eager', fetchpriority: 'high', class: class, alt: img_alt, style: img_style }}
 {%- else -%}
-  {{ image | image_url: width: 1500 | image_tag: widths: img_widths, sizes: img_sizes, loading: img_loading, decoding: 'async', class: class, alt: img_alt }}
+  {{ image | image_url: width: 1500 | image_tag: widths: img_widths, sizes: img_sizes, loading: img_loading, decoding: 'async', class: class, alt: img_alt, style: img_style }}
 {%- endif -%}

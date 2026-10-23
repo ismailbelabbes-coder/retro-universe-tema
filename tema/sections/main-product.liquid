@@ -12,7 +12,7 @@
   <nav class="crumbs" aria-label="Migas de pan" style="padding-top:20px"><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>{% if collection %} / <a href="{{ collection.url }}">{{ collection.title | escape }}</a>{% endif %}</nav>
   <div class="prod">
     <div class="gallery">
-      <div class="gallery__main" role="group" aria-label="{{ 'products.gallery' | t }}">
+      <div class="gallery__main gallery--{{ section.settings.gallery_fit }}{% if section.settings.gallery_zoom %} gallery--zoomable{% endif %}" role="group" aria-label="{{ 'products.gallery' | t }}">
         {%- for media in product.media -%}
           <div data-slide>
             {%- if media.media_type == 'image' -%}
@@ -28,6 +28,7 @@
         {%- else -%}
           {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
         {%- endfor -%}
+        {%- if section.settings.gallery_zoom and product.media.size > 0 -%}<span class="gallery__hint" aria-hidden="true">Zoom</span>{%- endif -%}
       </div>
       {%- if product.media.size > 1 -%}
         <ul class="thumbs" role="list">
@@ -97,6 +98,16 @@
     </div>
   </div>
 
+  {%- if section.settings.show_sticky_buy and product.available -%}
+    <div class="sticky-buy" data-sticky-buy hidden>
+      <div class="sticky-buy__info">
+        <p class="sticky-buy__t">{{ product.title | escape }}</p>
+        <p class="sticky-buy__p" data-sticky-price>{{ product.price | money }}</p>
+      </div>
+      <button class="btn" type="button" data-sticky-submit>{{ 'products.add' | t }}</button>
+    </div>
+  {%- endif -%}
+
   <script type="application/json" data-product-json>
     {
       "currency": {{ cart.currency.iso_code | json }},
@@ -122,6 +133,12 @@
 {
   "name": "Producto",
   "settings": [
+    { "type": "select", "id": "gallery_fit", "label": "Encuadre de la foto principal", "default": "contain", "options": [
+      { "value": "contain", "label": "Foto completa (no recorta)" },
+      { "value": "cover", "label": "Recortada (llena el marco)" }
+    ] },
+    { "type": "checkbox", "id": "gallery_zoom", "label": "Ampliar la foto al pasar el ratón o al tocarla", "default": true },
+    { "type": "checkbox", "id": "show_sticky_buy", "label": "Barra de compra fija en móvil (aparece al bajar)", "default": true },
     { "type": "checkbox", "id": "show_vendor", "label": "Mostrar marca", "default": false },
     { "type": "checkbox", "id": "show_sku", "label": "Mostrar referencia (SKU)", "default": false },
     { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Mostrar «Comprar ahora» (Apple Pay, Google Pay, etc.)", "info": "Usa el pago acelerado nativo de Shopify.", "default": true },

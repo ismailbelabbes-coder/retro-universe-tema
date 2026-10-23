@@ -93,6 +93,15 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 - Los elementos que aparecen con animación solo se ocultan si están bajo el pliegue y los gestiona JavaScript: si algo falla, todo queda visible. En el editor de temas nunca se ocultan.
 - Comprobado en la vista previa de la tienda real a 375 px y a 1366 px: sin desbordamiento horizontal.
 
+## Fotos de producto y conversión
+
+- **Encuadre de fotos:** en las secciones «Cuadrícula de colección» y «Colección» (y la ficha de producto) se elige «Foto completa» o «Recortada». En modo recortado se usa el punto de enfoque de cada imagen (Shopify > Productos > imagen > Editar > Punto de enfoque).
+- **Segunda foto al pasar el ratón** en las tarjetas (solo escritorio). Si la segunda foto de algún producto es un banner o tiene texto, desactívalo en esa sección o pon otra foto en segundo lugar.
+- **Zoom** al pasar el ratón en la ficha, al tocar en móvil, y deslizamiento para cambiar de foto.
+- **Envío gratuito:** barra de progreso en el cajón y en la página del carrito. Se configura en Ajustes del tema > Envío gratuito (30 € por defecto, el de su web actual). Solo informa: la condición real se configura en los envíos de Shopify.
+- **Barra de compra fija en móvil** en la ficha (se puede apagar en la sección).
+- Copia de seguridad previa a estos cambios: rama `backup-antes-de-imagenes`.
+
 ## Notas para quien siga desarrollando
 
 - Movimiento solo con `transform` y `opacity`. Con `prefers-reduced-motion` o con la casilla de animaciones desactivada se ve una versión estática completa.

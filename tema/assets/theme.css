@@ -628,3 +628,47 @@ body[data-motion="false"] .reveal.pre{opacity:1; transform:none}
 .drawer .cart-empty{padding:40px 24px}
 body.drawer-open{overflow:hidden}
 @media (prefers-reduced-motion:reduce){ .drawer{transition:none} }
+
+/* ============ Fotos de producto: encuadre, segunda foto y zoom ============ */
+.card__media{--pad:7%}
+.card--cover .card__media{--pad:0; padding:0}
+.card--cover .card__media img{object-fit:cover}
+.card--cover .card__media img.card__img1{filter:none}
+.card--cover .card__media::after{content:""; position:absolute; inset:auto 0 0 0; height:35%; background:linear-gradient(to top, var(--bg-2), transparent); pointer-events:none}
+.card__img2{position:absolute; inset:var(--pad); width:calc(100% - 2 * var(--pad)); height:calc(100% - 2 * var(--pad)); object-fit:contain; opacity:0; transition:opacity .35s var(--ease), transform .3s steps(4)}
+.card--cover .card__img2{object-fit:cover}
+@media (hover:hover){
+  .card--hover:hover .card__img2{opacity:1}
+  .card--hover:hover .card__img1{opacity:0}
+  .card--cover:hover .card__media img{transform:scale(1.06)}
+}
+.card__img1{transition:opacity .35s var(--ease), transform .3s steps(4)}
+
+.gallery__main{overflow:hidden; touch-action:pan-y; position:relative}
+.gallery--cover{padding:0}
+.gallery--cover img{object-fit:cover}
+.gallery--zoomable{cursor:zoom-in}
+.gallery--zoomable.is-zoom{cursor:zoom-out}
+.gallery--zoomable [data-slide].is-on img{transition:transform .25s var(--ease)}
+.gallery--zoomable.is-zoom [data-slide].is-on img{transform:scale(1.9); transform-origin:var(--zx,50%) var(--zy,50%)}
+.gallery__hint{position:absolute; right:10px; bottom:10px; font-family:var(--f-pixel); font-size:.5rem; color:var(--ink-3); background:var(--bg); padding:.4rem .5rem; pointer-events:none; text-transform:uppercase}
+.gallery--zoomable.is-zoom .gallery__hint{display:none}
+@media (prefers-reduced-motion:reduce){ .gallery--zoomable [data-slide].is-on img,.card__img1,.card__img2{transition:none} }
+
+/* ============ Envío gratuito y barra de compra fija ============ */
+.fship{margin:0; padding:12px 20px 14px; background:var(--bg-2); border-bottom:2px dashed var(--edge)}
+.cartp .fship{border:4px solid var(--edge); margin-bottom:20px; padding:14px 18px}
+.fship__t{margin:0 0 8px; font-size:.9rem; color:var(--ink-2)}
+.fship--done .fship__t{color:var(--yellow); font-weight:700}
+.fship__bar{height:8px; background:repeating-linear-gradient(90deg, var(--edge-2) 0 8px, transparent 8px 10px); overflow:hidden}
+.fship__bar i{display:block; height:100%; background:linear-gradient(90deg, var(--cyan), var(--yellow)); transform-origin:left; transform:scaleX(var(--p,0)); transition:transform .5s steps(8)}
+.sticky-buy{position:fixed; left:0; right:0; bottom:0; z-index:49; display:flex; align-items:center; gap:12px; padding:10px 14px calc(10px + env(safe-area-inset-bottom)); background:rgba(10,6,18,.96); border-top:4px solid var(--edge); transform:translateY(110%); transition:transform .3s var(--ease)}
+.sticky-buy.is-on{transform:none}
+.sticky-buy[hidden]{display:flex; visibility:hidden}
+.sticky-buy.is-on[hidden]{visibility:visible}
+.sticky-buy__info{flex:1; min-width:0}
+.sticky-buy__t{margin:0; font-size:.85rem; color:var(--ink-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.sticky-buy__p{margin:.2rem 0 0; font-family:var(--f-pixel); font-size:.8rem; color:var(--ink)}
+.sticky-buy .btn{margin:0; flex:none}
+@media (min-width:900px){ .sticky-buy{display:none!important} }
+@media (prefers-reduced-motion:reduce){ .sticky-buy,.fship__bar i{transition:none} }

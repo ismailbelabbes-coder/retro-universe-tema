@@ -42,7 +42,7 @@
               {%- unless seen contains token -%}
                 {%- assign seen = seen | append: product.id | append: ',' -%}
                 {%- assign total = total | plus: 1 -%}
-                <li data-cat="t{{ idx }}">{% render 'card-product', product: product, eager: false %}</li>
+                <li data-cat="t{{ idx }}">{% render 'card-product', product: product, eager: false, fit: section.settings.image_fit, hover: section.settings.hover_image %}</li>
               {%- endunless -%}
             {%- endfor -%}
           {%- endif -%}
@@ -61,7 +61,7 @@
     {%- elsif coll != blank and coll.products.size > 0 -%}
       <ul class="grid cols-{{ section.settings.columns }}" role="list">
         {%- for product in coll.products limit: section.settings.count -%}
-          <li>{% render 'card-product', product: product, eager: false %}</li>
+          <li>{% render 'card-product', product: product, eager: false, fit: section.settings.image_fit, hover: section.settings.hover_image %}</li>
         {%- endfor -%}
       </ul>
     {%- elsif request.design_mode -%}
@@ -88,6 +88,12 @@
     { "type": "collection", "id": "collection", "label": "Colección", "info": "Solo se usa si no hay pestañas." },
     { "type": "select", "id": "columns", "label": "Columnas en escritorio", "default": "3", "options": [ { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ] },
     { "type": "checkbox", "id": "show_all", "label": "Mostrar botón «Ver todo» (sin pestañas)", "default": true },
+    { "type": "header", "content": "Fotos de producto" },
+    { "type": "select", "id": "image_fit", "label": "Encuadre de la foto", "default": "contain", "options": [
+      { "value": "contain", "label": "Foto completa (no recorta)" },
+      { "value": "cover", "label": "Recortada (llena el marco)" }
+    ], "info": "«Recortada» usa el punto de enfoque que se define en cada imagen de Shopify (Productos > imagen > Editar > Punto de enfoque)." },
+    { "type": "checkbox", "id": "hover_image", "label": "Mostrar la segunda foto al pasar el ratón", "default": true },
     { "type": "richtext", "id": "note", "label": "Nota bajo la cuadrícula", "default": "<p>¿Buscas otro modelo, tamaño o temática? Pregúntanos por WhatsApp.</p>" },
     { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
     { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
