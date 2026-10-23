@@ -12,7 +12,9 @@
         endif
       -%}
       {%- if p_image != blank -%}
+        {%- if section.settings.product != blank -%}<a href="{{ section.settings.product.url }}" class="pandora__link">{%- endif -%}
         {% render 'img', image: p_image, sizes: '(min-width: 900px) 50vw, 90vw', alt: section.settings.image_alt %}
+        {%- if section.settings.product != blank -%}</a>{%- endif -%}
       {%- else -%}
         {% render 'demo-img', name: 'pandora-premium', alt: '', width: 900, height: 600 %}
       {%- endif -%}

@@ -64,7 +64,10 @@
     btn.textContent = v.available ? btn.dataset.label : S.soldOut;
     if (priceBox) {
       const sale = v.compare_at_price > v.price;
-      priceBox.innerHTML = (sale ? '<s>' + money(v.compare_at_price) + '</s>' : '') + '<strong>' + money(v.price) + '</strong>';
+      const pct = sale ? Math.round((1 - v.price / v.compare_at_price) * 100) : 0;
+      const note = sale && priceBox.dataset.note ? '<span class="price__note"></span>' : '';
+      priceBox.innerHTML = '<p class="price' + (sale ? ' price--sale' : '') + '">' + (sale ? '<s>' + money(v.compare_at_price) + '<span class="off">-' + pct + '%</span></s>' : '') + '<strong>' + money(v.price) + '</strong>' + note + '</p>';
+      const n = priceBox.querySelector('.price__note'); if (n) n.textContent = priceBox.dataset.note;
     }
     const url = new URL(location.href); url.searchParams.set('variant', v.id);
     history.replaceState(null, '', url);

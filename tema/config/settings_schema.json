@@ -119,6 +119,11 @@
     "name": "Pie de página legal",
     "settings": [
       { "type": "text", "id": "legal_text", "label": "Datos de la empresa", "default": "RETRO UNIVERSE S.L. CIF B56157308" },
+      { "type": "text", "id": "legal_registry", "label": "Datos registrales (opcional)", "info": "Por ejemplo: Inscrita en el Registro Mercantil de Málaga, tomo…, folio…, hoja…. Solo si la sociedad los tiene; el aviso legal debe recogerlos." },
+      { "type": "text", "id": "legal_pages", "label": "Páginas legales en el pie (handles separados por comas)", "default": "aviso-legal,politica-de-privacidad,politica-de-cookies,terminos-condiciones", "info": "Son las direcciones /pages/… de esas páginas. Las que no existan no se muestran." },
+      { "type": "url", "id": "withdrawal_url", "label": "Enlace de «Desistir del contrato»", "info": "Función de desistimiento exigida a los comercios online de la UE desde el 19 de junio de 2026. Pon aquí la página o el formulario que uses; si está vacío no se muestra." },
+      { "type": "url", "id": "accessibility_url", "label": "Declaración de accesibilidad (opcional)" },
+      { "type": "text", "id": "omnibus_note", "label": "Texto bajo un precio rebajado (en la ficha)", "info": "Si usas precios tachados, la normativa exige que el precio anterior sea el más bajo de los últimos 30 días. Si lo cumples, puedes escribir aquí: «Precio anterior: el más bajo de los últimos 30 días.» Déjalo vacío si no estás seguro." },
       { "type": "checkbox", "id": "show_payment_icons", "label": "Mostrar medios de pago aceptados", "default": false }
     ]
   }

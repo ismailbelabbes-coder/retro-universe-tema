@@ -39,7 +39,7 @@
 
       <div class="cart-sum">
         <p class="tot"><span>{{ 'cart.subtotal' | t }}</span><strong>{{ cart.total_price | money }}</strong></p>
-        <p class="note">{{ 'cart.taxes_note' | t }}</p>
+        <p class="note">{% if cart.taxes_included %}{{ 'cart.taxes_note_included' | t }}{% else %}{{ 'cart.taxes_note' | t }}{% endif %}</p>
         <button class="btn btn--ghost" type="submit" name="update">{{ 'cart.update' | t }}</button>
         <button class="btn" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
         {%- if section.settings.show_whatsapp and settings.whatsapp_number != blank -%}

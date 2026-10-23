@@ -707,3 +707,15 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 /* El fondo decorativo nunca debe competir con la lectura: velo detrás de los textos largos */
 .prose,.prod__desc,.coll-head .lead,.rt .lead,.cartp .lead,.page .lead{background:color-mix(in srgb, var(--bg) 84%, transparent); box-shadow:0 0 0 .7rem color-mix(in srgb, var(--bg) 84%, transparent); border-radius:2px}
 @media (max-width:749px){ .bg-carpet::after{opacity:.13} .bg-floor::after{opacity:.7} }
+
+.pin-panel h3 a{text-decoration:none}
+.pin-panel h3 a:hover{text-decoration:underline}
+.pandora__link{display:block}
+.pin-stage a[data-pin]{text-decoration:none}
+
+.linklike{background:none; border:0; padding:0; font:inherit; color:inherit; text-decoration:underline; cursor:pointer; min-height:44px; display:inline-flex; align-items:center}
+.linklike[hidden]{display:none}
+.foot__legal a,.foot__legal .linklike{min-height:44px; display:inline-flex; align-items:center}
+.price__note{display:block; margin-top:.4rem; font-size:.8rem; color:var(--ink-3)}
+.vat-note{margin:.4rem 0 0; font-size:.85rem; color:var(--ink-3)}
+.vat-note a{color:var(--ink-2)}

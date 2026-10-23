@@ -43,7 +43,7 @@
       </ul>
       <form class="drawer__foot" action="{{ routes.cart_url }}" method="post">
         <p class="tot"><span>{{ 'cart.subtotal' | t }}</span><strong>{{ cart.total_price | money }}</strong></p>
-        <p class="note">{{ 'cart.taxes_note' | t }}</p>
+        <p class="note">{% if cart.taxes_included %}{{ 'cart.taxes_note_included' | t }}{% else %}{{ 'cart.taxes_note' | t }}{% endif %}</p>
         <button class="btn btn--full" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
         <a class="btn btn--ghost btn--full" href="{{ routes.cart_url }}">{{ 'products.view_cart' | t }}</a>
       </form>

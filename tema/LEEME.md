@@ -93,6 +93,23 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 - Los elementos que aparecen con animación solo se ocultan si están bajo el pliegue y los gestiona JavaScript: si algo falla, todo queda visible. En el editor de temas nunca se ocultan.
 - Comprobado en la vista previa de la tienda real a 375 px y a 1366 px: sin desbordamiento horizontal.
 
+## Cumplimiento legal (UE / España)
+
+Lo que hace el tema, y lo que no puede hacer, porque lo decide Shopify o el negocio:
+
+| Tema | Qué hace el tema | Qué debe hacer el negocio |
+|---|---|---|
+| Cookies y consentimiento (RGPD, LSSI) | No mete scripts de seguimiento a mano. Todo carga por `content_for_header`. Tipografías alojadas en el propio tema (sin Google Fonts). El pie tiene el botón «Preferencias de cookies», que reabre el panel de consentimiento de Shopify. | Configurar y activar el banner de Shopify (Ajustes > Privacidad de clientes) y comprobar que no se activa analítica ni publicidad antes de aceptar. |
+| Información legal (LSSI art. 10) | El pie muestra razón social y CIF (Ajustes del tema > Pie de página legal), datos registrales (campo opcional), correo, dirección y los enlaces a las páginas legales y a las políticas de Shopify. | Completar los datos registrales y unificar el domicilio. Ver `legal/LEEME.md`. |
+| Páginas legales | Se enlazan solas por su dirección (`aviso-legal`, `politica-de-privacidad`, `politica-de-cookies`, `terminos-condiciones`, editable). | Revisar y sustituir los textos con los borradores de `tema/legal/` y su asesor. |
+| Derecho de desistimiento | Enlace opcional «Desistir del contrato» en el pie (Ajustes del tema > Pie de página legal). Si no hay enlace, no se muestra. | Desde el 19 de junio de 2026 la normativa europea exige una función de desistimiento en los comercios online. Shopify propone una tarea de preparación en su panel de inicio («derecho de desistimiento de la UE»). Crear la página o el formulario y poner aquí el enlace. |
+| Precios (IVA, envío, rebajas) | La ficha y la cesta indican «IVA incluido» y que los gastos de envío se calculan al finalizar, con enlace a la política de envío. El precio tachado solo se muestra si el producto tiene precio de comparación. Texto opcional para precios rebajados («precio anterior: el más bajo de los últimos 30 días»). | Usar el precio de comparación solo si cumple esa norma y escribir ese texto solo si es cierto. |
+| Botón de compra | La cesta usa «Finalizar compra». El pedido final lo gestiona el checkout de Shopify, que no se modifica. | Comprobar en el checkout que el botón final deja clara la obligación de pago. |
+| Accesibilidad (Ley Europea de Accesibilidad) | Contraste de 4,5:1 o más, foco visible, etiquetas en formularios, `alt` en imágenes, versión sin movimiento con «reducir movimiento», botones táctiles de 48 px. Enlace opcional a la declaración de accesibilidad en el pie. | Revisar con una herramienta (Lighthouse, axe) en la tienda publicada y publicar la declaración de accesibilidad si procede. |
+| Almacenamiento del navegador | Solo guarda, tras saltar la pantalla «Insert Coin», un dato funcional para no volver a mostrarla. No contiene datos personales. | Mencionarlo en la política de cookies (ya incluido en el borrador). |
+
+Esto no es asesoramiento jurídico: conviene que lo revise un abogado o gestor.
+
 ## Fotos de producto y conversión
 
 - **Encuadre de fotos:** en las secciones «Cuadrícula de colección» y «Colección» (y la ficha de producto) se elige «Foto completa» o «Recortada». En modo recortado se usa el punto de enfoque de cada imagen (Shopify > Productos > imagen > Editar > Punto de enfoque).

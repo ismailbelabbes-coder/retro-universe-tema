@@ -60,6 +60,7 @@
 
     <div class="foot__legal">
       {%- if settings.legal_text != blank -%}<span>{{ settings.legal_text }}</span>{%- endif -%}
+      {%- if settings.legal_registry != blank -%}<span>{{ settings.legal_registry | escape }}</span>{%- endif -%}
       {%- if section.settings.show_prices_note -%}<span>{{ 'footer.prices_note' | t }}</span>{%- endif -%}
       <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</span>
       {%- if settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
@@ -67,9 +68,18 @@
           {%- for type in shop.enabled_payment_types -%}<li>{{ type | payment_type_svg_tag: class: 'pay-icon' }}</li>{%- endfor -%}
         </ul>
       {%- endif -%}
+      {%- assign legal_handles = settings.legal_pages | split: ',' -%}
+      {%- for h in legal_handles -%}
+        {%- assign hh = h | strip -%}
+        {%- assign lp = pages[hh] -%}
+        {%- if lp.url != blank -%}<a href="{{ lp.url }}">{{ lp.title | escape }}</a>{%- endif -%}
+      {%- endfor -%}
       {%- for policy in shop.policies -%}
         <a href="{{ policy.url }}">{{ policy.title | escape }}</a>
       {%- endfor -%}
+      <button type="button" class="linklike" data-privacy-prefs hidden>{{ 'footer.cookie_prefs' | t }}</button>
+      {%- if settings.withdrawal_url != blank -%}<a href="{{ settings.withdrawal_url }}">{{ 'footer.withdrawal' | t }}</a>{%- endif -%}
+      {%- if settings.accessibility_url != blank -%}<a href="{{ settings.accessibility_url }}">{{ 'footer.accessibility' | t }}</a>{%- endif -%}
     </div>
   </div>
 </footer>

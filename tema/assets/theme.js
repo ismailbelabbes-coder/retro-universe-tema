@@ -370,4 +370,14 @@
     el.after(btn);
   });
   if (document.readyState === 'complete') collapse(); else addEventListener('load', collapse);
+
+  /* ---------- Preferencias de cookies: reabre el panel de consentimiento de Shopify ---------- */
+  const prefsBtn = $('[data-privacy-prefs]');
+  if (prefsBtn) {
+    const api = () => window.Shopify && window.Shopify.customerPrivacy && typeof window.Shopify.customerPrivacy.showPreferences === 'function' ? window.Shopify.customerPrivacy : null;
+    const sync = () => { prefsBtn.hidden = !api(); };
+    sync(); [800, 2500, 6000].forEach(t => setTimeout(sync, t));
+    document.addEventListener('visitorConsentCollected', sync);
+    prefsBtn.addEventListener('click', () => { const a = api(); if (a) a.showPreferences(); });
+  }
 })();

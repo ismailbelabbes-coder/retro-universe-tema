@@ -38,6 +38,10 @@
     "price_sale": "Precio de oferta",
     "unavailable": "No disponible",
     "quantity": "Cantidad",
+    "vat_included": "IVA incluido.",
+    "vat_excluded": "IVA no incluido.",
+    "shipping_link": "Los gastos de envío se calculan al finalizar la compra",
+    "shipping_policy": "Política de envío",
     "decrease": "Quitar una unidad",
     "increase": "Añadir una unidad",
     "added_toast": "Añadido a la cesta",
@@ -74,6 +78,7 @@
     "total": "Total",
     "subtotal": "Subtotal",
     "taxes_note": "Impuestos y gastos de envío se calculan al finalizar la compra.",
+    "taxes_note_included": "IVA incluido. Los gastos de envío se calculan al finalizar la compra.",
     "checkout": "Finalizar compra",
     "update": "Actualizar cesta",
     "remove": "Eliminar {{ title }}",
@@ -110,6 +115,9 @@
     "follow": "Síguenos",
     "contact": "Contacto",
     "prices_note": "Todos los precios incluyen IVA.",
+    "cookie_prefs": "Preferencias de cookies",
+    "withdrawal": "Desistir del contrato",
+    "accessibility": "Declaración de accesibilidad",
     "social_aria": "Redes sociales"
   },
   "boot": {

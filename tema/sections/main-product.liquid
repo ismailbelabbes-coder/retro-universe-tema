@@ -46,7 +46,8 @@
     <div class="prod__info">
       {%- if section.settings.show_vendor and product.vendor != blank -%}<p class="prod__vendor">{{ product.vendor | escape }}</p>{%- endif -%}
       <h1>{{ product.title | escape }}</h1>
-      <div data-price>{% render 'price', product: product %}</div>
+      <div data-price data-note="{{ settings.omnibus_note | escape }}">{% render 'price', product: product, note: true %}</div>
+      <p class="vat-note">{% if cart.taxes_included %}{{ 'products.vat_included' | t }}{% else %}{{ 'products.vat_excluded' | t }}{% endif %} {{ 'products.shipping_link' | t }}{% if shop.shipping_policy.url != blank %} (<a href="{{ shop.shipping_policy.url }}">{{ 'products.shipping_policy' | t }}</a>){% endif %}.</p>
 
       {%- assign form_id = 'product-form-' | append: section.id -%}
       {%- form 'product', product, id: form_id, class: 'buy', data-product-form: '', data-ajax-cart: 'true' -%}

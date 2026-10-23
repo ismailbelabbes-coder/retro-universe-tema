@@ -1,4 +1,4 @@
-{%- comment -%} Precio de producto. Parámetros: product (obligatorio) {%- endcomment -%}
+{%- comment -%} Precio de producto. Parámetros: product (obligatorio), note (true en la ficha: muestra el texto del precio anterior si está configurado) {%- endcomment -%}
 {%- liquid
   assign sale = false
   if product.compare_at_price > product.price and product.available
@@ -11,4 +11,5 @@
     <s><span class="sr">{{ 'products.price_regular' | t }}: </span>{{ product.compare_at_price | money }}<span class="off">-{{ pct }}%</span></s>
   {%- endif -%}
   <strong><span class="sr">{% if sale %}{{ 'products.price_sale' | t }}: {% endif %}</span>{% if product.price_varies and sale == false %}<span class="from">{{ 'products.from' | t }} </span>{% endif %}{{ product.price | money }}</strong>
+  {%- if sale and note and settings.omnibus_note != blank -%}<span class="price__note">{{ settings.omnibus_note | escape }}</span>{%- endif -%}
 </p>
