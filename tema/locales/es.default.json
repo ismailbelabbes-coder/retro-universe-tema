@@ -26,6 +26,8 @@
     "add": "+ Añadir",
     "added": "¡Añadido!",
     "add_to_cart": "Añadir a la cesta",
+    "read_more": "Ver toda la descripción",
+    "read_less": "Ver menos",
     "sold_out": "Agotado",
     "choose_options": "Ver opciones",
     "sale": "Oferta",
@@ -79,7 +81,7 @@
   },
   "search": {
     "title": "Buscar",
-    "placeholder": "Busca una máquina, un juego…",
+    "placeholder": "Busca una máquina",
     "submit": "Buscar",
     "results_for": "Resultados para «{{ terms }}»",
     "no_results": "No hemos encontrado nada para «{{ terms }}». Prueba con otra palabra o mira las colecciones.",

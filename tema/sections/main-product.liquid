@@ -90,7 +90,7 @@
       {%- endif -%}
 
       {%- if product.description != blank -%}
-        <div class="prod__desc rich">{{ product.description | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
+        <div class="prod__desc rich" data-collapsible data-more="{{ 'products.read_more' | t }}" data-less="{{ 'products.read_less' | t }}">{{ product.description | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
       {%- endif -%}
       {%- if section.settings.show_sku and current.sku != blank -%}
         <p class="meta" style="margin-top:16px">SKU: {{ current.sku | escape }}</p>

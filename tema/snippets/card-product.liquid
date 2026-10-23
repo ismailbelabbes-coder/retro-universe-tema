@@ -19,6 +19,7 @@
 {%- liquid
   assign fit_mode = fit | default: 'contain'
   assign second = product.images[1]
+  assign card_title = product.metafields.custom.titulo_corto.value | default: product.title
   assign focal = product.featured_image.presentation.focal_point | default: '50% 50%'
   assign focal2 = second.presentation.focal_point | default: '50% 50%'
 -%}
@@ -44,7 +45,7 @@
   </div>
   <div class="card__body">
     {%- if product.type != blank -%}<p class="card__cat">{{ product.type | escape }}</p>{%- endif -%}
-    <h3 class="card__name"><a href="{{ product.url }}">{{ product.title | escape }}</a></h3>
+    <h3 class="card__name"><a href="{{ product.url }}">{{ card_title | escape }}</a></h3>
     <div class="card__buy">
       {% render 'price', product: product %}
       {%- if product.available and multi == false -%}

@@ -100,6 +100,8 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 - **Zoom** al pasar el ratón en la ficha, al tocar en móvil, y deslizamiento para cambiar de foto.
 - **Envío gratuito:** barra de progreso en el cajón y en la página del carrito. Se configura en Ajustes del tema > Envío gratuito (30 € por defecto, el de su web actual). Solo informa: la condición real se configura en los envíos de Shopify.
 - **Barra de compra fija en móvil** en la ficha (se puede apagar en la sección).
+- **Título corto para las tarjetas (opcional):** si creas en Shopify un metacampo de producto `custom.titulo_corto` (texto), las tarjetas lo usan en lugar del título largo de SEO. Si no existe, se usa el título normal. Para crearlo: Ajustes > Datos personalizados > Productos > Añadir definición, con espacio de nombres `custom` y clave `titulo_corto`.
+- **Descripción larga plegable** en la ficha (solo si es muy larga).
 - Copia de seguridad previa a estos cambios: rama `backup-antes-de-imagenes`.
 
 ## Notas para quien siga desarrollando
