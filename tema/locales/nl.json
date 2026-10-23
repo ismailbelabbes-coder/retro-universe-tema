@@ -1,0 +1,163 @@
+{
+  "general": {
+    "skip": "Ga naar inhoud",
+    "menu": "Menu",
+    "close": "Sluiten",
+    "search": "Zoeken",
+    "account": "Mijn account",
+    "payment_methods": "Geaccepteerde betaalmethoden",
+    "cart": "Winkelwagen",
+    "cart_items": "Winkelwagen, {{ count }} artikelen",
+    "home": "Home",
+    "view_all": "Alles bekijken",
+    "read_more": "Meer lezen",
+    "read_less": "Minder lezen",
+    "back_to_shop": "Terug naar de winkel",
+    "pagination": "Paginering",
+    "page_n": "Pagina {{ n }}",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "page_of": "Pagina {{ current }} van {{ total }}",
+    "whatsapp": "WhatsApp",
+    "email": "E-mail",
+    "ask_whatsapp": "Vraag het via WhatsApp",
+    "main_menu": "Hoofdmenu",
+    "footer_menu": "Footermenu",
+    "breadcrumbs": "Kruimelpad",
+    "language": "Taal",
+    "apply": "Toepassen"
+  },
+  "products": {
+    "add": "+ Toevoegen",
+    "added": "Toegevoegd!",
+    "add_to_cart": "In winkelwagen",
+    "read_more": "Volledige beschrijving bekijken",
+    "read_less": "Minder tonen",
+    "sold_out": "Uitverkocht",
+    "choose_options": "Opties bekijken",
+    "sale": "Aanbieding",
+    "from": "vanaf",
+    "price_regular": "Normale prijs",
+    "price_sale": "Aanbiedingsprijs",
+    "unavailable": "Niet beschikbaar",
+    "quantity": "Aantal",
+    "vat_included": "Inclusief btw.",
+    "vat_excluded": "Exclusief btw.",
+    "shipping_link": "Verzendkosten worden berekend bij het afrekenen",
+    "shipping_policy": "Verzendbeleid",
+    "decrease": "Eén verwijderen",
+    "increase": "Eén toevoegen",
+    "added_toast": "Toegevoegd aan winkelwagen",
+    "view_cart": "Winkelwagen bekijken",
+    "gallery": "Fotogalerij",
+    "image_n": "Afbeelding {{ n }} van {{ total }}",
+    "ask_product": "Vraag het via WhatsApp",
+    "ask_message": "Hallo Retro Universe! Ik heb een vraag over: {{ title }} ({{ url }})",
+    "models": {
+      "one": "{{ count }} model",
+      "other": "{{ count }} modellen"
+    },
+    "no_products": "Er zijn nog geen producten in deze collectie.",
+    "sort_by": "Sorteren op",
+    "filters": "Filters",
+    "apply": "Toepassen",
+    "clear": "Filters wissen",
+    "in_stock": "Beschikbaarheid",
+    "available": "Op voorraad",
+    "price": "Prijs",
+    "price_from": "Van",
+    "price_to": "Tot",
+    "results": {
+      "one": "{{ count }} resultaat",
+      "other": "{{ count }} resultaten"
+    },
+    "zoom": "Zoom"
+  },
+  "cart": {
+    "title": "Je winkelwagen",
+    "empty": "Je winkelwagen is leeg. Gooi een munt in om het spel te starten.",
+    "continue": "Verder winkelen",
+    "product": "Product",
+    "price": "Prijs",
+    "total": "Totaal",
+    "subtotal": "Subtotaal",
+    "taxes_note": "Belastingen en verzendkosten worden berekend bij het afrekenen.",
+    "taxes_note_included": "Inclusief btw. Verzendkosten worden berekend bij het afrekenen.",
+    "checkout": "Afrekenen",
+    "update": "Winkelwagen bijwerken",
+    "remove": "{{ title }} verwijderen",
+    "note": "Opmerkingen bij de bestelling",
+    "whatsapp_help": "Wil je hulp voor je betaalt? Stuur ons een bericht via WhatsApp.",
+    "whatsapp_message": "Hallo Retro Universe! Ik heb een vraag over mijn winkelwagen ({{ url }})."
+  },
+  "search": {
+    "title": "Zoeken",
+    "placeholder": "Zoek een machine",
+    "submit": "Zoeken",
+    "results_for": "Resultaten voor “{{ terms }}”",
+    "no_results": "Niets gevonden voor “{{ terms }}”. Probeer een ander woord of bekijk de collecties.",
+    "label": "Zoeken in de winkel"
+  },
+  "blog": {
+    "read_more": "Meer lezen",
+    "published": "Gepubliceerd op {{ date }}",
+    "by": "Door {{ author }}",
+    "back": "Terug naar de blog",
+    "empty": "Nog geen berichten.",
+    "tags": "Tags"
+  },
+  "collections": {
+    "title": "Collecties",
+    "empty": "Er zijn nog geen collecties."
+  },
+  "not_found": {
+    "title": "Game over",
+    "text": "Deze pagina bestaat niet of is verplaatst.",
+    "button": "Terug naar de winkel"
+  },
+  "footer": {
+    "follow": "Volg ons",
+    "contact": "Contact",
+    "prices_note": "Alle prijzen zijn inclusief btw.",
+    "cookie_prefs": "Cookievoorkeuren",
+    "withdrawal": "Overeenkomst herroepen",
+    "accessibility": "Toegankelijkheidsverklaring",
+    "social_aria": "Sociale media"
+  },
+  "boot": {
+    "label": "Startscherm van Retro Universe",
+    "skip": "Naar de winkel",
+    "skip_hint": "Tik op het scherm, druk op Enter of wacht een paar seconden om binnen te gaan",
+    "ready": "READY!"
+  },
+  "hero": {
+    "prev": "Vorige machine",
+    "next": "Volgende machine",
+    "joystick": "Joystick: volgende machine",
+    "see": "{{ title }} in de winkel bekijken",
+    "group": "Interactieve arcadekast",
+    "from": "vanaf"
+  },
+  "contact": {
+    "name": "Naam",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "message": "Bericht",
+    "send": "Verzenden",
+    "success": "Bedankt voor je bericht. We hebben het ontvangen en antwoorden zo snel mogelijk.",
+    "consent_before": "Ik heb het",
+    "consent_link": "Privacybeleid",
+    "consent_after": "gelezen en ga akkoord. Ik geef toestemming voor de verwerking van mijn gegevens om mijn vraag te behandelen."
+  },
+  "password": {
+    "title": "Winkel in voorbereiding",
+    "text": "We zijn zo snel mogelijk terug."
+  },
+  "gift_card": {
+    "title": "Cadeaubon",
+    "balance": "Saldo",
+    "code": "Code",
+    "copy": "Code kopiëren",
+    "use": "Gebruiken in de winkel"
+  }
+}

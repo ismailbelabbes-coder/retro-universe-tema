@@ -9,7 +9,7 @@
   assign wa_msg = 'products.ask_message' | t: title: product.title, url: full_url
 -%}
 <div class="wrap" data-product>
-  <nav class="crumbs" aria-label="Migas de pan" style="padding-top:20px"><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>{% if collection %} / <a href="{{ collection.url }}">{{ collection.title | escape }}</a>{% endif %}</nav>
+  <nav class="crumbs" aria-label="{{ 'general.breadcrumbs' | t }}" style="padding-top:20px"><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>{% if collection %} / <a href="{{ collection.url }}">{{ collection.title | escape }}</a>{% endif %}</nav>
   <div class="prod">
     <div class="gallery">
       <div class="gallery__main gallery--{{ section.settings.gallery_fit }}{% if section.settings.gallery_zoom %} gallery--zoomable{% endif %}" role="group" aria-label="{{ 'products.gallery' | t }}">
@@ -28,7 +28,7 @@
         {%- else -%}
           {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
         {%- endfor -%}
-        {%- if section.settings.gallery_zoom and product.media.size > 0 -%}<span class="gallery__hint" aria-hidden="true">Zoom</span>{%- endif -%}
+        {%- if section.settings.gallery_zoom and product.media.size > 0 -%}<span class="gallery__hint" aria-hidden="true">{{ 'products.zoom' | t }}</span>{%- endif -%}
       </div>
       {%- if product.media.size > 1 -%}
         <ul class="thumbs" role="list">

@@ -22,7 +22,10 @@
     "email": "Correo",
     "ask_whatsapp": "Preguntar por WhatsApp",
     "main_menu": "Menú principal",
-    "footer_menu": "Menú del pie"
+    "footer_menu": "Menú del pie",
+    "breadcrumbs": "Migas de pan",
+    "language": "Idioma",
+    "apply": "Aplicar"
   },
   "products": {
     "add": "+ Añadir",
@@ -67,7 +70,8 @@
     "results": {
       "one": "{{ count }} resultado",
       "other": "{{ count }} resultados"
-    }
+    },
+    "zoom": "Zoom"
   },
   "cart": {
     "title": "Tu cesta",

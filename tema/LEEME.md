@@ -93,6 +93,17 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 - Los elementos que aparecen con animación solo se ocultan si están bajo el pliegue y los gestiona JavaScript: si algo falla, todo queda visible. En el editor de temas nunca se ocultan.
 - Comprobado en la vista previa de la tienda real a 375 px y a 1366 px: sin desbordamiento horizontal.
 
+## Idiomas y clientes de fuera de España
+
+La web actual ya funciona en varios idiomas con **Shopify Markets** (`/de`, `/fr`, `/it`, `/pt`...) y publica las etiquetas `hreflang` automáticamente; el tema nuevo las conserva (comprobado en la vista previa: 20 etiquetas). Qué hay que saber:
+
+- **Textos de la interfaz** (Añadir, Cesta, filtros, formulario...): el tema incluye `locales/` en español, inglés, alemán, francés, italiano, portugués y neerlandés. Para cualquier otro idioma publicado (polaco, húngaro, noruego, ruso, rumano, hebreo...) se verá en español hasta que se añada su archivo.
+- **Textos que se escriben en el editor** (portada, banners, pie, ajustes de tema): son contenido del tema y hay que traducirlos para el tema nuevo con **Translate & Adapt** o con la app de traducción. Las traducciones del tema actual no se copian solas.
+- **Productos, colecciones, menús y páginas**: se traducen a nivel de tienda y no dependen del tema.
+- **Google necesita cada página en su idioma en el propio HTML.** Hoy, en `/de`, la interfaz sale en alemán pero los títulos y descripciones de producto salen en español en el HTML (probablemente los traduce en el navegador la app Transtore). Para el SEO internacional conviene que las traducciones estén guardadas en Shopify (Translate & Adapt o Markets), no solo aplicadas por JavaScript.
+- **Selector de idioma**: lo pone la app Transtore (hay que activar su extensión en «Embeds de aplicaciones»). El tema trae uno nativo, apagado por defecto (Ajustes del tema > Idiomas y países).
+- Las imágenes con texto, los textos legales y los correos de pedido se traducen aparte.
+
 ## Página de contacto
 
 La web actual tiene una página `/pages/contact` con formulario (nombre, correo, teléfono y comentario). El tema incluye la plantilla `page.contact` y el formulario nativo de Shopify con casilla de consentimiento de privacidad. Si esa página usa la plantilla por defecto, el formulario también aparece cuando su dirección es `contact` o `contacto`. **Comprobar en la vista previa que /pages/contact muestra el formulario y que un mensaje de prueba llega a info@retrouniverse.es.**

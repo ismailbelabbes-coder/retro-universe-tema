@@ -1,0 +1,163 @@
+{
+  "general": {
+    "skip": "Skip to content",
+    "menu": "Menu",
+    "close": "Close",
+    "search": "Search",
+    "account": "My account",
+    "payment_methods": "Accepted payment methods",
+    "cart": "Cart",
+    "cart_items": "Cart, {{ count }} items",
+    "home": "Home",
+    "view_all": "View all",
+    "read_more": "Read more",
+    "read_less": "Read less",
+    "back_to_shop": "Back to the shop",
+    "pagination": "Pagination",
+    "page_n": "Page {{ n }}",
+    "next": "Next",
+    "previous": "Previous",
+    "page_of": "Page {{ current }} of {{ total }}",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "ask_whatsapp": "Ask on WhatsApp",
+    "main_menu": "Main menu",
+    "footer_menu": "Footer menu",
+    "breadcrumbs": "Breadcrumb",
+    "language": "Language",
+    "apply": "Apply"
+  },
+  "products": {
+    "add": "+ Add",
+    "added": "Added!",
+    "add_to_cart": "Add to cart",
+    "read_more": "View full description",
+    "read_less": "Show less",
+    "sold_out": "Sold out",
+    "choose_options": "View options",
+    "sale": "Sale",
+    "from": "from",
+    "price_regular": "Regular price",
+    "price_sale": "Sale price",
+    "unavailable": "Unavailable",
+    "quantity": "Quantity",
+    "vat_included": "VAT included.",
+    "vat_excluded": "VAT not included.",
+    "shipping_link": "Shipping costs are calculated at checkout",
+    "shipping_policy": "Shipping policy",
+    "decrease": "Remove one",
+    "increase": "Add one",
+    "added_toast": "Added to cart",
+    "view_cart": "View cart",
+    "gallery": "Image gallery",
+    "image_n": "Image {{ n }} of {{ total }}",
+    "ask_product": "Ask on WhatsApp",
+    "ask_message": "Hi, Retro Universe! I would like to ask about: {{ title }} ({{ url }})",
+    "models": {
+      "one": "{{ count }} model",
+      "other": "{{ count }} models"
+    },
+    "no_products": "There are no products in this collection yet.",
+    "sort_by": "Sort by",
+    "filters": "Filters",
+    "apply": "Apply",
+    "clear": "Clear filters",
+    "in_stock": "Availability",
+    "available": "In stock",
+    "price": "Price",
+    "price_from": "From",
+    "price_to": "To",
+    "results": {
+      "one": "{{ count }} result",
+      "other": "{{ count }} results"
+    },
+    "zoom": "Zoom"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty. Insert a machine to start the game.",
+    "continue": "Continue shopping",
+    "product": "Product",
+    "price": "Price",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "taxes_note": "Taxes and shipping are calculated at checkout.",
+    "taxes_note_included": "VAT included. Shipping costs are calculated at checkout.",
+    "checkout": "Check out",
+    "update": "Update cart",
+    "remove": "Remove {{ title }}",
+    "note": "Order notes",
+    "whatsapp_help": "Would you like help before paying? Write to us on WhatsApp.",
+    "whatsapp_message": "Hi, Retro Universe! I have a question about my cart ({{ url }})."
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search for a machine",
+    "submit": "Search",
+    "results_for": "Results for “{{ terms }}”",
+    "no_results": "We found nothing for “{{ terms }}”. Try another word or browse the collections.",
+    "label": "Search the shop"
+  },
+  "blog": {
+    "read_more": "Read more",
+    "published": "Published on {{ date }}",
+    "by": "By {{ author }}",
+    "back": "Back to the blog",
+    "empty": "No posts yet.",
+    "tags": "Tags"
+  },
+  "collections": {
+    "title": "Collections",
+    "empty": "There are no collections yet."
+  },
+  "not_found": {
+    "title": "Game over",
+    "text": "This page does not exist or has moved.",
+    "button": "Back to the shop"
+  },
+  "footer": {
+    "follow": "Follow us",
+    "contact": "Contact",
+    "prices_note": "All prices include VAT.",
+    "cookie_prefs": "Cookie preferences",
+    "withdrawal": "Withdraw from the contract",
+    "accessibility": "Accessibility statement",
+    "social_aria": "Social media"
+  },
+  "boot": {
+    "label": "Retro Universe start screen",
+    "skip": "Enter the shop",
+    "skip_hint": "Tap the screen, press Enter or wait a few seconds to enter",
+    "ready": "READY!"
+  },
+  "hero": {
+    "prev": "Previous machine",
+    "next": "Next machine",
+    "joystick": "Joystick: next machine",
+    "see": "View {{ title }} in the shop",
+    "group": "Interactive arcade cabinet",
+    "from": "from"
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "send": "Send",
+    "success": "Thank you for writing to us. We have received your message and will reply as soon as possible.",
+    "consent_before": "I have read and accept the",
+    "consent_link": "Privacy policy",
+    "consent_after": ", and I consent to the processing of my data to handle my enquiry."
+  },
+  "password": {
+    "title": "Shop being prepared",
+    "text": "We will be back very soon."
+  },
+  "gift_card": {
+    "title": "Gift card",
+    "balance": "Balance",
+    "code": "Code",
+    "copy": "Copy code",
+    "use": "Use in the shop"
+  }
+}

@@ -730,3 +730,6 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 .chk-consent input{width:24px; height:24px; flex:none; margin-top:2px; accent-color:var(--pink)}
 .chk-consent a{color:var(--cyan)}
 @media (min-width:750px){ .cform__row{grid-template-columns:1fr 1fr} }
+
+.foot__loc{margin-top:28px; max-width:260px}
+.foot__loc .field{width:100%}

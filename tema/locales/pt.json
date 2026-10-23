@@ -1,0 +1,163 @@
+{
+  "general": {
+    "skip": "Saltar para o conteúdo",
+    "menu": "Menu",
+    "close": "Fechar",
+    "search": "Pesquisar",
+    "account": "A minha conta",
+    "payment_methods": "Meios de pagamento aceites",
+    "cart": "Carrinho",
+    "cart_items": "Carrinho, {{ count }} artigos",
+    "home": "Início",
+    "view_all": "Ver tudo",
+    "read_more": "Ler mais",
+    "read_less": "Ler menos",
+    "back_to_shop": "Voltar à loja",
+    "pagination": "Paginação",
+    "page_n": "Página {{ n }}",
+    "next": "Seguinte",
+    "previous": "Anterior",
+    "page_of": "Página {{ current }} de {{ total }}",
+    "whatsapp": "WhatsApp",
+    "email": "E-mail",
+    "ask_whatsapp": "Perguntar pelo WhatsApp",
+    "main_menu": "Menu principal",
+    "footer_menu": "Menu do rodapé",
+    "breadcrumbs": "Caminho de navegação",
+    "language": "Idioma",
+    "apply": "Aplicar"
+  },
+  "products": {
+    "add": "+ Adicionar",
+    "added": "Adicionado!",
+    "add_to_cart": "Adicionar ao carrinho",
+    "read_more": "Ver toda a descrição",
+    "read_less": "Ver menos",
+    "sold_out": "Esgotado",
+    "choose_options": "Ver opções",
+    "sale": "Promoção",
+    "from": "desde",
+    "price_regular": "Preço normal",
+    "price_sale": "Preço promocional",
+    "unavailable": "Indisponível",
+    "quantity": "Quantidade",
+    "vat_included": "IVA incluído.",
+    "vat_excluded": "IVA não incluído.",
+    "shipping_link": "Os custos de envio são calculados no pagamento",
+    "shipping_policy": "Política de envio",
+    "decrease": "Remover uma unidade",
+    "increase": "Adicionar uma unidade",
+    "added_toast": "Adicionado ao carrinho",
+    "view_cart": "Ver carrinho",
+    "gallery": "Galeria de imagens",
+    "image_n": "Imagem {{ n }} de {{ total }}",
+    "ask_product": "Perguntar pelo WhatsApp",
+    "ask_message": "Olá, Retro Universe! Gostaria de perguntar sobre: {{ title }} ({{ url }})",
+    "models": {
+      "one": "{{ count }} modelo",
+      "other": "{{ count }} modelos"
+    },
+    "no_products": "Ainda não há produtos nesta coleção.",
+    "sort_by": "Ordenar por",
+    "filters": "Filtros",
+    "apply": "Aplicar",
+    "clear": "Limpar filtros",
+    "in_stock": "Disponibilidade",
+    "available": "Em stock",
+    "price": "Preço",
+    "price_from": "De",
+    "price_to": "Até",
+    "results": {
+      "one": "{{ count }} resultado",
+      "other": "{{ count }} resultados"
+    },
+    "zoom": "Zoom"
+  },
+  "cart": {
+    "title": "O seu carrinho",
+    "empty": "O carrinho está vazio. Insira uma máquina para começar o jogo.",
+    "continue": "Continuar a comprar",
+    "product": "Produto",
+    "price": "Preço",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "taxes_note": "Os impostos e os custos de envio são calculados no pagamento.",
+    "taxes_note_included": "IVA incluído. Os custos de envio são calculados no pagamento.",
+    "checkout": "Finalizar compra",
+    "update": "Atualizar carrinho",
+    "remove": "Remover {{ title }}",
+    "note": "Notas para a encomenda",
+    "whatsapp_help": "Quer ajuda antes de pagar? Escreva-nos pelo WhatsApp.",
+    "whatsapp_message": "Olá, Retro Universe! Tenho uma dúvida sobre o meu carrinho ({{ url }})."
+  },
+  "search": {
+    "title": "Pesquisar",
+    "placeholder": "Pesquise uma máquina",
+    "submit": "Pesquisar",
+    "results_for": "Resultados para «{{ terms }}»",
+    "no_results": "Não encontrámos nada para «{{ terms }}». Tente outra palavra ou veja as coleções.",
+    "label": "Pesquisar na loja"
+  },
+  "blog": {
+    "read_more": "Ler mais",
+    "published": "Publicado a {{ date }}",
+    "by": "Por {{ author }}",
+    "back": "Voltar ao blogue",
+    "empty": "Ainda não há artigos.",
+    "tags": "Etiquetas"
+  },
+  "collections": {
+    "title": "Coleções",
+    "empty": "Ainda não há coleções."
+  },
+  "not_found": {
+    "title": "Game over",
+    "text": "Esta página não existe ou mudou de sítio.",
+    "button": "Voltar à loja"
+  },
+  "footer": {
+    "follow": "Siga-nos",
+    "contact": "Contacto",
+    "prices_note": "Todos os preços incluem IVA.",
+    "cookie_prefs": "Preferências de cookies",
+    "withdrawal": "Resolver o contrato",
+    "accessibility": "Declaração de acessibilidade",
+    "social_aria": "Redes sociais"
+  },
+  "boot": {
+    "label": "Ecrã inicial da Retro Universe",
+    "skip": "Entrar na loja",
+    "skip_hint": "Toque no ecrã, prima Enter ou aguarde alguns segundos para entrar",
+    "ready": "READY!"
+  },
+  "hero": {
+    "prev": "Máquina anterior",
+    "next": "Máquina seguinte",
+    "joystick": "Joystick: máquina seguinte",
+    "see": "Ver {{ title }} na loja",
+    "group": "Máquina arcade interativa",
+    "from": "desde"
+  },
+  "contact": {
+    "name": "Nome",
+    "email": "E-mail",
+    "phone": "Telefone",
+    "message": "Mensagem",
+    "send": "Enviar",
+    "success": "Obrigado por nos escrever. Recebemos a sua mensagem e responderemos o mais depressa possível.",
+    "consent_before": "Li e aceito a",
+    "consent_link": "Política de privacidade",
+    "consent_after": "e consinto o tratamento dos meus dados para gerir o meu pedido de informação."
+  },
+  "password": {
+    "title": "Loja em preparação",
+    "text": "Voltamos muito em breve."
+  },
+  "gift_card": {
+    "title": "Cartão-presente",
+    "balance": "Saldo",
+    "code": "Código",
+    "copy": "Copiar código",
+    "use": "Usar na loja"
+  }
+}

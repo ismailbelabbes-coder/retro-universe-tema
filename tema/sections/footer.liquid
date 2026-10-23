@@ -58,6 +58,18 @@
       </div>
     </div>
 
+    {%- if settings.show_localization and localization.available_languages.size > 1 -%}
+      {%- form 'localization', id: 'footer-localization', class: 'foot__loc' -%}
+        <label class="lbl" for="foot-lang">{{ 'general.language' | t }}</label>
+        <select class="field" id="foot-lang" name="language_code" data-autosubmit>
+          {%- for language in localization.available_languages -%}
+            <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name | capitalize | escape }}</option>
+          {%- endfor -%}
+        </select>
+        <noscript><button class="btn btn--ghost" type="submit">{{ 'general.apply' | t }}</button></noscript>
+      {%- endform -%}
+    {%- endif -%}
+
     <div class="foot__legal">
       {%- if settings.legal_text != blank -%}<span>{{ settings.legal_text }}</span>{%- endif -%}
       {%- if settings.legal_registry != blank -%}<span>{{ settings.legal_registry | escape }}</span>{%- endif -%}

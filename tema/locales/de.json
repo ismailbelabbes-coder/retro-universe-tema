@@ -1,0 +1,163 @@
+{
+  "general": {
+    "skip": "Zum Inhalt springen",
+    "menu": "Menü",
+    "close": "Schließen",
+    "search": "Suchen",
+    "account": "Mein Konto",
+    "payment_methods": "Akzeptierte Zahlungsarten",
+    "cart": "Warenkorb",
+    "cart_items": "Warenkorb, {{ count }} Artikel",
+    "home": "Startseite",
+    "view_all": "Alle ansehen",
+    "read_more": "Mehr lesen",
+    "read_less": "Weniger anzeigen",
+    "back_to_shop": "Zurück zum Shop",
+    "pagination": "Seitennummerierung",
+    "page_n": "Seite {{ n }}",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "page_of": "Seite {{ current }} von {{ total }}",
+    "whatsapp": "WhatsApp",
+    "email": "E-Mail",
+    "ask_whatsapp": "Per WhatsApp fragen",
+    "main_menu": "Hauptmenü",
+    "footer_menu": "Fußmenü",
+    "breadcrumbs": "Brotkrümelnavigation",
+    "language": "Sprache",
+    "apply": "Anwenden"
+  },
+  "products": {
+    "add": "+ Hinzufügen",
+    "added": "Hinzugefügt!",
+    "add_to_cart": "In den Warenkorb",
+    "read_more": "Gesamte Beschreibung anzeigen",
+    "read_less": "Weniger anzeigen",
+    "sold_out": "Ausverkauft",
+    "choose_options": "Optionen ansehen",
+    "sale": "Angebot",
+    "from": "ab",
+    "price_regular": "Regulärer Preis",
+    "price_sale": "Angebotspreis",
+    "unavailable": "Nicht verfügbar",
+    "quantity": "Menge",
+    "vat_included": "Inkl. MwSt.",
+    "vat_excluded": "Zzgl. MwSt.",
+    "shipping_link": "Die Versandkosten werden an der Kasse berechnet",
+    "shipping_policy": "Versandrichtlinie",
+    "decrease": "Eine Einheit entfernen",
+    "increase": "Eine Einheit hinzufügen",
+    "added_toast": "Zum Warenkorb hinzugefügt",
+    "view_cart": "Warenkorb ansehen",
+    "gallery": "Bildergalerie",
+    "image_n": "Bild {{ n }} von {{ total }}",
+    "ask_product": "Per WhatsApp fragen",
+    "ask_message": "Hallo Retro Universe! Ich habe eine Frage zu: {{ title }} ({{ url }})",
+    "models": {
+      "one": "{{ count }} Modell",
+      "other": "{{ count }} Modelle"
+    },
+    "no_products": "In dieser Kollektion gibt es noch keine Produkte.",
+    "sort_by": "Sortieren nach",
+    "filters": "Filter",
+    "apply": "Anwenden",
+    "clear": "Filter entfernen",
+    "in_stock": "Verfügbarkeit",
+    "available": "Auf Lager",
+    "price": "Preis",
+    "price_from": "Von",
+    "price_to": "Bis",
+    "results": {
+      "one": "{{ count }} Ergebnis",
+      "other": "{{ count }} Ergebnisse"
+    },
+    "zoom": "Zoom"
+  },
+  "cart": {
+    "title": "Dein Warenkorb",
+    "empty": "Dein Warenkorb ist leer. Wirf eine Münze ein, um das Spiel zu starten.",
+    "continue": "Weiter einkaufen",
+    "product": "Produkt",
+    "price": "Preis",
+    "total": "Gesamt",
+    "subtotal": "Zwischensumme",
+    "taxes_note": "Steuern und Versand werden an der Kasse berechnet.",
+    "taxes_note_included": "Inkl. MwSt. Die Versandkosten werden an der Kasse berechnet.",
+    "checkout": "Zur Kasse",
+    "update": "Warenkorb aktualisieren",
+    "remove": "{{ title }} entfernen",
+    "note": "Hinweise zur Bestellung",
+    "whatsapp_help": "Möchtest du vor dem Bezahlen Hilfe? Schreib uns per WhatsApp.",
+    "whatsapp_message": "Hallo Retro Universe! Ich habe eine Frage zu meinem Warenkorb ({{ url }})."
+  },
+  "search": {
+    "title": "Suchen",
+    "placeholder": "Suche eine Maschine",
+    "submit": "Suchen",
+    "results_for": "Ergebnisse für „{{ terms }}“",
+    "no_results": "Für „{{ terms }}“ wurde nichts gefunden. Versuche ein anderes Wort oder sieh dir die Kollektionen an.",
+    "label": "Im Shop suchen"
+  },
+  "blog": {
+    "read_more": "Mehr lesen",
+    "published": "Veröffentlicht am {{ date }}",
+    "by": "Von {{ author }}",
+    "back": "Zurück zum Blog",
+    "empty": "Noch keine Beiträge.",
+    "tags": "Tags"
+  },
+  "collections": {
+    "title": "Kollektionen",
+    "empty": "Es gibt noch keine Kollektionen."
+  },
+  "not_found": {
+    "title": "Game over",
+    "text": "Diese Seite existiert nicht oder wurde verschoben.",
+    "button": "Zurück zum Shop"
+  },
+  "footer": {
+    "follow": "Folge uns",
+    "contact": "Kontakt",
+    "prices_note": "Alle Preise inkl. MwSt.",
+    "cookie_prefs": "Cookie-Einstellungen",
+    "withdrawal": "Vom Vertrag zurücktreten",
+    "accessibility": "Erklärung zur Barrierefreiheit",
+    "social_aria": "Soziale Medien"
+  },
+  "boot": {
+    "label": "Startbildschirm von Retro Universe",
+    "skip": "Zum Shop",
+    "skip_hint": "Tippe auf den Bildschirm, drücke Enter oder warte ein paar Sekunden",
+    "ready": "READY!"
+  },
+  "hero": {
+    "prev": "Vorherige Maschine",
+    "next": "Nächste Maschine",
+    "joystick": "Joystick: nächste Maschine",
+    "see": "{{ title }} im Shop ansehen",
+    "group": "Interaktiver Spielautomat",
+    "from": "ab"
+  },
+  "contact": {
+    "name": "Name",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "message": "Nachricht",
+    "send": "Senden",
+    "success": "Danke für deine Nachricht. Wir haben sie erhalten und antworten dir so schnell wie möglich.",
+    "consent_before": "Ich habe die",
+    "consent_link": "Datenschutzerklärung",
+    "consent_after": "gelesen und akzeptiere sie. Ich willige in die Verarbeitung meiner Daten zur Bearbeitung meiner Anfrage ein."
+  },
+  "password": {
+    "title": "Shop in Vorbereitung",
+    "text": "Wir sind bald wieder da."
+  },
+  "gift_card": {
+    "title": "Geschenkkarte",
+    "balance": "Guthaben",
+    "code": "Code",
+    "copy": "Code kopieren",
+    "use": "Im Shop verwenden"
+  }
+}

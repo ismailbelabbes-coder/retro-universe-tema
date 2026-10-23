@@ -14,7 +14,7 @@
 {%- paginate collection.products by section.settings.per_page -%}
 <div class="wrap">
   <header class="coll-head">
-    <nav class="crumbs" aria-label="Migas de pan"><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a> / <a href="{{ routes.collections_url }}">{{ 'collections.title' | t }}</a></nav>
+    <nav class="crumbs" aria-label="{{ 'general.breadcrumbs' | t }}"><a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a> / <a href="{{ routes.collections_url }}">{{ 'collections.title' | t }}</a></nav>
     <h1 class="h2">{{ collection.title | escape }}</h1>
     {%- if section.settings.show_description and collection.description != blank -%}
       <div class="lead rich" data-collapsible data-max="110" data-more="{{ 'general.read_more' | t }}" data-less="{{ 'general.read_less' | t }}">{{ collection.description | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
