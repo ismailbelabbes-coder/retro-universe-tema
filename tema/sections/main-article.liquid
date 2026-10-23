@@ -9,7 +9,7 @@
   {%- if article.image -%}
     <div style="margin:24px 0;max-width:900px">{% render 'img', image: article.image, alt: article.title, sizes: '(min-width: 900px) 900px, 100vw', widths: '540, 720, 960, 1200', priority: true %}</div>
   {%- endif -%}
-  <div class="prose rich">{{ article.content }}</div>
+  <div class="prose rich">{{ article.content | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
   <p style="margin-top:32px"><a class="btn btn--ghost" href="{{ blog.url }}">{{ 'blog.back' | t }}</a></p>
 </article>
 <script type="application/ld+json">{{ article | structured_data }}</script>

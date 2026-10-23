@@ -9,6 +9,7 @@
   let cfg = { strings: {}, boot: {} };
   try { cfg = JSON.parse($('#theme-config').textContent); } catch (e) {}
   const S = cfg.strings || {};
+  const drawer = $('#cart-drawer'), backdrop = $('[data-drawer-backdrop]');
   const dots = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
   /* ---------- Avisos ---------- */
@@ -70,7 +71,8 @@
       const cart = await (await fetch(cfg.cartJs, { headers: { Accept: 'application/json' } })).json();
       flyCoin(btn);
       setTimeout(() => setCount(cart.item_count), motionOn ? 650 : 0);
-      toast(S.toast, item.product_title, cfg.cartUrl, S.viewCart);
+      if (drawer) { await refreshDrawer(); setTimeout(openDrawer, motionOn ? 700 : 0); }
+      else toast(S.toast, item.product_title, cfg.cartUrl, S.viewCart);
       if (btn) {
         btn.classList.add('is-added'); btn.textContent = S.added;
         setTimeout(() => { btn.classList.remove('is-added'); btn.textContent = label; btn.disabled = false; }, 1400);
@@ -79,6 +81,62 @@
       form.submit(); /* si algo falla, el formulario nativo hace el trabajo */
     }
   });
+
+  /* ---------- Carrito lateral ---------- */
+  let lastFocus = null;
+  const openDrawer = () => {
+    if (!drawer) return;
+    lastFocus = document.activeElement;
+    drawer.classList.add('is-open'); backdrop.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false'); document.body.classList.add('drawer-open');
+    setTimeout(() => { const c = $('[data-drawer-close]', drawer); if (c) c.focus(); }, 60);
+  };
+  const closeDrawer = () => {
+    if (!drawer) return;
+    drawer.classList.remove('is-open'); backdrop.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true'); document.body.classList.remove('drawer-open');
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  };
+  async function refreshDrawer() {
+    if (!drawer) return;
+    try {
+      const res = await fetch(cfg.root + '?sections=cart-drawer', { headers: { Accept: 'application/json' } });
+      const html = (await res.json())['cart-drawer'];
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const fresh = $('[data-drawer-inner]', doc);
+      if (fresh) $('[data-drawer-inner]', drawer).innerHTML = fresh.innerHTML;
+    } catch (e) {}
+  }
+  if (drawer) {
+    /* el icono de la cesta abre el cajón; sin JS o en /cart lleva a la página de la cesta */
+    document.addEventListener('click', e => {
+      const a = e.target.closest('[data-cart-link]');
+      if (!a || document.body.classList.contains('template-cart') || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault(); refreshDrawer().then(openDrawer);
+    });
+    drawer.addEventListener('click', async e => {
+      if (e.target.closest('[data-drawer-close]')) { closeDrawer(); return; }
+      const b = e.target.closest('[data-line]'); if (!b) return;
+      b.disabled = true;
+      try {
+        const res = await fetch(cfg.cartChange, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ line: +b.dataset.line, quantity: +b.dataset.to }) });
+        const cart = await res.json();
+        setCount(cart.item_count);
+        await refreshDrawer();
+      } catch (err) { b.disabled = false; }
+    });
+    backdrop.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => {
+      if (!drawer.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeDrawer();
+      if (e.key === 'Tab') {
+        const f = $$('button:not([disabled]), a[href]', drawer).filter(x => x.offsetParent !== null);
+        if (!f.length) return;
+        if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+      }
+    });
+  }
 
   /* ---------- Cantidad ---------- */
   document.addEventListener('click', e => {
@@ -125,20 +183,23 @@
       if (k < 1) requestAnimationFrame(step);
     })(t0);
   };
+  const design = document.body.dataset.design === 'true';
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver(es => es.forEach(e => {
       if (!e.isIntersecting) return;
-      e.target.classList.add('is-in');
+      e.target.classList.replace('pre', 'is-in');
       if (e.target.dataset.countTo) countUp(e.target);
       io.unobserve(e.target);
-    }), { rootMargin: '0px 0px -12% 0px' });
-    $$('.reveal, [data-count-to]').forEach(el => io.observe(el));
-  } else {
-    $$('.reveal').forEach(el => el.classList.add('is-in'));
+    }), { rootMargin: '0px 0px -8% 0px' });
+    $$('.reveal, [data-count-to]').forEach(el => {
+      /* solo se oculta lo que está bajo el pliegue; si JS falla, todo queda visible */
+      if (el.classList.contains('reveal') && motionOn && !design && el.getBoundingClientRect().top > innerHeight * .92) el.classList.add('pre');
+      io.observe(el);
+    });
   }
 
   /* ---------- Cartuchos que caen al entrar en pantalla (solo los que están bajo el pliegue) ---------- */
-  if (motionOn && 'IntersectionObserver' in window) {
+  if (motionOn && !design && 'IntersectionObserver' in window) {
     const cio = new IntersectionObserver(es => {
       es.filter(e => e.isIntersecting).forEach((e, k) => {
         e.target.style.setProperty('--i', k);
@@ -152,7 +213,7 @@
   }
 
   /* ---------- Selector de tamaño (pinball) ---------- */
-  $$('[data-sizer]').forEach(box => {
+  const initSizer = box => {
     const tabs = $$('[role="tab"]', box), panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
     const imgs = $$('[data-pin]', box), ruler = $('[data-ruler]', box);
     const sel = (i, focus) => {
@@ -169,6 +230,23 @@
       });
     });
     sel(Math.max(0, tabs.findIndex(t => t.getAttribute('aria-selected') === 'true')));
+  };
+  $$('[data-sizer]').forEach(initSizer);
+  document.addEventListener('shopify:section:load', e => $$('[data-sizer]', e.target).forEach(initSizer));
+
+  /* ---------- Pestañas de categoría (cuadrícula de la portada) ---------- */
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-tabs] .tab'); if (!t) return;
+    const box = t.closest('[data-tabs]'), cat = t.dataset.filter, scope = box.parentElement;
+    $$('.tab', box).forEach(x => x.setAttribute('aria-pressed', String(x === t)));
+    let k = 0;
+    $$('[data-tab-grid] > li', scope).forEach(li => {
+      const show = cat === 'all' || li.dataset.cat === cat;
+      li.hidden = !show;
+      const c = $('.card', li);
+      if (show && c && motionOn) { c.classList.remove('pre', 'in'); void c.offsetWidth; c.style.setProperty('--i', Math.min(k++, 6)); c.classList.add('in'); }
+    });
+    $$('[data-more]', scope).forEach(a => { a.hidden = a.dataset.more !== cat; });
   });
 
   /* ---------- Pandora: cursor de selección de juego ---------- */

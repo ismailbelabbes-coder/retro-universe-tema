@@ -80,7 +80,7 @@ function startSpace() {
         }
       }
     }
-    const mr = Math.max(5, Math.round(H * .045)), mx = Math.round(W * (mobile ? .14 : .08)), my = Math.round(H * (mobile ? .12 : .16));
+    const mr = Math.max(5, Math.round(H * .045)), mx = Math.round(W * (mobile ? .9 : .08)), my = Math.round(H * (mobile ? .045 : .16));
     for (let y = my - mr; y <= my + mr; y++) for (let x = mx - mr; x <= mx + mr; x++) {
       const dx = (x - mx) / mr, dy = (y - my) / mr, d2 = dx * dx + dy * dy;
       if (d2 > 1 || x < 0 || y < 0 || x >= W || y >= H) continue;

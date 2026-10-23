@@ -27,7 +27,7 @@ Se crea una copia sin publicar. El tema actual de la tienda no se toca.
 
 **Ajustes del tema:** paleta (los 5 colores), tipografías, efectos CRT, interruptor de animaciones, pantalla Insert Coin (activar, recordar, cierre automático), WhatsApp (número y mensaje), correo, dirección, redes, anuncio opcional, logotipo, favicon, imagen para compartir y datos legales.
 
-**Secciones de la portada** (todas con textos, bloques, colores y espaciado editables): Arranque Insert Coin, Portada: cabina arcade, Marquesina, High Scores, Selecciona tu jugador, Cuadrícula de colección, Bloque Pandora, Selector de pinball, Power-ups, Contacto «Continue?», Banner y Texto. Las secciones se pueden reordenar, añadir y quitar.
+**Secciones de la portada** (todas con textos, bloques, colores y espaciado editables): Arranque Insert Coin, Portada: cabina arcade, Marquesina, High Scores, Selecciona tu jugador, Cuadrícula de colección (con pestañas de categoría que filtran sin recargar, una colección por pestaña), Bloque Pandora, Selector de pinball (un producto por tamaño), Power-ups, Contacto «Continue?», Banner y Texto. El **carrito lateral** (sección `cart-drawer`) se abre al añadir o al pulsar el icono de la cesta; sin JavaScript el icono lleva a `/cart`. Las secciones se pueden reordenar, añadir y quitar.
 
 **Cabecera y pie:** grupos de secciones con el menú elegido en el editor. Plantillas: `index`, `collection`, `product`, `cart`, `page`, `search`, `404`, `list-collections`, `blog` y `article`, más `password` y `gift_card`.
 
@@ -84,6 +84,14 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 - **Envío gratuito:** la web actual dice «a partir de 30 € para España (solo Península) y Portugal». La demo decía 80 €, así que el tema usa los 30 € como texto por defecto. Compruébalo con el cliente.
 - Los títulos de producto son muy largos (hasta 150 caracteres). El tema los corta a 3 líneas en las tarjetas.
 - La portada actual publica datos estructurados `Organization`; el tema también.
+
+## Revisión de calidad (última pasada)
+
+- Contraste medido con la paleta por defecto: todo el texto supera 4,5:1 (el texto secundario, 5,6 a 6,5:1; el blanco sobre violeta, 5,4:1). Los campos de formulario tienen borde de alto contraste.
+- Un solo `<h1>` por página: los `<h1>` que traen las descripciones de producto, página, artículo o colección se convierten en `<h2>`.
+- La etiqueta «Oferta» solo sale en descuentos del 25 % o más (la web anterior ponía «OFERTA» en todo). El precio tachado y el porcentaje se ven siempre que haya descuento.
+- Los elementos que aparecen con animación solo se ocultan si están bajo el pliegue y los gestiona JavaScript: si algo falla, todo queda visible. En el editor de temas nunca se ocultan.
+- Comprobado en la vista previa de la tienda real a 375 px y a 1366 px: sin desbordamiento horizontal.
 
 ## Notas para quien siga desarrollando
 

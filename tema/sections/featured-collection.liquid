@@ -1,5 +1,13 @@
 {% render 'section-style', section: section %}
-{%- assign coll = section.settings.collection -%}
+{%- liquid
+  assign coll = section.settings.collection
+  assign use_tabs = false
+  if section.blocks.size > 0
+    assign use_tabs = true
+  endif
+  assign seen = ','
+  assign total = 0
+-%}
 <section class="shop" id="tienda" aria-labelledby="shop-{{ section.id }}">
   <div class="wrap">
     <div class="sec-head">
@@ -7,19 +15,59 @@
         <h2 class="h2 reveal" id="shop-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
         {%- if section.settings.text != blank -%}<div class="lead rich">{{ section.settings.text }}</div>{%- endif -%}
       </div>
-      {%- if coll != blank and section.settings.show_all -%}
+      {%- if use_tabs == false and coll != blank and section.settings.show_all -%}
         <a class="btn btn--ghost" href="{{ coll.url }}">{{ 'general.view_all' | t }}</a>
       {%- endif -%}
     </div>
-    {%- if coll != blank and coll.products.size > 0 -%}
+
+    {%- if use_tabs -%}
+      <div class="tabs" role="group" aria-label="{{ section.settings.tabs_label | escape }}" data-tabs>
+        <button class="tab" type="button" data-filter="all" aria-pressed="true">{% render 'px', text: section.settings.all_label %}</button>
+        {%- for block in section.blocks -%}
+          {%- assign bc = block.settings.collection -%}
+          {%- if bc != blank -%}
+            {%- assign tab_label = block.settings.label | default: bc.title -%}
+            <button class="tab" type="button" data-filter="t{{ forloop.index0 }}" aria-pressed="false" style="--c:var(--{{ block.settings.color }})" {{ block.shopify_attributes }}>{% render 'px', text: tab_label %}</button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <ul class="grid cols-{{ section.settings.columns }}" role="list" data-tab-grid>
+        {%- for block in section.blocks -%}
+          {%- assign bc = block.settings.collection -%}
+          {%- if bc != blank -%}
+            {%- assign idx = forloop.index0 -%}
+            {%- for product in bc.products limit: section.settings.count -%}
+              {%- assign token = ',' | append: product.id | append: ',' -%}
+              {%- unless seen contains token -%}
+                {%- assign seen = seen | append: product.id | append: ',' -%}
+                {%- assign total = total | plus: 1 -%}
+                <li data-cat="t{{ idx }}">{% render 'card-product', product: product, eager: false %}</li>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+      {%- if total == 0 and request.design_mode -%}
+        <p class="lead">Elige una colección en cada pestaña.</p>
+      {%- endif -%}
+      <p class="shop__more" style="margin-top:24px">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.collection != blank -%}
+            <a class="btn btn--ghost" href="{{ block.settings.collection.url }}" data-more="t{{ forloop.index0 }}" hidden>{{ 'general.view_all' | t }}: {{ block.settings.label | default: block.settings.collection.title | escape }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      </p>
+    {%- elsif coll != blank and coll.products.size > 0 -%}
       <ul class="grid cols-{{ section.settings.columns }}" role="list">
         {%- for product in coll.products limit: section.settings.count -%}
           <li>{% render 'card-product', product: product, eager: false %}</li>
         {%- endfor -%}
       </ul>
     {%- elsif request.design_mode -%}
-      <p class="lead">Elige una colección en los ajustes de esta sección.</p>
+      <p class="lead">Añade pestañas con colecciones o elige una colección en los ajustes de esta sección.</p>
     {%- endif -%}
+
     {%- if section.settings.note != blank -%}
       <div class="rich" style="margin-top:28px;color:var(--ink-2)">{{ section.settings.note }}</div>
     {%- endif -%}
@@ -32,14 +80,42 @@
   "settings": [
     { "type": "text", "id": "heading", "label": "Título", "default": "Elige tu máquina" },
     { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Todos los precios llevan IVA. Añade lo que te guste a la cesta y paga con el checkout seguro de Shopify.</p>" },
-    { "type": "collection", "id": "collection", "label": "Colección" },
-    { "type": "range", "id": "count", "label": "Productos a mostrar", "min": 2, "max": 24, "step": 2, "default": 6 },
+    { "type": "header", "content": "Con pestañas (como en la demo)" },
+    { "type": "text", "id": "all_label", "label": "Texto de la pestaña «todo»", "default": "Todo" },
+    { "type": "text", "id": "tabs_label", "label": "Descripción accesible de las pestañas", "default": "Filtrar por categoría" },
+    { "type": "range", "id": "count", "label": "Productos por pestaña", "min": 2, "max": 12, "step": 1, "default": 6 },
+    { "type": "header", "content": "Sin pestañas" },
+    { "type": "collection", "id": "collection", "label": "Colección", "info": "Solo se usa si no hay pestañas." },
     { "type": "select", "id": "columns", "label": "Columnas en escritorio", "default": "3", "options": [ { "value": "3", "label": "3" }, { "value": "4", "label": "4" } ] },
-    { "type": "checkbox", "id": "show_all", "label": "Mostrar botón «Ver todo»", "default": true },
+    { "type": "checkbox", "id": "show_all", "label": "Mostrar botón «Ver todo» (sin pestañas)", "default": true },
     { "type": "richtext", "id": "note", "label": "Nota bajo la cuadrícula", "default": "<p>¿Buscas otro modelo, tamaño o temática? Pregúntanos por WhatsApp.</p>" },
     { "type": "range", "id": "padding_top", "label": "Espacio superior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 },
     { "type": "range", "id": "padding_bottom", "label": "Espacio inferior", "min": 0, "max": 160, "step": 8, "unit": "px", "default": 80 }
   ],
-  "presets": [{ "name": "Cuadrícula de colección" }]
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Pestaña",
+      "limit": 6,
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "text", "id": "label", "label": "Texto de la pestaña (opcional)", "info": "Si está vacío usa el título de la colección." },
+        { "type": "select", "id": "color", "label": "Color", "default": "pink", "options": [
+          { "value": "pink", "label": "Rosa" }, { "value": "cyan", "label": "Cian" }, { "value": "yellow", "label": "Amarillo" }, { "value": "violet", "label": "Violeta" }
+        ] }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cuadrícula de colección",
+      "blocks": [
+        { "type": "tab", "settings": { "color": "pink" } },
+        { "type": "tab", "settings": { "color": "cyan" } },
+        { "type": "tab", "settings": { "color": "yellow" } },
+        { "type": "tab", "settings": { "color": "violet" } }
+      ]
+    }
+  ]
 }
 {% endschema %}

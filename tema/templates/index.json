@@ -178,9 +178,43 @@
     },
     "shop": {
       "type": "featured-collection",
-      "settings": {
-        "collection": "arcade-recreativas"
-      }
+      "settings": {},
+      "blocks": {
+        "tb1": {
+          "type": "tab",
+          "settings": {
+            "collection": "arcade-recreativas",
+            "color": "pink"
+          }
+        },
+        "tb2": {
+          "type": "tab",
+          "settings": {
+            "collection": "pinball-virtual",
+            "color": "cyan"
+          }
+        },
+        "tb3": {
+          "type": "tab",
+          "settings": {
+            "collection": "pandora-box",
+            "color": "yellow"
+          }
+        },
+        "tb4": {
+          "type": "tab",
+          "settings": {
+            "collection": "consolas-portatiles",
+            "color": "violet"
+          }
+        }
+      },
+      "block_order": [
+        "tb1",
+        "tb2",
+        "tb3",
+        "tb4"
+      ]
     },
     "pandora": {
       "type": "pandora",
@@ -221,7 +255,8 @@
         "f4"
       ],
       "settings": {
-        "collection": "pandora-box"
+        "collection": "pandora-box",
+        "product": "pandora-box-premium-intel-i5-3470-8gb-ram-disco-duro-128gb-m2-itx-gh61tr-dual-boot-windows-11-usb-256gb-batocera-arduino-leonardo-placas-zero-delay-trackball-joysticks-americanos-botones-arcade"
       }
     },
     "pinball": {
@@ -237,14 +272,18 @@
             "spec_2_label": "PC",
             "spec_2_value": "Intel N95",
             "spec_3_label": "Botones",
-            "spec_3_value": "12 arcade"
+            "spec_3_value": "12 arcade",
+            "product": "pinball-virtual-en-acero-con-13-3-1080p-playield-pc-intel-n95-con-8gb-ram-y-128gb-m2-12-botones-arcade-retroiluminados-frontend-pinballx-vpx-y-vp9-minipinball-curvo-metalico-theaddamsfamily-negro",
+            "title": "Mini Pinball en acero"
           }
         },
         "z2": {
           "type": "size",
           "settings": {
             "size": "18,5\"",
-            "tag": "Normal"
+            "tag": "Normal",
+            "product": "pinball-virtual-playfield-18-5-backglass-15-ryzen-5-5500-igpu-amd-radeon-7-1800mhz-16gb-ram-256gb-ssd-pinball-con-patas-thefamilyaddams",
+            "title": "Pinball Virtual 18,5\""
           }
         },
         "z3": {
@@ -257,7 +296,9 @@
             "spec_2_label": "Backglass + DMD",
             "spec_2_value": "19\" + 7\"",
             "spec_3_label": "PC",
-            "spec_3_value": "Ryzen 7"
+            "spec_3_value": "Ryzen 7",
+            "product": "pinball-virtual-4k-27-5-con-pc-ryzen-7-gtx1060-1800-juegos-dmd-7-backglass-19-dof-con-solenoides-shaker-pinup-popper-arcade-con-trackball-y-joystick",
+            "title": "Pinball Virtual 27,5\""
           }
         }
       },

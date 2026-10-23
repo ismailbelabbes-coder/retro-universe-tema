@@ -127,7 +127,7 @@
   </head>
 
   <body class="template-{{ request.page_type | handle }}{% if settings.boot_enabled and request.page_type == 'index' %} booting{% endif %}"
-    data-motion="{{ settings.fx_motion }}">
+    data-motion="{{ settings.fx_motion }}" data-design="{{ request.design_mode }}">
     <a class="skip" href="#MainContent">{{ 'general.skip' | t }}</a>
 
     {%- if settings.announcement_enabled and settings.announcement_text != blank -%}
@@ -148,6 +148,8 @@
 
     {% sections 'footer-group' %}
 
+    {% section 'cart-drawer' %}
+
     <div class="toasts" id="toasts" aria-live="polite"></div>
     <template id="sprites" hidden>
       <i data-sprite="coin">{% render 'pix', name: 'coin' %}</i>
@@ -164,6 +166,8 @@
         "cartUrl": {{ routes.cart_url | json }},
         "cartAdd": {{ routes.cart_add_url | json }},
         "cartJs": {{ routes.cart_url | append: '.js' | json }},
+        "cartChange": {{ routes.cart_change_url | append: '.js' | json }},
+        "root": {{ routes.root_url | json }},
         "locale": {{ request.locale.iso_code | json }},
         "strings": {
           "added": {{ 'products.added' | t | json }},

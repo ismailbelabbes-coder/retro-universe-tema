@@ -1,7 +1,7 @@
 {% render 'section-style', section: section %}
 <div class="wrap page">
   <h1>{{ page.title | escape }}</h1>
-  <div class="prose rich">{{ page.content }}</div>
+  <div class="prose rich">{{ page.content | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
 </div>
 
 {% schema %}

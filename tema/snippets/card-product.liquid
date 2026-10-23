@@ -9,7 +9,10 @@
   endif
   assign on_sale = false
   if product.compare_at_price > product.price and product.available
-    assign on_sale = true
+    assign disc = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+    if disc >= 25
+      assign on_sale = true
+    endif
   endif
 -%}
 <article class="card k-{{ k }}">
