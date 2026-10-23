@@ -6,8 +6,8 @@ En cumplimiento del deber de información del artículo 10 de la Ley 34/2002, de
 
 - **Denominación social:** Retro Universe S.L.
 - **NIF:** B56157308
-- **Domicilio social:** `[COMPLETAR: confirmar si es C/ Bambú, 9, 1ºB, 29640 Fuengirola (Málaga), que consta en el aviso actual]`
-- **Establecimiento / dirección de atención:** `[COMPLETAR si es distinto: C/ Archidona, nave 30, Mijas Costa (Málaga)]`
+- **Domicilio social:** C/ Bambú, 9, 1ºB, 29640 Fuengirola (Málaga) *(confirmado por el cliente)*
+- **Establecimiento / dirección de atención:** C/ Archidona, nave 30, 29649 Mijas Costa (Málaga)
 - **Correo electrónico:** info@retrouniverse.es
 - **Teléfono / WhatsApp:** `[COMPLETAR: +34 672 83 58 94, si se quiere publicar]`
 - **Datos registrales:** `[COMPLETAR: Inscrita en el Registro Mercantil de ..., tomo ..., folio ..., hoja ..., inscripción ...]`
