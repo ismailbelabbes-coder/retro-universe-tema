@@ -767,3 +767,13 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 .menu__lang{margin:16px 0 0}
 .menu__lang .field--sm{width:100%}
 @media (min-width:990px){ .hud__lang{display:block} .menu__lang{display:none} }
+
+/* Cabecera de escritorio ordenada: sin saltos de línea y selector de idioma compacto */
+.hud__nav{min-width:0}
+.hud__nav a{white-space:nowrap}
+.hud__nav,.hud__nav ul{gap:clamp(10px,1.3vw,22px)}
+.hud__nav{font-size:1.3rem}
+.hud__right{gap:4px; flex:none}
+.field--sm{min-width:0; width:auto; padding:.4rem 1.7rem .4rem .7rem; font-size:.85rem; font-family:var(--f-pixel); letter-spacing:.03em}
+.hud__lang .field--sm{min-width:4.6rem}
+@media (max-width:1240px){ .hud__account{display:none} .cart-link .lbl{display:none} }
