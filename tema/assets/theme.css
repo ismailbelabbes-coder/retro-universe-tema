@@ -769,7 +769,7 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 @media (min-width:990px){ .hud__lang{display:block} .menu__lang{display:none} }
 
 /* Cabecera de escritorio ordenada: sin saltos de línea y selector de idioma compacto */
-.hud__nav{min-width:0}
+.hud__nav{min-width:0; overflow:hidden}
 .hud__nav a{white-space:nowrap}
 .hud__nav,.hud__nav ul{gap:clamp(10px,1.3vw,22px)}
 .hud__nav{font-size:1.3rem}
@@ -793,3 +793,15 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 .fship + .lines .line__total,.line__total{color:var(--yellow)}
 .cart-sum .tot strong,.drawer__foot .tot strong{font-size:1.3rem; text-shadow:2px 2px 0 var(--pink-deep)}
 .pin-buy .price strong{font-size:1.5rem}
+
+/* Cabecera adaptable a cualquier idioma: si el menú no cabe, se usa el botón de menú */
+.hud__nav{flex:1 1 0}
+.hud__nav ul{flex-wrap:nowrap; width:max-content; margin-inline:auto}
+.hud.is-compact .hud__nav{display:none}
+.hud.is-compact .menu{display:block}
+.hud.is-compact .hud__lang{display:none}
+.hud.is-compact .menu__lang{display:block}
+.hud.is-compact .hud__right{margin-left:auto}
+/* Palabras largas (alemán, neerlandés): cortar con guion en vez de salirse de la caja */
+html:not([lang^="es"]) body{hyphens:auto; overflow-wrap:break-word}
+.px,.btn,.btn-add,.tab,.badge,.size-btn{hyphens:manual}

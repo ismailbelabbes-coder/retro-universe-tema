@@ -380,4 +380,19 @@
     document.addEventListener('visitorConsentCollected', sync);
     prefsBtn.addEventListener('click', () => { const a = api(); if (a) a.showPreferences(); });
   }
+
+  /* ---------- Cabecera: pasa al botón de menú si los enlaces no caben (idiomas con palabras largas) ---------- */
+  const hud = $('.hud');
+  if (hud) {
+    const nav = $('.hud__nav', hud), list = nav && $('ul', nav);
+    const fit = () => {
+      if (!list) return;
+      hud.classList.remove('is-compact');
+      if (matchMedia('(min-width: 990px)').matches && list.scrollWidth > nav.clientWidth + 2) hud.classList.add('is-compact');
+    };
+    fit();
+    addEventListener('resize', fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    addEventListener('load', fit);
+  }
 })();
