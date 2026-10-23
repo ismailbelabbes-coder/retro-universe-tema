@@ -1,0 +1,15 @@
+{%- comment -%}
+  Selector de idioma compacto (formulario nativo de Shopify). Parámetro: id (único por página).
+  Solo se muestra si hay más de un idioma disponible y el ajuste está activado.
+{%- endcomment -%}
+{%- if settings.show_localization and localization.available_languages.size > 1 -%}
+  {%- form 'localization', id: id, class: 'lang-select' -%}
+    <label class="sr" for="{{ id }}-sel">{{ 'general.language' | t }}</label>
+    <select class="field field--sm" id="{{ id }}-sel" name="language_code" data-autosubmit>
+      {%- for language in localization.available_languages -%}
+        <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name | capitalize | escape }}</option>
+      {%- endfor -%}
+    </select>
+    <noscript><button class="btn btn--ghost" type="submit">{{ 'general.apply' | t }}</button></noscript>
+  {%- endform -%}
+{%- endif -%}

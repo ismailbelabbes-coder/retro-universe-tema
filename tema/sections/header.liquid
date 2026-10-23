@@ -34,6 +34,7 @@
     </nav>
 
     <div class="hud__right">
+      <div class="hud__lang">{% render 'language-select', id: 'hud-lang' %}</div>
       <a class="icon-btn" href="{{ routes.search_url }}" aria-label="{{ 'general.search' | t }}">{% render 'icon', name: 'search' %}</a>
       {%- if shop.customer_accounts_enabled -%}
         <a class="icon-btn hud__account" href="{{ routes.account_url }}" aria-label="{{ 'general.account' | t }}">{% render 'icon', name: 'user' %}</a>
@@ -59,6 +60,7 @@
               </li>
             {%- endfor -%}
           </ul>
+          <div class="menu__lang">{% render 'language-select', id: 'menu-lang' %}</div>
           <form class="search" action="{{ routes.search_url }}" method="get" role="search">
             <label class="sr" for="menu-q">{{ 'search.label' | t }}</label>
             <input class="field" id="menu-q" type="search" name="q" placeholder="{{ 'search.placeholder' | t }}" autocomplete="off">

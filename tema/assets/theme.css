@@ -759,3 +759,11 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 .prod__info .price strong{color:var(--yellow); font-size:clamp(1.6rem,2.6vw,2.2rem)}
 .prod__info .price s{font-size:.9rem; color:var(--ink-3)}
 .sticky-buy__p{color:var(--yellow)}
+
+/* ============ Selector de idioma compacto en la cabecera ============ */
+.lang-select{margin:0}
+.field--sm{min-height:48px; width:auto; min-width:7.5rem; padding:.4rem .7rem; font-size:.85rem; margin:3px}
+.hud__lang{display:none}
+.menu__lang{margin:16px 0 0}
+.menu__lang .field--sm{width:100%}
+@media (min-width:990px){ .hud__lang{display:block} .menu__lang{display:none} }
