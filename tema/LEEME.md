@@ -93,6 +93,14 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 - Los elementos que aparecen con animación solo se ocultan si están bajo el pliegue y los gestiona JavaScript: si algo falla, todo queda visible. En el editor de temas nunca se ocultan.
 - Comprobado en la vista previa de la tienda real a 375 px y a 1366 px: sin desbordamiento horizontal.
 
+## Estado y cómo publicar
+
+**Hecho:** tema completo y editable; idiomas de, fr, it, en, ca y pt (textos del tema y traducciones en Translate & Adapt); formulario de contacto; pie legal y borradores en `tema/legal/`; carrito lateral; envío gratuito; fondo y animaciones.
+
+**Pendiente antes de publicar:** revisión del cliente (2 rondas de ajustes incluidas), activar en «Embeds de aplicaciones» el WhatsApp de Webux y desactivar el traductor de Transtore, comprobar SEO y redirecciones con la lista de abajo, y que el cliente confirme textos legales y función de desistimiento.
+
+**Publicar (lo hace el cliente):** Tienda online > Temas > «Retro Universe Arcade» > Acciones > **Publicar**. El tema anterior queda guardado y se puede volver a publicar si hay un problema. Recomendado: publicar a primera hora, comprobar portada, una colección, una ficha, el carrito y el pago de prueba, y revisar Analytics y Merchant ese día.
+
 ## Idiomas y clientes de fuera de España
 
 La web actual ya funciona en varios idiomas con **Shopify Markets** (`/de`, `/fr`, `/it`, `/pt`...) y publica las etiquetas `hreflang` automáticamente; el tema nuevo las conserva (comprobado en la vista previa: 20 etiquetas). Qué hay que saber:
