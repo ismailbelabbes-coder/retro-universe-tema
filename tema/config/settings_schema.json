@@ -47,6 +47,10 @@
         { "value": "grid", "label": "Brillos y rejilla tenue" },
         { "value": "none", "label": "Fondo liso" }
       ], "info": "Con «reducir movimiento» activado en el dispositivo, las estrellas quedan quietas." },
+      { "type": "select", "id": "photo_panel", "label": "Panel detrás de las fotos de producto", "default": "dark", "options": [
+        { "value": "dark", "label": "Oscuro con brillo (estilo arcade)" },
+        { "value": "light", "label": "Blanco liso (para fotos con fondo blanco)" }
+      ], "info": "Las fotos con fondo transparente se ven sobre el panel; las que tienen fondo blanco se ven mejor con el panel blanco." },
       { "type": "checkbox", "id": "fx_scanlines", "label": "Líneas de pantalla CRT sobre la página", "default": true },
       { "type": "checkbox", "id": "fx_vignette", "label": "Viñeta en los bordes", "default": true },
       { "type": "checkbox", "id": "fx_motion", "label": "Animaciones (marquesina, fondo de estrellas, aparición de elementos)", "info": "Si la persona usa «reducir movimiento» en su dispositivo, siempre se ve la versión estática.", "default": true },

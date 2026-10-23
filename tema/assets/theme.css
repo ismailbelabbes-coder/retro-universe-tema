@@ -733,3 +733,29 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 
 .foot__loc{margin-top:28px; max-width:260px}
 .foot__loc .field{width:100%}
+
+/* ============ Fotos limpias, galería más grande y precio destacado ============ */
+/* El efecto CRT (líneas y viñeta) queda detrás del contenido: solo se ve en el fondo, nunca sobre fotos ni infografías */
+.fx{z-index:1}
+.main,.foot,.announce{position:relative; z-index:2}
+/* Sin filtros, brillos ni parpadeos sobre las fotos de producto */
+.card__media img,.gallery__main img,.prod__desc img{filter:none!important}
+.card__media::before{display:none}
+.card.in .card__img1{animation:none}
+.gallery__main [data-slide].is-on img{animation:none}
+.photos-light .card__media,.photos-light .gallery__main{background:#f6f3fb}
+.photos-light .card--cover .card__media::after{display:none}
+/* Galería principal ~30 % más grande en escritorio, miniaturas más grandes */
+.gallery__main{padding:2%}
+.thumb{width:80px; height:80px}
+@media (min-width:900px){
+  .prod{grid-template-columns:minmax(0,1.9fr) minmax(360px,1fr); gap:clamp(28px,3.5vw,56px)}
+  .thumb{width:104px; height:104px}
+}
+/* Descripción a todo el ancho: las infografías se ven grandes y nítidas */
+.prod__desc{max-width:1100px; margin-top:clamp(24px,4vw,48px)}
+.prod__desc img{display:block; width:100%; max-width:100%; height:auto; margin:1.2rem 0}
+/* Precio destacado en amarillo; el precio anterior, discreto */
+.prod__info .price strong{color:var(--yellow); font-size:clamp(1.6rem,2.6vw,2.2rem)}
+.prod__info .price s{font-size:.9rem; color:var(--ink-3)}
+.sticky-buy__p{color:var(--yellow)}

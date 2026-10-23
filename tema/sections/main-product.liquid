@@ -90,14 +90,15 @@
         <p class="note" style="color:var(--ink-3);font-size:.9rem">{{ section.settings.buy_note | escape }}</p>
       {%- endif -%}
 
-      {%- if product.description != blank -%}
-        <div class="prod__desc rich" data-collapsible data-max="560" data-more="{{ 'products.read_more' | t }}" data-less="{{ 'products.read_less' | t }}">{{ product.description | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
-      {%- endif -%}
       {%- if section.settings.show_sku and current.sku != blank -%}
         <p class="meta" style="margin-top:16px">SKU: {{ current.sku | escape }}</p>
       {%- endif -%}
     </div>
   </div>
+
+    {%- if product.description != blank -%}
+      <div class="prod__desc rich" data-collapsible data-max="560" data-more="{{ 'products.read_more' | t }}" data-less="{{ 'products.read_less' | t }}">{{ product.description | replace: '<h1', '<h2' | replace: '</h1>', '</h2>' }}</div>
+    {%- endif -%}
 
   {%- if section.settings.show_sticky_buy and product.available -%}
     <div class="sticky-buy" data-sticky-buy hidden>
