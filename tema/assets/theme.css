@@ -692,3 +692,14 @@ body::after{left:0; right:0; top:-400px; bottom:0; background-image:url("data:im
 .bg-none::before,.bg-none::after{display:none}
 .bg-glow::after,.bg-grid::after{display:none}
 .bg-grid::after{display:block; top:0; background-image:linear-gradient(rgba(190,165,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(190,165,255,.07) 1px, transparent 1px); background-size:56px 56px; opacity:1; animation:none; -webkit-mask-image:linear-gradient(to bottom, transparent, #000 55%, transparent); mask-image:linear-gradient(to bottom, transparent, #000 55%, transparent)}
+
+/* Fondo «moqueta de recreativa»: el dibujo de neón de las salas de los 80 y 90 */
+.bg-carpet::after{left:0; right:0; top:-180px; bottom:0; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' fill='none' stroke-width='3' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M18 46l15-26 15 26z' stroke='%23ff2e93'/%3E%3Cpolyline points='96%2C28 106%2C16 116%2C28 126%2C16 136%2C28' stroke='%2327f0ff'/%3E%3Ccircle cx='62' cy='118' r='8' stroke='%23ffd23f'/%3E%3Crect x='128' y='104' width='15' height='15' stroke='%237a3cff' transform='rotate%2822 135 111%29'/%3E%3Cpath d='M150 150l12-20 12 20z' stroke='%23ffd23f'/%3E%3Cpolyline points='14%2C150 22%2C140 30%2C150 38%2C140 46%2C150' stroke='%23ff2e93'/%3E%3Cpath d='M96 82v14M89 89h14' stroke='%2327f0ff'/%3E%3Ccircle cx='160' cy='40' r='5' stroke='%23ff2e93'/%3E%3Crect x='88' y='150' width='10' height='10' stroke='%2327f0ff' transform='rotate%28-15 93 155%29'/%3E%3Cpath d='M30 98l-8 8m0-8l8 8' stroke='%237a3cff'/%3E%3C/svg%3E"); background-size:180px 180px; opacity:.2; animation:bg-carpet 90s linear infinite}
+@keyframes bg-carpet{to{transform:translate(-180px,180px)}}
+/* Fondo «suelo de rejilla»: plano en perspectiva que avanza despacio hacia ti */
+.bg-floor::after{left:-70%; right:-70%; top:auto; bottom:0; height:75vh; transform-origin:50% 100%; transform:perspective(420px) rotateX(63deg);
+  background-image:linear-gradient(color-mix(in srgb, var(--pink) 80%, transparent) 2px, transparent 2px), linear-gradient(90deg, color-mix(in srgb, var(--pink) 80%, transparent) 2px, transparent 2px);
+  background-size:64px 64px; opacity:.85; animation:bg-floor 4s linear infinite;
+  -webkit-mask-image:linear-gradient(to top, #000 15%, transparent 95%); mask-image:linear-gradient(to top, #000 15%, transparent 95%)}
+@keyframes bg-floor{from{transform:perspective(420px) rotateX(63deg) translateY(0)} to{transform:perspective(420px) rotateX(63deg) translateY(64px)}}
+@media (max-width:749px){ .bg-floor::after{height:48vh; background-size:48px 48px} }

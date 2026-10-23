@@ -39,8 +39,10 @@
   {
     "name": "Efectos arcade",
     "settings": [
-      { "type": "select", "id": "bg_style", "label": "Fondo decorativo de la página", "default": "stars", "options": [
+      { "type": "select", "id": "bg_style", "label": "Fondo decorativo de la página", "default": "carpet", "options": [
         { "value": "stars", "label": "Brillos suaves y estrellas que caen despacio" },
+        { "value": "carpet", "label": "Moqueta de recreativa (dibujo de neón, retro)" },
+        { "value": "floor", "label": "Suelo de rejilla en perspectiva (retro)" },
         { "value": "glow", "label": "Solo brillos suaves de color" },
         { "value": "grid", "label": "Brillos y rejilla tenue" },
         { "value": "none", "label": "Fondo liso" }

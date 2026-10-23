@@ -97,7 +97,7 @@ Se usa el carrito y el checkout nativos: `{% form 'product' %}`, `/cart` y el bo
 
 - **Encuadre de fotos:** en las secciones «Cuadrícula de colección» y «Colección» (y la ficha de producto) se elige «Foto completa» o «Recortada». En modo recortado se usa el punto de enfoque de cada imagen (Shopify > Productos > imagen > Editar > Punto de enfoque).
 - **Animación retro de las fotos:** al entrar en pantalla la foto «se enciende» como un tubo CRT, y al pasar el ratón rebota en dos fotogramas y un brillo de pantalla la cruza (solo `transform` y `opacity`; sin movimiento con «reducir movimiento»).
-- **Fondo decorativo** (Ajustes del tema > Efectos arcade): brillos suaves y estrellas que caen muy despacio, solo brillos, rejilla tenue o fondo liso.
+- **Fondo decorativo** (Ajustes del tema > Efectos arcade): moqueta de recreativa (por defecto), suelo de rejilla en perspectiva, brillos y estrellas, solo brillos, rejilla tenue o fondo liso.
 - **Textos largos plegables** («Leer más»): descripciones de colección y de producto.
 - **Zoom** al pasar el ratón en la ficha, al tocar en móvil, y deslizamiento para cambiar de foto.
 - **Envío gratuito:** barra de progreso en el cajón y en la página del carrito. Se configura en Ajustes del tema > Envío gratuito (30 € por defecto, el de su web actual). Solo informa: la condición real se configura en los envíos de Shopify.
