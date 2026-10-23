@@ -109,7 +109,7 @@ La web actual ya funciona en varios idiomas con **Shopify Markets** (`/de`, `/fr
 - **Textos que se escriben en el editor** (portada, banners, pie, ajustes de tema): son contenido del tema y hay que traducirlos para el tema nuevo con **Translate & Adapt** o con la app de traducción. Las traducciones del tema actual no se copian solas.
 - **Productos, colecciones, menús y páginas**: se traducen a nivel de tienda y no dependen del tema.
 - **Google necesita cada página en su idioma en el propio HTML.** Hoy, en `/de`, la interfaz sale en alemán pero los títulos y descripciones de producto salen en español en el HTML (probablemente los traduce en el navegador la app Transtore). Para el SEO internacional conviene que las traducciones estén guardadas en Shopify (Translate & Adapt o Markets), no solo aplicadas por JavaScript.
-- **Selector de idioma**: lo pone la app Transtore (hay que activar su extensión en «Embeds de aplicaciones»). El tema trae uno nativo, apagado por defecto (Ajustes del tema > Idiomas y países).
+- **Selector de idioma**: lo pone la app Transtore (hay que activar su extensión en «Embeds de aplicaciones»). El tema trae uno nativo, **activado por defecto** en el pie (Ajustes del tema > Idiomas y países). Conviene desactivar el de Transtore para no tener dos.
 - Las imágenes con texto, los textos legales y los correos de pedido se traducen aparte.
 
 ## Página de contacto
